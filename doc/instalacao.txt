@@ -1,0 +1,9 @@
+Download JDK 8
+Download eclipse neon
+Download JavaFX SceneBuilder
+
+Instalar e(fx)clipse no eclipse
+Configurar "Installed JRE" no eclipse
+Configurar o SceneBuilder no Eclipse
+Instalar o Maven no eclipse
+	http://www.eclipse.org/m2e/
