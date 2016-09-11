@@ -21,7 +21,7 @@ import javafx.stage.Stage;
 public class MainController implements Initializable {
 	
 	@FXML
-    private Text actiontarget;    
+    private Text loginErrors;    
     
     @FXML
     private PasswordField passwordField;
@@ -38,9 +38,9 @@ public class MainController implements Initializable {
         	ProcessadorAutenticacao.validate(loginField.getText(), passwordField.getText());
 			goToMainScreen(event);
 		} catch (LoginException e) {
-			actiontarget.setText(e.getMessage());
+			loginErrors.setText(e.getMessage());
 		} catch (IOException e) {
-			actiontarget.setText("Não foi possível carregar a aplicação");
+			loginErrors.setText("Não foi possível carregar a aplicação");
 			e.printStackTrace();
 		}
     }
