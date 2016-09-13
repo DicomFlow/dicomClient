@@ -43,7 +43,7 @@
       </SplitPane>
    </top>
    <left>
-      <Accordion prefHeight="691.0" prefWidth="211.0" BorderPane.alignment="CENTER">
+      <Accordion fx:id="menuLateral" prefHeight="691.0" prefWidth="211.0" BorderPane.alignment="CENTER">
         <panes>
           <TitledPane animated="false" text="Configurações" />
           <TitledPane animated="false" text="Caixa de Entrada">
@@ -58,7 +58,7 @@
                       <RowConstraints maxHeight="553.0" minHeight="10.0" prefHeight="484.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="49.0" prefWidth="189.0" text="Novos Exames" />
+                        <Button fx:id="novosExamesButton" mnemonicParsing="false" onAction="#showStudies" prefHeight="49.0" prefWidth="189.0" text="Novos Exames" />
                         <Button mnemonicParsing="false" prefHeight="49.0" prefWidth="189.0" text="Exames Enviados" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
@@ -68,25 +68,4 @@
         </panes>
       </Accordion>
    </left>
-   <center>
-      <Accordion BorderPane.alignment="CENTER">
-        <panes>
-          <TitledPane animated="false" text="Hospital Universitario Lauro Wanderley">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-          </TitledPane>
-          <TitledPane animated="false" text="Hospital da Unimed">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-          </TitledPane>
-          <TitledPane animated="false" text="Hospital Napoleão Laureano">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-          </TitledPane>
-        </panes>
-      </Accordion>
-   </center>
 </BorderPane>
