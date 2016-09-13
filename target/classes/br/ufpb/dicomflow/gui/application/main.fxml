@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufpb.dicomflow.gui.application.MainController">
+<BorderPane maxHeight="768.0" maxWidth="1024.0" minHeight="768.0" minWidth="1024.0" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufpb.dicomflow.gui.application.MainController">
    <top>
       <SplitPane dividerPositions="0.37681159420289856" orientation="VERTICAL" prefHeight="77.0" prefWidth="800.0" BorderPane.alignment="CENTER">
         <items>
@@ -42,4 +42,51 @@
         </items>
       </SplitPane>
    </top>
+   <left>
+      <Accordion prefHeight="691.0" prefWidth="211.0" BorderPane.alignment="CENTER">
+        <panes>
+          <TitledPane animated="false" text="Configurações" />
+          <TitledPane animated="false" text="Caixa de Entrada">
+               <content>
+                  <GridPane>
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="194.0" minHeight="0.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="481.0" minHeight="0.0" prefHeight="47.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="553.0" minHeight="10.0" prefHeight="484.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Button mnemonicParsing="false" prefHeight="49.0" prefWidth="189.0" text="Novos Exames" />
+                        <Button mnemonicParsing="false" prefHeight="49.0" prefWidth="189.0" text="Exames Enviados" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
+               </content>
+            </TitledPane>
+            <TitledPane animated="false" layoutX="10.0" layoutY="35.0" text="Mensagens e Alertas" />
+        </panes>
+      </Accordion>
+   </left>
+   <center>
+      <Accordion BorderPane.alignment="CENTER">
+        <panes>
+          <TitledPane animated="false" text="Hospital Universitario Lauro Wanderley">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </TitledPane>
+          <TitledPane animated="false" text="Hospital da Unimed">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </TitledPane>
+          <TitledPane animated="false" text="Hospital Napoleão Laureano">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </TitledPane>
+        </panes>
+      </Accordion>
+   </center>
 </BorderPane>

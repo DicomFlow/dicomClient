@@ -14,6 +14,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -36,7 +38,7 @@ public class MainController implements Initializable {
     protected void handleEntrarButtonAction(ActionEvent event) {        
         try {
         	ProcessadorAutenticacao.validate(loginField.getText(), passwordField.getText());
-			goToMainScreen(event);
+			showMainScreen(event);
 		} catch (LoginException e) {
 			loginErrors.setText(e.getMessage());
 		} catch (IOException e) {
@@ -46,10 +48,10 @@ public class MainController implements Initializable {
     }
     
     
-    public void goToMainScreen(ActionEvent event) throws IOException {
+    public void showMainScreen(ActionEvent event) throws IOException {
         Stage stage = Main.getpStage();
         stage.setTitle("DicomFlow Client");
-        Pane myPane = null;
+        BorderPane myPane = null;
         myPane = FXMLLoader.load(getClass().getResource("main.fxml"));
         Scene scene = new Scene(myPane);
         stage.setScene(scene);        
