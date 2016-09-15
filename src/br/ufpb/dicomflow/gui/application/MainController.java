@@ -8,29 +8,20 @@ import java.util.ResourceBundle;
 
 import br.ufpb.dicomflow.gui.business.ProcessadorAutenticacao;
 import br.ufpb.dicomflow.gui.exception.LoginException;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
-import javafx.scene.control.AccordionBuilder;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -59,11 +50,14 @@ public class MainController implements Initializable {
     
     @FXML
     private Accordion studiesAccordion;
+    
+    @FXML ComboBox<String> ordenarPor;
             
     @FXML 
     protected void handleEntrarButtonAction(ActionEvent event) {        
         try {
         	ProcessadorAutenticacao.validate(loginField.getText(), passwordField.getText());
+        	initFields();
 			showMainScreen(event);
 		} catch (LoginException e) {
 			loginErrors.setText(e.getMessage());
@@ -71,6 +65,12 @@ public class MainController implements Initializable {
 			loginErrors.setText("Não foi possível carregar a aplicação");
 			e.printStackTrace();
 		}
+    }
+    
+    private void initFields() {
+    	ordenarPor = new ComboBox<String>();
+    	ordenarPor.getItems().addAll("Data", "Nome");    	
+    	
     }
     
     
@@ -82,6 +82,7 @@ public class MainController implements Initializable {
         Scene scene = new Scene(myPane);
         stage.setScene(scene);        
         
+        initFields();
         stage.show();
      }
     
@@ -93,8 +94,7 @@ public class MainController implements Initializable {
         BorderPane myPane = null;
         myPane = FXMLLoader.load(getClass().getResource("main.fxml"));        
         
-        studiesAccordion = new Accordion();               
-        studiesAccordion.getPanes().addAll(getStudies());                                     
+        studiesAccordion = getStudiesList();       
         myPane.setCenter(studiesAccordion);
         
         scene.setRoot(myPane);        
@@ -111,6 +111,38 @@ public class MainController implements Initializable {
     	result.add(t1);
     	
     	return result;
+    }
+    
+    public Accordion getStudiesList() {
+    	Accordion root = new Accordion();
+    	
+    	Accordion listaPacientes1 = new Accordion ();
+    	TitledPane paciente1 = new TitledPane();
+    	paciente1.setText("Paciente: João da Silva");
+    	listaPacientes1.getPanes().add(paciente1);
+    	
+    	Accordion listaPacientes2 = new Accordion();
+    	TitledPane paciente2 = new TitledPane();
+    	paciente2.setText("Paciente: Maria Andrade de Souza");
+    	listaPacientes2.getPanes().add(paciente2);
+    	TitledPane paciente3 = new TitledPane();
+    	paciente3.setText("Paciente: Neto Lucena");
+    	listaPacientes2.getPanes().add(paciente3);
+    	
+    	Accordion listaPacientes3 = new Accordion();
+    	TitledPane paciente4 = new TitledPane();
+    	paciente4.setText("Paciente: José Antônio Medeiros");
+    	listaPacientes3.getPanes().add(paciente4);
+    	
+    	TitledPane hospital1 = new TitledPane("Estudos do Hospital Universitário Lauro Wanderley (HULW)", listaPacientes1);
+    	TitledPane hospital2 = new TitledPane("Estudos do Hospital Napoleão Laureano", listaPacientes2);
+    	TitledPane hospital3 = new TitledPane("Estudos do Hospital da UNIMED", listaPacientes3);
+    	
+    	root.getPanes().add(hospital1);
+    	root.getPanes().add(hospital2);
+    	root.getPanes().add(hospital3);
+    	return root;
+    	          
     }
 
     

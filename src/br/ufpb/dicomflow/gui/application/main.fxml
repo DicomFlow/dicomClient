@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.embed.swing.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.image.*?>
@@ -11,7 +12,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="768.0" maxWidth="1024.0" minHeight="768.0" minWidth="1024.0" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufpb.dicomflow.gui.application.MainController">
+<BorderPane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufpb.dicomflow.gui.application.MainController">
    <top>
       <SplitPane dividerPositions="0.37681159420289856" orientation="VERTICAL" prefHeight="77.0" prefWidth="800.0" BorderPane.alignment="CENTER">
         <items>
@@ -38,7 +39,13 @@
                   </MenuBar>
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="69.0" prefWidth="798.0" SplitPane.resizableWithParent="false" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="69.0" prefWidth="798.0" SplitPane.resizableWithParent="false">
+               <children>
+                  <Label layoutX="225.0" layoutY="14.0" prefHeight="17.0" prefWidth="75.0" text="Ordenar por:" />
+                  <Label layoutX="590.0" layoutY="14.0" prefHeight="17.0" prefWidth="44.0" text="Buscar:" />
+                  <TextField layoutX="635.0" layoutY="10.0" />
+                  <ComboBox fx:id="ordenarPor" layoutX="300.0" layoutY="10.0" prefWidth="150.0" />
+               </children></AnchorPane>
         </items>
       </SplitPane>
    </top>
@@ -54,12 +61,13 @@
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints maxHeight="194.0" minHeight="0.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="481.0" minHeight="0.0" prefHeight="47.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="553.0" minHeight="10.0" prefHeight="484.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="481.0" minHeight="0.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="553.0" minHeight="10.0" prefHeight="86.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="553.0" minHeight="10.0" prefHeight="224.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button fx:id="novosExamesButton" mnemonicParsing="false" onAction="#showStudies" prefHeight="49.0" prefWidth="189.0" text="Novos Exames" />
-                        <Button mnemonicParsing="false" prefHeight="49.0" prefWidth="189.0" text="Exames Enviados" GridPane.rowIndex="1" />
+                        <Button fx:id="novosExamesButton" mnemonicParsing="false" onAction="#showStudies" prefHeight="5.0" prefWidth="189.0" text="Novos Exames" GridPane.rowIndex="1" />
+                        <Button mnemonicParsing="false" prefHeight="6.0" prefWidth="189.0" text="Exames Enviados" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                </content>
