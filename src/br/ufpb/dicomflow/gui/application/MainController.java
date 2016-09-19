@@ -8,8 +8,6 @@ import java.util.ResourceBundle;
 
 import br.ufpb.dicomflow.gui.business.ProcessadorAutenticacao;
 import br.ufpb.dicomflow.gui.exception.LoginException;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
