@@ -38,3 +38,7 @@ and open the template in the editor.
 .button:hover {
     -fx-background-color: linear-gradient(#2A5058, #61a2b1);
 }
+
+.iconGarbage {  
+  -fx-graphic: url("/img/garbage_32.png");
+}
