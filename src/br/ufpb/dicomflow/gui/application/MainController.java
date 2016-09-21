@@ -8,7 +8,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import br.ufpb.dicomflow.gui.business.ProcessadorAutenticacao;
+import br.ufpb.dicomflow.gui.business.ProcessadorBuscaMensagens;
 import br.ufpb.dicomflow.gui.exception.LoginException;
+import br.ufpb.dicomflow.integrationAPI.message.xml.ServiceIF;
+import br.ufpb.dicomflow.integrationAPI.message.xml.SharingPut;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -52,6 +55,9 @@ public class MainController implements Initializable {
     
     @FXML
     private Accordion studiesAccordion;
+    
+    @FXML
+    private Accordion newMessagesAccordion;
     
     @FXML ComboBox<String> ordenarPor;
     
@@ -113,7 +119,7 @@ public class MainController implements Initializable {
         
         scene.setRoot(myPane);        
         stage.show();
-     }
+     }    
     
     public List<TitledPane> getStudies() {  
     	ArrayList<TitledPane> result = new ArrayList<TitledPane>();
@@ -157,6 +163,40 @@ public class MainController implements Initializable {
     	root.getPanes().add(hospital3);
     	return root;
     	          
+    }
+    
+    public void showNewMessages(ActionEvent event) throws Exception {
+    	Scene scene = Main.getpStage().getScene();
+        Stage stage = (Stage) scene.getWindow();
+        
+
+        BorderPane myPane = null;
+        myPane = FXMLLoader.load(getClass().getResource("main.fxml"));        
+        
+        List<SharingPut> newMessages = (List<SharingPut>) ProcessadorBuscaMensagens.receberMensagens();                
+        newMessagesAccordion = getNewMessagesList(newMessages);        
+        
+        myPane.setCenter(newMessagesAccordion);
+        
+        scene.setRoot(myPane);        
+        stage.show();
+     }
+    
+    public Accordion getNewMessagesList(List<SharingPut> newMessages) {
+    	Accordion root = new Accordion();
+    	
+    	for (SharingPut message: newMessages) {
+    		Accordion item = new Accordion();    		
+    		for (br.ufpb.dicomflow.integrationAPI.message.xml.URL url: message.getUrls()) {
+    			TitledPane tp = new TitledPane();
+    	    	tp.setText("URL: " +  url.getValue());
+    	    	item.getPanes().add(tp);
+        	}
+    		TitledPane messageTP = new TitledPane("Mensagem ID: " + message.getMessageID(), item);
+    		root.getPanes().add(messageTP);
+    	}    	    
+    	
+    	return root;
     }
 
     

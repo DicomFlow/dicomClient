@@ -81,12 +81,12 @@
                               <Image url="@../../../../../../img/garbage_32.png" />
                            </image>
                         </ImageView>
-                        <Hyperlink onAction="#showStudies" text="Novos Exames" visited="true" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                        <Hyperlink fx:id="novosExames" onAction="#showNewMessages" text="Novos Exames" visited="true" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Hyperlink>
-                        <Hyperlink text="Exames Locais" visited="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Hyperlink onAction="#showStudies" text="Exames Locais" visited="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <font>
                               <Font size="18.0" />
                            </font>
