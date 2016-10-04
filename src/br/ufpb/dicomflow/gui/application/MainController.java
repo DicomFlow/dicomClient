@@ -1,5 +1,6 @@
 package br.ufpb.dicomflow.gui.application;
 
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -61,9 +62,6 @@ public class MainController implements Initializable {
     private Accordion menuLateral;
     
     @FXML
-    private Accordion studiesAccordion;
-    
-    @FXML
     TreeView<String> studiesTreeView;
     
     @FXML
@@ -79,15 +77,17 @@ public class MainController implements Initializable {
     
     @FXML
     private ImageView iconeLixeira;
-    
+       
     @FXML 
-    private Hyperlink novosExames;
+    MenuItem atualizarExames;
 	
     private Node rootIcon = new ImageView(new Image(getClass().getResourceAsStream("reading_16.png")));		
             
+    
     @FXML 
     protected void handleEntrarButtonAction(ActionEvent event) {        
         try {
+        	SessaoAplicacao.getInstance().loadProperties();
         	ProcessadorAutenticacao.validate(loginField.getText(), passwordField.getText());
         	initFields();
 			showMainScreen(event);
@@ -98,6 +98,7 @@ public class MainController implements Initializable {
 			e.printStackTrace();
 		}
     }
+    
     
     private void initFields() {    	
     	ordenarPor = new ComboBox<String>();
@@ -114,19 +115,24 @@ public class MainController implements Initializable {
         Scene scene = new Scene(myPane);
         stage.setScene(scene);        
         
+        stage.hide();
         initFields();
         stage.show();
+                
      }
+    
+    public void AtualizarExames(ActionEvent event) throws Exception {	
+    	SessaoAplicacao.getInstance().setNewMessages(ProcessadorBuscaMensagens.receberMensagens());
+    	showNewMessages(event);    	
+     }
+    
     
     public void showStudies(ActionEvent event) throws IOException {
     	Scene scene = Main.getpStage().getScene();
         Stage stage = (Stage) scene.getWindow();        
 
         BorderPane myPane = null;
-        myPane = FXMLLoader.load(getClass().getResource("main.fxml"));        
-        
-//        studiesAccordion = getStudiesList();       
-//        myPane.setCenter(studiesAccordion);
+        myPane = FXMLLoader.load(getClass().getResource("main.fxml"));                
         
         studiesTreeView = getStudiesTreeList();
         myPane.setCenter(studiesTreeView);
@@ -183,7 +189,7 @@ public class MainController implements Initializable {
     	          
     }
     
-    public  TreeView<String> getStudiesTreeList() {
+    public  TreeView<String> getStudiesTreeList() {        	
     	 TreeItem<String> rootItem = new TreeItem<> ("Inbox", rootIcon);
          rootItem.setExpanded(true);
          for (int i = 1; i < 6; i++) {
@@ -219,6 +225,7 @@ public class MainController implements Initializable {
 		return contextMenu;
     }
     
+    
     public ContextMenu getNewStudiesContextMenu(Node node) {
     	ContextMenu contextMenu = new ContextMenu();
 		contextMenu.setOnShowing(new EventHandler<WindowEvent>() {
@@ -237,6 +244,7 @@ public class MainController implements Initializable {
 		return contextMenu;
     }
     
+    
     public void showNewMessages(ActionEvent event) throws Exception {
     	Scene scene = Main.getpStage().getScene();
         Stage stage = (Stage) scene.getWindow();
@@ -245,7 +253,7 @@ public class MainController implements Initializable {
         BorderPane myPane = null;
         myPane = FXMLLoader.load(getClass().getResource("main.fxml"));        
         
-        List<RequestPut> newMessages = (List<RequestPut>) ProcessadorBuscaMensagens.receberMensagens();                
+        List<RequestPut> newMessages = SessaoAplicacao.getInstance().getNewMessages();              
         newStudiesTreeView = getNewMessagesTreeList(newMessages);        
         
         myPane.setCenter(newStudiesTreeView);
@@ -259,8 +267,9 @@ public class MainController implements Initializable {
         root.setExpanded(true);             
                 
         for (RequestPut requestPut: newMessages) {
-        	TreeItem<String> requestPutList = new TreeItem<> ("Mensagem: " + requestPut.getMessageID(), new ImageView(new Image(getClass().getResourceAsStream("mail_16.png"))));
+        	TreeItem<String> requestPutList = new TreeItem<> ("Mensagem: " + requestPut.getMessageID(), new ImageView(new Image(getClass().getResourceAsStream("mail_16.png"))));        	
         	URL url = requestPut.getUrl();
+        	
         	for (Patient patient: url.getPatient()) {
         		TreeItem<String> patientList = new TreeItem<> ("Paciente: " + patient.getName(), new ImageView(new Image(getClass().getResourceAsStream("avatar_16.png"))));
         		for (Study study: patient.getStudy()) {
@@ -277,7 +286,7 @@ public class MainController implements Initializable {
         	root.getChildren().add(requestPutList);
         }
         
-        TreeView<String> tree = new TreeView<>(root);
+        TreeView<String> tree = new TreeView<>(root);       
         return tree;              	    	    		   
     }
 
@@ -285,7 +294,6 @@ public class MainController implements Initializable {
 	public void initialize(java.net.URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub		
 	}
-	
 
 			    
 }
