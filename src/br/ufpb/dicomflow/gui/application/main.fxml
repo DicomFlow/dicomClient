@@ -52,7 +52,7 @@
    <left>
       <Accordion fx:id="menuLateral" prefHeight="691.0" prefWidth="211.0" BorderPane.alignment="CENTER">
         <panes>
-          <TitledPane animated="false" text="Configurações">
+          <TitledPane animated="false" text="Caixa de Entrada">
                <content>
                   <GridPane prefHeight="447.0" prefWidth="174.0">
                     <columnConstraints>
@@ -68,17 +68,17 @@
                      <children>
                         <ImageView fx:id="iconeNovosExames" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <image>
-                              <Image url="@../../../../../../img/garbage_32.png" />
+                              <Image url="@mail.png" />
                            </image>
                         </ImageView>
                         <ImageView fx:id="iconeExames" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <image>
-                              <Image url="@../../../../../../img/garbage_32.png" />
+                              <Image url="@reading-message_32.png" />
                            </image>
                         </ImageView>
                         <ImageView fx:id="iconeLixeira" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                            <image>
-                              <Image url="@../../../../../../img/garbage_32.png" />
+                              <Image url="@garbage.png" />
                            </image>
                         </ImageView>
                         <Hyperlink fx:id="novosExames" onAction="#showNewMessages" text="Novos Exames" visited="true" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
@@ -99,7 +99,7 @@
                      </children>
                   </GridPane>
                </content></TitledPane>
-          <TitledPane animated="false" prefHeight="385.0" prefWidth="211.0" text="Caixa de Entrada">
+          <TitledPane animated="false" prefHeight="385.0" prefWidth="211.0" text="Configurações">
                <content>
                   <GridPane>
                     <columnConstraints>
