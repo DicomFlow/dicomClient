@@ -17,7 +17,6 @@ import org.apache.commons.io.IOUtils;
 import org.glassfish.jersey.client.ClientConfig;
 
 import br.ufpb.dicomflow.gui.exception.LoginException;
-import br.ufpb.dicomflow.integrationAPI.conf.IntegrationAPIProperties;
 import br.ufpb.dicomflow.integrationAPI.message.xml.RequestPut;
 
 public class ProcessadorDownloadExames {

@@ -10,6 +10,7 @@ public class CustomTreeItem extends HBox {
 
 	private Label boxText;
 	private Button boxButton;
+	private Button boxButton2;
 	private Node graphic;
 
 	public CustomTreeItem(Label txt) {
@@ -29,6 +30,17 @@ public class CustomTreeItem extends HBox {
 		this.boxButton = bt;
 
 		this.getChildren().addAll(graphic, boxText, boxButton);
+		this.setAlignment(Pos.CENTER_LEFT);
+	}
+	
+	public CustomTreeItem(Label txt, Button bt, Button bt2, Node graphic) {
+		super(5);
+
+		this.boxText = txt;
+		this.boxButton = bt;
+		this.boxButton2 = bt2;
+		
+		this.getChildren().addAll(graphic, boxText, boxButton, boxButton2);
 		this.setAlignment(Pos.CENTER_LEFT);
 	}
 	
@@ -64,7 +76,13 @@ public class CustomTreeItem extends HBox {
 	public void setGraphic(Node graphic) {
 		this.graphic = graphic;
 	}
-	
-	
+
+	public Button getBoxButton2() {
+		return boxButton2;
+	}
+
+	public void setBoxButton2(Button boxButton2) {
+		this.boxButton2 = boxButton2;
+	}		
 
 }

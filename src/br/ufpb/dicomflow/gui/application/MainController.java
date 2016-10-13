@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 
 import br.ufpb.dicomflow.gui.business.ProcessadorAutenticacao;
 import br.ufpb.dicomflow.gui.business.ProcessadorBuscaMensagens;
+import br.ufpb.dicomflow.gui.business.ProcessadorDownloadExames;
+import br.ufpb.dicomflow.gui.business.ProcessadorEnvioRequestResult;
 import br.ufpb.dicomflow.gui.components.CustomTreeItem;
 import br.ufpb.dicomflow.gui.exception.LoginException;
 import br.ufpb.dicomflow.integrationAPI.message.xml.Patient;
@@ -61,7 +63,7 @@ public class MainController implements Initializable {
     private Accordion menuLateral;
     
     @FXML
-    TreeView<String> localStudiesTreeView;
+    TreeView<CustomTreeItem> localStudiesTreeView;
     
     @FXML
     TreeView<CustomTreeItem> newStudiesTreeView;
@@ -134,8 +136,10 @@ public class MainController implements Initializable {
 
         BorderPane myPane = null;
         myPane = FXMLLoader.load(getClass().getResource("main.fxml"));     
-        
-        List<RequestPut> localMessages = SessaoAplicacao.getInstance().getLocalMessages();              
+
+        //TODO - Remover
+        //List<RequestPut> localMessages = SessaoAplicacao.getInstance().getLocalMessages();              
+        List<RequestPut> localMessages = SessaoAplicacao.getInstance().getNewMessages();
         localStudiesTreeView = getLocalMessagesTreeList(localMessages);         
         
         myPane.setCenter(localStudiesTreeView);
@@ -154,7 +158,7 @@ public class MainController implements Initializable {
         myPane = FXMLLoader.load(getClass().getResource("main.fxml"));        
         
         List<RequestPut> newMessages = SessaoAplicacao.getInstance().getNewMessages();              
-        newStudiesTreeView = getNewMessagesTreeList(newMessages);                
+        newStudiesTreeView = getNewMessagesTreeList(newMessages);               
         
         myPane.setCenter(newStudiesTreeView);
         
@@ -167,8 +171,18 @@ public class MainController implements Initializable {
     	TreeItem<CustomTreeItem> root = new TreeItem<CustomTreeItem>(new CustomTreeItem( new Label("Novas Mensagens"), rootIcon ));
         root.setExpanded(true);             
         
-        for (RequestPut requestPut: messages) {        	
-        	TreeItem<CustomTreeItem> requestPutList = new TreeItem<CustomTreeItem>(new CustomTreeItem( new Label("Mensagem: " + requestPut.getMessageID()), new Button("Download"), new ImageView(new Image(getClass().getResourceAsStream("mail_16.png")))) );
+        for (RequestPut requestPut: messages) {
+        	Button messageButton = new Button("Download");
+        	messageButton.setOnAction(new EventHandler<ActionEvent>() {
+        	    @Override public void handle(ActionEvent e) {
+        	       try {
+					ProcessadorDownloadExames.downloadExames(requestPut);
+				} catch (LoginException e1) {					
+					e1.printStackTrace();
+				}
+        	    }
+        	});
+        	TreeItem<CustomTreeItem> requestPutList = new TreeItem<CustomTreeItem>(new CustomTreeItem( new Label("Mensagem: " + requestPut.getMessageID()), messageButton, new ImageView(new Image(getClass().getResourceAsStream("mail_16.png")))) );
         	URL url = requestPut.getUrl();
         	
         	for (Patient patient: url.getPatient()) {
@@ -192,20 +206,40 @@ public class MainController implements Initializable {
     }
     
     
-    public TreeView<String> getLocalMessagesTreeList(List<RequestPut> messages) {
-    	TreeItem<String> root = new TreeItem<> ("Estudos Locais", rootIcon);
+    public TreeView<CustomTreeItem> getLocalMessagesTreeList(List<RequestPut> messages) {
+    	TreeItem<CustomTreeItem> root = new TreeItem<CustomTreeItem>(new CustomTreeItem( new Label("Mensagens Locais"), rootIcon ));
         root.setExpanded(true);             
-                
+        
         for (RequestPut requestPut: messages) {
-        	TreeItem<String> requestPutList = new TreeItem<> ("Mensagem: " + requestPut.getMessageID(), new ImageView(new Image(getClass().getResourceAsStream("mail_16.png"))));        	
+        	Button laudoButton = new Button("Upload de Laudo");
+        	laudoButton.setOnAction(new EventHandler<ActionEvent>() {
+        	    @Override public void handle(ActionEvent e) {
+        	       try {
+					ProcessadorDownloadExames.downloadExames(requestPut);
+				} catch (LoginException e1) {					
+					e1.printStackTrace();
+				}
+        	    }
+        	});
+        	Button envioRespostaButton = new Button("Enviar Resposta");
+        	envioRespostaButton.setOnAction(new EventHandler<ActionEvent>() {
+        	    @Override public void handle(ActionEvent e) {
+        	       try {
+					ProcessadorEnvioRequestResult.enviarExamesLaudos(requestPut, "abc.txt", null);
+				} catch (LoginException e1) {					
+					e1.printStackTrace();
+				}
+        	    }
+        	});
+        	TreeItem<CustomTreeItem> requestPutList = new TreeItem<CustomTreeItem>(new CustomTreeItem( new Label("Mensagem: " + requestPut.getMessageID()), laudoButton, envioRespostaButton, new ImageView(new Image(getClass().getResourceAsStream("mail_16.png")))) );
         	URL url = requestPut.getUrl();
         	
         	for (Patient patient: url.getPatient()) {
-        		TreeItem<String> patientList = new TreeItem<> ("Paciente: " + patient.getName(), new ImageView(new Image(getClass().getResourceAsStream("avatar_16.png"))));
+        		TreeItem<CustomTreeItem> patientList = new TreeItem<CustomTreeItem>(new CustomTreeItem( new Label( "Paciente: " + patient.getName() ), new ImageView(new Image(getClass().getResourceAsStream("avatar_16.png")))) );
         		for (Study study: patient.getStudy()) {
-        			TreeItem<String> studyList = new TreeItem<> ("Estudo: " + study.getDescription(), new ImageView(new Image(getClass().getResourceAsStream("test_16.png"))));
+        			TreeItem<CustomTreeItem> studyList = new TreeItem<CustomTreeItem>(new CustomTreeItem( new Label( "Estudo: " + study.getDescription() ), new ImageView(new Image(getClass().getResourceAsStream("test_16.png")))) );
         			for (Serie serie: study.getSerie()) {
-        				TreeItem<String> serieList = new TreeItem<> ("Série: " + serie.getDescription(), new ImageView(new Image(getClass().getResourceAsStream("tornado_16.png"))));
+        				TreeItem<CustomTreeItem> serieList = new TreeItem<CustomTreeItem>(new CustomTreeItem( new Label( "Série: " + serie.getDescription() ), new ImageView(new Image(getClass().getResourceAsStream("tornado_16.png")))) );
         				studyList.getChildren().add(serieList);
         			}
         			patientList.getChildren().add(studyList);
@@ -215,8 +249,9 @@ public class MainController implements Initializable {
         	root.getChildren().add(requestPutList);
         }
         
-        TreeView<String> tree = new TreeView<>(root);
-        return tree;              	    	    		   
+        TreeView<CustomTreeItem> tree = new TreeView<CustomTreeItem>();
+        tree.setRoot(root);
+        return tree;          	    	    		   
     }
 
     

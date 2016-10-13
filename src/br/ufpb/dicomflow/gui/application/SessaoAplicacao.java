@@ -14,7 +14,7 @@ public class SessaoAplicacao {
 //	private Usuario usuarioLogado;	
 //	private Log log = LogFactory.getLog("RestauranteUniversitarioDesktop");
 	List<RequestPut> localMessages = new ArrayList<RequestPut>();
-	List<RequestPut> newMessages = new ArrayList<RequestPut>();
+	List<RequestPut> newMessages = new ArrayList<RequestPut>();	
 
 	//Arquivo .properties
 	private Properties properties;
