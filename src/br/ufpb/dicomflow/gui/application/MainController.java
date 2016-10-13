@@ -2,6 +2,7 @@ package br.ufpb.dicomflow.gui.application;
 
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -24,7 +25,6 @@ import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -254,7 +254,7 @@ public class MainController implements Initializable {
         myPane = FXMLLoader.load(getClass().getResource("main.fxml"));        
         
         List<RequestPut> newMessages = SessaoAplicacao.getInstance().getNewMessages();              
-        newStudiesTreeView = getNewMessagesTreeList(newMessages);        
+        newStudiesTreeView = getNewMessagesTreeList(newMessages);                
         
         myPane.setCenter(newStudiesTreeView);
         
@@ -276,7 +276,6 @@ public class MainController implements Initializable {
         			TreeItem<String> studyList = new TreeItem<> ("Estudo: " + study.getDescription(), new ImageView(new Image(getClass().getResourceAsStream("test_16.png"))));
         			for (Serie serie: study.getSerie()) {
         				TreeItem<String> serieList = new TreeItem<> ("Série: " + serie.getDescription(), new ImageView(new Image(getClass().getResourceAsStream("tornado_16.png"))));
-        				
         				studyList.getChildren().add(serieList);
         			}
         			patientList.getChildren().add(studyList);
@@ -286,7 +285,7 @@ public class MainController implements Initializable {
         	root.getChildren().add(requestPutList);
         }
         
-        TreeView<String> tree = new TreeView<>(root);       
+        TreeView<String> tree = new TreeView<>(root);
         return tree;              	    	    		   
     }
 
