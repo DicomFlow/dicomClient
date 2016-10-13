@@ -12,7 +12,8 @@ public class SessaoAplicacao {
 	private static SessaoAplicacao instance = null;		
 	
 //	private Usuario usuarioLogado;	
-//	private Log log = LogFactory.getLog("RestauranteUniversitarioDesktop");	
+//	private Log log = LogFactory.getLog("RestauranteUniversitarioDesktop");
+	List<RequestPut> localMessages = new ArrayList<RequestPut>();
 	List<RequestPut> newMessages = new ArrayList<RequestPut>();
 
 	//Arquivo .properties
@@ -46,6 +47,14 @@ public class SessaoAplicacao {
 			throw new Exception(property + " not found.");
 		}
 		return properties.getProperty(property);
+	}		
+
+	public List<RequestPut> getLocalMessages() {
+		return localMessages;
+	}
+
+	public void setLocalMessages(List<RequestPut> localMessages) {
+		this.localMessages = localMessages;
 	}
 
 	public List<RequestPut> getNewMessages() {

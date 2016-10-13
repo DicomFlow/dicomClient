@@ -81,7 +81,7 @@
                               <Image url="@garbage.png" />
                            </image>
                         </ImageView>
-                        <Hyperlink fx:id="novosExames" onAction="#showNewMessages" text="Novos Exames" visited="true" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                        <Hyperlink fx:id="novosExames" onAction="#showNewStudies" text="Novos Exames" visited="true" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
                            <font>
                               <Font size="18.0" />
                            </font>
