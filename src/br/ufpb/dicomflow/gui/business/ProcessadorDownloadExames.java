@@ -3,8 +3,6 @@ package br.ufpb.dicomflow.gui.business;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;

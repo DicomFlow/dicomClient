@@ -30,6 +30,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
@@ -172,7 +173,9 @@ public class MainController implements Initializable {
         root.setExpanded(true);             
         
         for (RequestPut requestPut: messages) {
-        	Button messageButton = new Button("Download");
+        	Button messageButton = new Button();
+        	messageButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("cloud-computing.png"))));
+        	messageButton.setTooltip(new Tooltip("Download"));
         	messageButton.setOnAction(new EventHandler<ActionEvent>() {
         	    @Override public void handle(ActionEvent e) {
         	       try {
@@ -211,7 +214,9 @@ public class MainController implements Initializable {
         root.setExpanded(true);             
         
         for (RequestPut requestPut: messages) {
-        	Button laudoButton = new Button("Upload de Laudo");
+        	Button laudoButton = new Button();
+        	laudoButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("attachment.png"))));
+        	laudoButton.setTooltip(new Tooltip("Anexar Laudo"));
         	laudoButton.setOnAction(new EventHandler<ActionEvent>() {
         	    @Override public void handle(ActionEvent e) {
         	       try {
@@ -221,7 +226,9 @@ public class MainController implements Initializable {
 				}
         	    }
         	});
-        	Button envioRespostaButton = new Button("Enviar Resposta");
+        	Button envioRespostaButton = new Button();
+        	envioRespostaButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("cloud-computing-1.png"))));
+        	envioRespostaButton.setTooltip(new Tooltip("Enviar Resposta"));
         	envioRespostaButton.setOnAction(new EventHandler<ActionEvent>() {
         	    @Override public void handle(ActionEvent e) {
         	       try {
