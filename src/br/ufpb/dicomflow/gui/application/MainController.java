@@ -1,14 +1,19 @@
 package br.ufpb.dicomflow.gui.application;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import org.apache.commons.io.IOUtils;
 
 import br.ufpb.dicomflow.gui.business.ProcessadorAutenticacao;
 import br.ufpb.dicomflow.gui.business.ProcessadorBuscaMensagens;
 import br.ufpb.dicomflow.gui.business.ProcessadorDownloadExames;
 import br.ufpb.dicomflow.gui.business.ProcessadorEnvioRequestResult;
+import br.ufpb.dicomflow.gui.components.ArquivosExame;
 import br.ufpb.dicomflow.gui.components.CustomTreeItem;
 import br.ufpb.dicomflow.gui.exception.LoginException;
 import br.ufpb.dicomflow.integrationAPI.message.xml.Patient;
@@ -141,10 +146,8 @@ public class MainController implements Initializable {
 
         BorderPane myPane = null;
         myPane = FXMLLoader.load(getClass().getResource("main.fxml"));     
-
-        //TODO - Remover
-        //List<RequestPut> localMessages = SessaoAplicacao.getInstance().getLocalMessages();              
-        List<RequestPut> localMessages = SessaoAplicacao.getInstance().getNewMessages();
+        
+        List<RequestPut> localMessages = SessaoAplicacao.getInstance().getLocalMessages();              
         localStudiesTreeView = getLocalMessagesTreeList(localMessages);         
         
         myPane.setCenter(localStudiesTreeView);
@@ -183,7 +186,15 @@ public class MainController implements Initializable {
         	messageButton.setOnAction(new EventHandler<ActionEvent>() {
         	    @Override public void handle(ActionEvent e) {
         	       try {
-					ProcessadorDownloadExames.downloadExames(requestPut);
+					String filePath = ProcessadorDownloadExames.downloadExames(requestPut);	
+					HashMap<String, ArquivosExame> arquivosExamesMap = SessaoAplicacao.getInstance().getArquivosExameMap();
+					ArquivosExame arquivosExame = arquivosExamesMap.get(requestPut.getMessageID());
+					if (arquivosExame == null) {
+						arquivosExame = new ArquivosExame();
+					}
+					arquivosExame.setExamesPath(filePath);
+					arquivosExamesMap.put(requestPut.getMessageID(), arquivosExame);
+					SessaoAplicacao.getInstance().getLocalMessages().add(requestPut);					
 				} catch (LoginException e1) {					
 					e1.printStackTrace();
 				}
@@ -225,16 +236,19 @@ public class MainController implements Initializable {
         	    @Override public void handle(ActionEvent e) {
         	       try {
         	    	   Stage stage = Main.getpStage();
-        	    	   List<File> list = fileChooser.showOpenMultipleDialog(stage);
-                           if (list != null) {
-                               for (File file : list) {
-                                   //openFile(file);
-                               }
-                           }
-					//ProcessadorDownloadExames.downloadExames(requestPut);
-				} catch (Exception e1) {					
-					e1.printStackTrace();
-				}
+        	    	   File laudo = fileChooser.showOpenDialog(stage);
+                           if (laudo != null) {
+                        	   HashMap<String, ArquivosExame> arquivosExamesMap = SessaoAplicacao.getInstance().getArquivosExameMap();
+           						ArquivosExame arquivosExame = arquivosExamesMap.get(requestPut.getMessageID());
+           						if (arquivosExame == null) {
+           							arquivosExame = new ArquivosExame();
+           						}
+           						arquivosExame.setLaudo(laudo.getAbsolutePath());
+           						arquivosExamesMap.put(requestPut.getMessageID(), arquivosExame);
+                           }                          
+        	       } catch (Exception e1) {					
+        	    	   e1.printStackTrace();
+        	       }
         	    }
         	});
         	Button envioRespostaButton = new Button();
@@ -243,10 +257,19 @@ public class MainController implements Initializable {
         	envioRespostaButton.setOnAction(new EventHandler<ActionEvent>() {
         	    @Override public void handle(ActionEvent e) {
         	       try {
-					ProcessadorEnvioRequestResult.enviarExamesLaudos(requestPut, "abc.txt", null);
-				} catch (LoginException e1) {					
-					e1.printStackTrace();
-				}
+        	    	   HashMap<String, ArquivosExame> arquivosExamesMap = SessaoAplicacao.getInstance().getArquivosExameMap();
+   						ArquivosExame arquivosExame = arquivosExamesMap.get(requestPut.getMessageID());
+   						byte[] laudo = null;
+   						if (arquivosExame != null) {
+   							if (arquivosExame.getLaudo() != null) {
+   								File file = new File(arquivosExame.getLaudo());
+   								laudo = IOUtils.toByteArray(new FileInputStream(file));   								
+   							}   							
+   						}   						
+   						ProcessadorEnvioRequestResult.enviarExamesLaudos(requestPut, requestPut.getMessageID() + ".zip", laudo);
+        	       } catch (Exception e1) {					
+        	    	   e1.printStackTrace();
+        	       }
         	    }
         	});
         	TreeItem<CustomTreeItem> requestPutList = new TreeItem<CustomTreeItem>(new CustomTreeItem( new Label("Mensagem: " + requestPut.getMessageID()), laudoButton, envioRespostaButton, new ImageView(new Image(getClass().getResourceAsStream("mail_16.png")))) );

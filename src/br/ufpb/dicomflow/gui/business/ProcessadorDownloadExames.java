@@ -19,7 +19,7 @@ import br.ufpb.dicomflow.integrationAPI.message.xml.RequestPut;
 
 public class ProcessadorDownloadExames {
 	
-	public static void downloadExames(RequestPut requestPut) throws LoginException {
+	public static String downloadExames(RequestPut requestPut) throws LoginException {
 		
 		try {						
 			ClientConfig clientConfig = new ClientConfig();
@@ -30,18 +30,20 @@ public class ProcessadorDownloadExames {
 			
 			Response response = invocationBuilder.get();
 			InputStream is = (InputStream)response.getEntity();		
-			//response.readEntity(String.class);		
 
 			byte[] SWFByteArray = IOUtils.toByteArray(is);  
 
 			//TODO download dir
-			FileOutputStream fos = new FileOutputStream(new File("c:/temp/" + requestPut.getMessageID() + ".zip"));
+			String fileName = "c:/temp/" + requestPut.getMessageID() + ".zip";
+			FileOutputStream fos = new FileOutputStream(new File(fileName));
 			fos.write(SWFByteArray);			
 			fos.flush();
 			fos.close();										
 						
+			return fileName;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return null;
 		} finally {
 			
 		}

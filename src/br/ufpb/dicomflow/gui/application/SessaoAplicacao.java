@@ -2,9 +2,11 @@ package br.ufpb.dicomflow.gui.application;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
+import br.ufpb.dicomflow.gui.components.ArquivosExame;
 import br.ufpb.dicomflow.integrationAPI.message.xml.RequestPut;
 
 public class SessaoAplicacao {
@@ -15,6 +17,7 @@ public class SessaoAplicacao {
 //	private Log log = LogFactory.getLog("RestauranteUniversitarioDesktop");
 	List<RequestPut> localMessages = new ArrayList<RequestPut>();
 	List<RequestPut> newMessages = new ArrayList<RequestPut>();	
+	HashMap<String, ArquivosExame> arquivosExameMap = new HashMap<String, ArquivosExame>();
 
 	//Arquivo .properties
 	private Properties properties;
@@ -63,8 +66,15 @@ public class SessaoAplicacao {
 
 	public void setNewMessages(List<RequestPut> newMessages) {
 		this.newMessages = newMessages;
+	}
+
+	public HashMap<String, ArquivosExame> getArquivosExameMap() {
+		return arquivosExameMap;
+	}
+
+	public void setArquivosExameMap(HashMap<String, ArquivosExame> arquivosExameMap) {
+		this.arquivosExameMap = arquivosExameMap;
 	}	
-	
-	
+		
 
 }
