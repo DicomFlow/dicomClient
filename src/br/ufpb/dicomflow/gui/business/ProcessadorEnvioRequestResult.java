@@ -3,7 +3,6 @@ package br.ufpb.dicomflow.gui.business;
 import java.util.Properties;
 
 import br.ufpb.dicomflow.gui.exception.LoginException;
-import br.ufpb.dicomflow.integrationAPI.conf.IntegrationAPIProperties;
 import br.ufpb.dicomflow.integrationAPI.exceptions.ServiceCreationException;
 import br.ufpb.dicomflow.integrationAPI.mail.MailAuthenticatorIF;
 import br.ufpb.dicomflow.integrationAPI.mail.MailContentBuilderIF;
@@ -11,7 +10,6 @@ import br.ufpb.dicomflow.integrationAPI.mail.MailHeadBuilderIF;
 import br.ufpb.dicomflow.integrationAPI.mail.impl.MailContentBuilderFactory;
 import br.ufpb.dicomflow.integrationAPI.mail.impl.MailHeadBuilderFactory;
 import br.ufpb.dicomflow.integrationAPI.mail.impl.SMTPAuthenticator;
-import br.ufpb.dicomflow.integrationAPI.mail.impl.SMTPReceiver;
 import br.ufpb.dicomflow.integrationAPI.mail.impl.SMTPSender;
 import br.ufpb.dicomflow.integrationAPI.main.ServiceFactory;
 import br.ufpb.dicomflow.integrationAPI.main.ServiceProcessor;
@@ -29,13 +27,14 @@ public class ProcessadorEnvioRequestResult {
 		
 		Data data = new Data();
 		data.setFilename(fileName);
+		//byte[] b = fileName.getBytes(); 
 		data.setBytes(bytes);
 		
-//		Result result = new Result();		
-//		result.setData(data);
-//		result.setOriginalMessageID(requestPut.getMessageID());
-//		
-//		requestResult.addResult(result);
+		Result result = new Result();		
+		result.setData(data);
+		result.setOriginalMessageID(requestPut.getMessageID());
+		
+		requestResult.addResult(result);
 						
 		try {
 			//TODO - parametrizar propriedades
@@ -59,7 +58,6 @@ public class ProcessadorEnvioRequestResult {
 			mailHeadBuilder.setTo("protocolointegracao@gmail.com");
 			MailContentBuilderIF mailContentBuilder = MailContentBuilderFactory.createContentStrategy(MailContentBuilderIF.SMTP_SIMPLE_CONTENT_STRATEGY);
 			
-			SMTPSender sender = new SMTPSender();
 			ServiceProcessor.sendMessage(requestResult, "protocolointegracao@gmail.com", props, smtpAuthenticatorStrategy, mailHeadBuilder, mailContentBuilder);
 		} catch (ServiceCreationException e) {
 			e.printStackTrace();

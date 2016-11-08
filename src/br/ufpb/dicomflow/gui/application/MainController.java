@@ -1,5 +1,6 @@
 package br.ufpb.dicomflow.gui.application;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -37,6 +38,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -84,11 +86,13 @@ public class MainController implements Initializable {
     @FXML 
     MenuItem atualizarExames;
 	
-    private Node rootIcon = new ImageView(new Image(getClass().getResourceAsStream("reading_16.png")));		
+    private Node rootIcon = new ImageView(new Image(getClass().getResourceAsStream("reading_16.png")));
+    
+    final FileChooser fileChooser = new FileChooser();
             
     
     @FXML 
-    protected void handleEntrarButtonAction(ActionEvent event) {        
+    protected void handleEntrarButtonAction(ActionEvent event) {
         try {
         	SessaoAplicacao.getInstance().loadProperties();
         	ProcessadorAutenticacao.validate(loginField.getText(), passwordField.getText());
@@ -220,8 +224,15 @@ public class MainController implements Initializable {
         	laudoButton.setOnAction(new EventHandler<ActionEvent>() {
         	    @Override public void handle(ActionEvent e) {
         	       try {
-					ProcessadorDownloadExames.downloadExames(requestPut);
-				} catch (LoginException e1) {					
+        	    	   Stage stage = Main.getpStage();
+        	    	   List<File> list = fileChooser.showOpenMultipleDialog(stage);
+                           if (list != null) {
+                               for (File file : list) {
+                                   //openFile(file);
+                               }
+                           }
+					//ProcessadorDownloadExames.downloadExames(requestPut);
+				} catch (Exception e1) {					
 					e1.printStackTrace();
 				}
         	    }
