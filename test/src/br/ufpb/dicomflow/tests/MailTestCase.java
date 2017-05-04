@@ -6,7 +6,7 @@ import java.util.Properties;
 
 import org.junit.Test;
 
-import br.ufpb.dicomflow.integrationAPI.conf.IntegrationAPIProperties;
+import br.ufpb.dicomflow.integrationAPI.conf.DicomMessageProperties;
 import br.ufpb.dicomflow.integrationAPI.mail.FilterIF;
 import br.ufpb.dicomflow.integrationAPI.mail.MailAuthenticatorIF;
 import br.ufpb.dicomflow.integrationAPI.mail.MailMessageReaderIF;
@@ -56,16 +56,16 @@ public class MailTestCase {
 		try {
 
 			Properties props = new Properties();
-			IntegrationAPIProperties.getInstance().load(IntegrationAPIProperties.CONFIG_FILE_PATH);
-			props = IntegrationAPIProperties.getInstance().getReceiveProperties();
+			DicomMessageProperties.getInstance().load(DicomMessageProperties.CONFIG_FILE_PATH);
+			props = DicomMessageProperties.getInstance().getReceiveProperties();
 
 			MailAuthenticatorIF mailAuthenticator = new SMTPAuthenticator(
-					props.getProperty(IntegrationAPIProperties.AUTHENTICATION_LOGIN),
-					props.getProperty(IntegrationAPIProperties.AUTHENTICATION_PASSWORD));
+					props.getProperty(DicomMessageProperties.AUTHENTICATION_LOGIN),
+					props.getProperty(DicomMessageProperties.AUTHENTICATION_PASSWORD));
 			MailServiceExtractorIF mailServiceExtractor = new SMTPServiceExtractor();
 			MailMessageReaderIF mailMessageReader = new SMTPMessageReader(
-					props.getProperty(IntegrationAPIProperties.PROVIDER_HOST),
-					props.getProperty(IntegrationAPIProperties.PROVIDER_FOLDER));
+					props.getProperty(DicomMessageProperties.PROVIDER_HOST),
+					props.getProperty(DicomMessageProperties.PROVIDER_FOLDER));
 
 			SMTPReceiver receiver = new SMTPReceiver();
 			receiver.setProperties(props);
