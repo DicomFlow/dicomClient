@@ -122,7 +122,7 @@ public class MainController implements Initializable {
     public void showMainScreen(ActionEvent event) throws IOException {
         Stage stage = Main.getpStage();
         stage.setTitle("DicomFlow Client");
-        stage.setMaximized(true);      
+       // stage.setMaximized(true);      
         BorderPane myPane = null;
         myPane = FXMLLoader.load(getClass().getResource("main.fxml"));
         Scene scene = new Scene(myPane);
