@@ -5,21 +5,18 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import br.ufpb.dicomflow.gui.application.validation.ValidationFields;
+import br.ufpb.dicomflow.gui.business.AuthenticationProcessor;
 import br.ufpb.dicomflow.gui.dao.GenericDao;
 import br.ufpb.dicomflow.gui.dao.bean.AuthenticationBean;
+import br.ufpb.dicomflow.gui.exception.LoginException;
 import br.ufpb.dicomflow.utils.CryptographyUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 public class LoginController implements Initializable{
 
@@ -45,22 +42,15 @@ public class LoginController implements Initializable{
     		return;
     	}
 
-    	AuthenticationBean authDB = (AuthenticationBean) GenericDao.select(AuthenticationBean.class, "mail", loginField.getText());
-    	if(authDB == null){
-    		loginErrors.setText("E-mail não configurado ou senha inválida.");
-    		return;
-    	}else{
-    		String encryptedPassword = CryptographyUtil.encriptSHA256(passwordField.getText());
-        	if(encryptedPassword == null){
-        		loginErrors.setText("Não foi possível salvar as configurações.");
-        		return;
-        	}
 
-        	if(!authDB.getPassword().equals(encryptedPassword)){
-        		loginErrors.setText("E-mail não configurado ou senha inválida.");
-        		return;
-        	}
-    	}
+    	try {
+			AuthenticationProcessor.getProcessadorAutenticacao().validate(loginField.getText(), passwordField.getText());
+		} catch (LoginException e) {
+			loginErrors.setText(e.getMessage());
+			return;
+		}
+
+
 
     	try {
     		SceneLoader.getSceneLoader().loadMainScene();

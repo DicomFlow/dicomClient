@@ -9,9 +9,8 @@ import java.util.ResourceBundle;
 
 import org.apache.commons.io.IOUtils;
 
-import br.ufpb.dicomflow.gui.business.ProcessadorBuscaMensagens;
-import br.ufpb.dicomflow.gui.business.ProcessadorDownloadExames;
-import br.ufpb.dicomflow.gui.business.ProcessadorEnvioRequestResult;
+import br.ufpb.dicomflow.gui.business.MessageProcessor;
+import br.ufpb.dicomflow.gui.business.DownloadProcessor;
 import br.ufpb.dicomflow.gui.components.ArquivosExame;
 import br.ufpb.dicomflow.gui.components.CustomTreeItem;
 import br.ufpb.dicomflow.gui.exception.LoginException;
@@ -80,7 +79,7 @@ public class MainController implements Initializable {
     final FileChooser fileChooser = new FileChooser();
 
     public void atualizarExames(ActionEvent event) throws Exception {
-    	SessaoAplicacao.getInstance().setNewMessages(ProcessadorBuscaMensagens.receberMensagens());
+    	SessaoAplicacao.getInstance().setNewMessages(MessageProcessor.receberMensagens());
     	showNewStudies(event);
      }
 
@@ -131,7 +130,7 @@ public class MainController implements Initializable {
         	messageButton.setOnAction(new EventHandler<ActionEvent>() {
         	    @Override public void handle(ActionEvent e) {
         	       try {
-					String filePath = ProcessadorDownloadExames.downloadExames(requestPut);
+					String filePath = DownloadProcessor.downloadExames(requestPut);
 					HashMap<String, ArquivosExame> arquivosExamesMap = SessaoAplicacao.getInstance().getArquivosExameMap();
 					ArquivosExame arquivosExame = arquivosExamesMap.get(requestPut.getMessageID());
 					if (arquivosExame == null) {
@@ -211,7 +210,7 @@ public class MainController implements Initializable {
    								laudo = IOUtils.toByteArray(new FileInputStream(file));
    							}
    						}
-   						ProcessadorEnvioRequestResult.enviarExamesLaudos(requestPut, requestPut.getMessageID() + ".zip", laudo);
+   						MessageProcessor.enviarExamesLaudos(requestPut, requestPut.getMessageID() + ".zip", laudo);
         	       } catch (Exception e1) {
         	    	   e1.printStackTrace();
         	       }

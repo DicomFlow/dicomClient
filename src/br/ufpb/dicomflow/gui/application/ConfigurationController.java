@@ -7,10 +7,11 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import br.ufpb.dicomflow.gui.application.validation.ValidationFields;
-import br.ufpb.dicomflow.gui.business.ProcessadorConfiguracao;
+import br.ufpb.dicomflow.gui.business.ConfigurationProcessor;
 import br.ufpb.dicomflow.gui.dao.GenericDao;
 import br.ufpb.dicomflow.gui.dao.bean.AuthenticationBean;
 import br.ufpb.dicomflow.gui.dao.bean.ConfigurationBean;
+import br.ufpb.dicomflow.gui.exception.ConfigurationException;
 import br.ufpb.dicomflow.utils.CryptographyUtil;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -64,28 +65,12 @@ public class ConfigurationController implements Initializable{
     		return;
     	}
 
-    	AuthenticationBean authDB = (AuthenticationBean) GenericDao.select(AuthenticationBean.class, "mail", mailField.getText());
-    	if(authDB != null){
-    		configAlerts.setText("E-mail já configurado.");
-    		return;
-    	}
-
-    	String encryptedPassword = CryptographyUtil.encriptSHA256(passwordField.getText());
-    	if(encryptedPassword == null){
-    		configAlerts.setText("Não foi possível salvar as configurações.");
-    		return;
-    	}
-
-
-    	ConfigurationBean configuration = (ConfigurationBean) GenericDao.select(ConfigurationBean.class, "title", typeField.getValue());
-
-    	AuthenticationBean auth = new AuthenticationBean();
-    	auth.setMail(mailField.getText());
-    	auth.setPassword(encryptedPassword);
-    	auth.setFolder(folderField.getText());
-    	auth.setConfiguration(configuration);
-
-    	GenericDao.save(auth);
+    	try {
+			ConfigurationProcessor.getProcessadorConfiguracao().saveConfiguration(mailField.getText(), passwordField.getText(), typeField.getValue(), folderField.getText());
+		} catch (ConfigurationException e) {
+			configAlerts.setText(e.getMessage());
+			return;
+		}
 
     	configAlerts.setText("Configurações salvas com sucesso.");
 
@@ -124,7 +109,7 @@ public class ConfigurationController implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 
 		//initialize comboBox
-		List<String> configurationTitles = ProcessadorConfiguracao.getProcessadorConfiguracao().getConfigurationTitles();
+		List<String> configurationTitles = ConfigurationProcessor.getProcessadorConfiguracao().getConfigurationTitles();
 		typeField.getItems().addAll(configurationTitles);
 
 		//install tolltip on folderLabel

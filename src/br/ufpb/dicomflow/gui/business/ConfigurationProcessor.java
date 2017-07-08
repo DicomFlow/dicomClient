@@ -11,22 +11,25 @@ import java.util.List;
 import java.util.Properties;
 
 import br.ufpb.dicomflow.gui.dao.GenericDao;
+import br.ufpb.dicomflow.gui.dao.bean.AuthenticationBean;
 import br.ufpb.dicomflow.gui.dao.bean.ConfigurationBean;
 import br.ufpb.dicomflow.gui.dao.bean.Persistent;
 import br.ufpb.dicomflow.gui.dao.bean.PropertyBean;
+import br.ufpb.dicomflow.gui.exception.ConfigurationException;
+import br.ufpb.dicomflow.utils.CryptographyUtil;
 
-public class ProcessadorConfiguracao {
+public class ConfigurationProcessor {
 
 	private final String GMAIL_PROPERTIES = "gmail.properties";
 
-	private static ProcessadorConfiguracao processadorConfiguracao = new ProcessadorConfiguracao();
+	private static ConfigurationProcessor processadorConfiguracao = new ConfigurationProcessor();
 
 
-	private ProcessadorConfiguracao(){
+	private ConfigurationProcessor(){
 
 	}
 
-	public static ProcessadorConfiguracao getProcessadorConfiguracao() {
+	public static ConfigurationProcessor getProcessadorConfiguracao() {
 		return processadorConfiguracao;
 	}
 
@@ -102,7 +105,7 @@ public class ProcessadorConfiguracao {
 
 	private String getPath(String configFile) {
 		String path = "";
-		File dir = new File(ProcessadorConfiguracao.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+		File dir = new File(ConfigurationProcessor.class.getProtectionDomain().getCodeSource().getLocation().getPath());
 		path = dir.toString();
 		return path + File.separator + configFile;
 	}
@@ -142,6 +145,32 @@ public class ProcessadorConfiguracao {
 
 		return properties;
 
+	}
+
+	public void saveConfiguration(String mail, String password, String title, String folder) throws ConfigurationException{
+		AuthenticationBean authDB = (AuthenticationBean) GenericDao.select(AuthenticationBean.class, "mail", mail);
+    	if(authDB != null){
+    		throw new ConfigurationException("E-mail já configurado.");
+    	}
+
+    	String encryptedPassword = CryptographyUtil.encriptSHA256(password);
+    	if(encryptedPassword == null){
+    		throw new ConfigurationException("Não foi possível salvar as configurações.");
+    	}
+
+
+    	ConfigurationBean configuration = (ConfigurationBean) GenericDao.select(ConfigurationBean.class, "title", title);
+    	if(configuration == null){
+    		throw new ConfigurationException("Não foi possível salvar as configurações.");
+    	}
+
+    	AuthenticationBean auth = new AuthenticationBean();
+    	auth.setMail(mail);
+    	auth.setPassword(encryptedPassword);
+    	auth.setFolder(folder);
+    	auth.setConfiguration(configuration);
+
+    	GenericDao.save(auth);
 	}
 
 

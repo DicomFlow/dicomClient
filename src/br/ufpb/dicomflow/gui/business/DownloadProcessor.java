@@ -17,7 +17,7 @@ import org.glassfish.jersey.client.ClientConfig;
 import br.ufpb.dicomflow.gui.exception.LoginException;
 import br.ufpb.dicomflow.integrationAPI.message.xml.RequestPut;
 
-public class ProcessadorDownloadExames {
+public class DownloadProcessor {
 	
 	public static String downloadExames(RequestPut requestPut) throws LoginException {
 		

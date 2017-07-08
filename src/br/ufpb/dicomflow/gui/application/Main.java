@@ -1,6 +1,6 @@
 package br.ufpb.dicomflow.gui.application;
 
-import br.ufpb.dicomflow.gui.business.ProcessadorConfiguracao;
+import br.ufpb.dicomflow.gui.business.ConfigurationProcessor;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -17,7 +17,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-    	ProcessadorConfiguracao.getProcessadorConfiguracao().init();
+    	ConfigurationProcessor.getProcessadorConfiguracao().init();
 
         Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
         Scene scene = new Scene(root, 300, 275);
