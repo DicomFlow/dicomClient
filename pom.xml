@@ -30,11 +30,11 @@
 		<jaxrs.version>2.0.1</jaxrs.version>
 	</properties>
 	<repositories>
-    <repository>
-      <id>atlassian.com</id>
-      <url>	https://maven.atlassian.com/3rdparty/</url>
-    </repository>
- </repositories>
+		<repository>
+			<id>atlassian.com</id>
+			<url>	https://maven.atlassian.com/3rdparty/</url>
+		</repository>
+	</repositories>
 	<dependencies>
 
 		<dependency>
@@ -69,14 +69,24 @@
 
 		<!-- Hibernate library dependecy start -->
 		<dependency>
-		    <groupId>org.hibernate</groupId>
-		    <artifactId>hibernate-annotations</artifactId>
-		    <version>3.5.6-Final</version>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-annotations</artifactId>
+			<version>3.5.6-Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.4.1.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
 			<version>2.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.37</version>
 		</dependency>
 		<dependency>
 			<groupId>dom4j</groupId>
@@ -89,14 +99,19 @@
 			<version>1.2</version>
 		</dependency>
 		<dependency>
-		    <groupId>commons-collections</groupId>
-		    <artifactId>commons-collections</artifactId>
-		    <version>3.2.2</version>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.2</version>
 		</dependency>
 		<dependency>
-		    <groupId>cglib</groupId>
-		    <artifactId>cglib</artifactId>
-		    <version>3.2.5</version>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.9.3</version>
+		</dependency>
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>3.2.5</version>
 		</dependency>
 		<dependency>
 			<groupId>asm</groupId>
@@ -104,19 +119,24 @@
 			<version>3.3.1</version>
 		</dependency>
 		<dependency>
-		    <groupId>ehcache</groupId>
-		    <artifactId>ehcache</artifactId>
-		    <version>1.2.3</version>
+			<groupId>ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+			<version>1.2.3</version>
 		</dependency>
 		<dependency>
-		    <groupId>hibernate</groupId>
-		    <artifactId>hibernate-tools</artifactId>
-		    <version>3.2.3.GA</version>
+			<groupId>hibernate</groupId>
+			<artifactId>hibernate-tools</artifactId>
+			<version>3.2.3.GA</version>
 		</dependency>
 		<dependency>
-		    <groupId>javax.transaction</groupId>
-		    <artifactId>jta</artifactId>
-		    <version>1.1</version>
+			<groupId>javax.transaction</groupId>
+			<artifactId>jta</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>javax.validation</groupId>
+		    <artifactId>validation-api</artifactId>
+		    <version>1.1.0.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
@@ -124,14 +144,19 @@
 			<version>1.2.17</version>
 		</dependency>
 		<dependency>
-		    <groupId>oscache</groupId>
-		    <artifactId>oscache</artifactId>
-		    <version>2.2</version>
+			<groupId>oscache</groupId>
+			<artifactId>oscache</artifactId>
+			<version>2.2</version>
 		</dependency>
 		<dependency>
-		    <groupId>javax.persistence</groupId>
-		    <artifactId>persistence-api</artifactId>
-		    <version>1.0</version>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.5.6</version>
 		</dependency>
 		<!-- Hibernate library dependency end -->
 

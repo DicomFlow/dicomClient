@@ -9,7 +9,6 @@ import java.util.ResourceBundle;
 
 import org.apache.commons.io.IOUtils;
 
-import br.ufpb.dicomflow.gui.business.ProcessadorAutenticacao;
 import br.ufpb.dicomflow.gui.business.ProcessadorBuscaMensagens;
 import br.ufpb.dicomflow.gui.business.ProcessadorDownloadExames;
 import br.ufpb.dicomflow.gui.business.ProcessadorEnvioRequestResult;
@@ -34,159 +33,105 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class MainController implements Initializable {
-	
-	@FXML
-    private Text loginErrors;    
-    
-    @FXML
-    private PasswordField passwordField;
-    
-    @FXML
-    private TextField loginField;
-    
-    @FXML
-    private Button loginButton;
-    
+
     @FXML
     private Button novosExamesButton;
-    
+
     @FXML
     private BorderPane mainPane;
-    
+
     @FXML
     private Accordion menuLateral;
-    
+
     @FXML
     TreeView<CustomTreeItem> localStudiesTreeView;
-    
+
     @FXML
     TreeView<CustomTreeItem> newStudiesTreeView;
-        
+
     @FXML
     ComboBox<String> ordenarPor;
-    
+
     @FXML
     private ImageView iconeNovosExames;
-    
+
     @FXML
     private ImageView iconeExames;
-    
+
     @FXML
     private ImageView iconeLixeira;
-       
-    @FXML 
+
+    @FXML
     MenuItem atualizarExames;
-	
-    private Node rootIcon = new ImageView(new Image(getClass().getResourceAsStream("reading_16.png")));
-    
+
+    private Node rootIcon = new ImageView(new Image(getClass().getResourceAsStream("img/reading_16.png")));
+
     final FileChooser fileChooser = new FileChooser();
-            
-    
-    @FXML 
-    protected void handleEntrarButtonAction(ActionEvent event) {
-        try {
-        	SessaoAplicacao.getInstance().loadProperties();
-        	ProcessadorAutenticacao.validate(loginField.getText(), passwordField.getText());
-        	initFields();
-			showMainScreen(event);
-		} catch (LoginException e) {
-			loginErrors.setText(e.getMessage());
-		} catch (IOException e) {
-			loginErrors.setText("Não foi possível carregar a aplicação");
-			e.printStackTrace();
-		}
-    }
-    
-    
-    private void initFields() {    	
-    	ordenarPor = new ComboBox<String>();
-    	ordenarPor.getItems().addAll("Data", "Nome");    	
-    	
-    }
-    
-    
-    public void showMainScreen(ActionEvent event) throws IOException {
-        Stage stage = Main.getpStage();
-        stage.setTitle("DicomFlow Client");
-       // stage.setMaximized(true);      
-        BorderPane myPane = null;
-        myPane = FXMLLoader.load(getClass().getResource("main.fxml"));
-        Scene scene = new Scene(myPane);
-        stage.setScene(scene);        
-        
-        stage.hide();
-        initFields();
-        stage.show();
-                
-     }
-    
-    public void AtualizarExames(ActionEvent event) throws Exception {	
+
+    public void atualizarExames(ActionEvent event) throws Exception {
     	SessaoAplicacao.getInstance().setNewMessages(ProcessadorBuscaMensagens.receberMensagens());
-    	showNewStudies(event);    	
+    	showNewStudies(event);
      }
-    
-    
+
+
     public void showStudies(ActionEvent event) throws IOException {
     	Scene scene = Main.getpStage().getScene();
-        Stage stage = (Stage) scene.getWindow();        
+        Stage stage = (Stage) scene.getWindow();
 
         BorderPane myPane = null;
-        myPane = FXMLLoader.load(getClass().getResource("main.fxml"));     
-        
-        List<RequestPut> localMessages = SessaoAplicacao.getInstance().getLocalMessages();              
-        localStudiesTreeView = getLocalMessagesTreeList(localMessages);         
-        
+        myPane = FXMLLoader.load(getClass().getResource("main.fxml"));
+
+        List<RequestPut> localMessages = SessaoAplicacao.getInstance().getLocalMessages();
+        localStudiesTreeView = getLocalMessagesTreeList(localMessages);
+
         myPane.setCenter(localStudiesTreeView);
-        
-        scene.setRoot(myPane);        
+
+        scene.setRoot(myPane);
         stage.show();
-     }  
-    
-    
+     }
+
+
     public void showNewStudies(ActionEvent event) throws Exception {
     	Scene scene = Main.getpStage().getScene();
         Stage stage = (Stage) scene.getWindow();
-        
+
 
         BorderPane myPane = null;
-        myPane = FXMLLoader.load(getClass().getResource("main.fxml"));        
-        
-        List<RequestPut> newMessages = SessaoAplicacao.getInstance().getNewMessages();              
-        newStudiesTreeView = getNewMessagesTreeList(newMessages);               
-        
+        myPane = FXMLLoader.load(getClass().getResource("main.fxml"));
+
+        List<RequestPut> newMessages = SessaoAplicacao.getInstance().getNewMessages();
+        newStudiesTreeView = getNewMessagesTreeList(newMessages);
+
         myPane.setCenter(newStudiesTreeView);
-        
-        scene.setRoot(myPane);        
+
+        scene.setRoot(myPane);
         stage.show();
      }
-                    
-    
+
+
     public TreeView<CustomTreeItem> getNewMessagesTreeList(List<RequestPut> messages) {
     	TreeItem<CustomTreeItem> root = new TreeItem<CustomTreeItem>(new CustomTreeItem( new Label("Novas Mensagens"), rootIcon ));
-        root.setExpanded(true);             
-        
+        root.setExpanded(true);
+
         for (RequestPut requestPut: messages) {
         	Button messageButton = new Button();
-        	messageButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("cloud-computing.png"))));
+        	messageButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("img/cloud-computing.png"))));
         	messageButton.setTooltip(new Tooltip("Download"));
         	messageButton.setOnAction(new EventHandler<ActionEvent>() {
         	    @Override public void handle(ActionEvent e) {
         	       try {
-					String filePath = ProcessadorDownloadExames.downloadExames(requestPut);	
+					String filePath = ProcessadorDownloadExames.downloadExames(requestPut);
 					HashMap<String, ArquivosExame> arquivosExamesMap = SessaoAplicacao.getInstance().getArquivosExameMap();
 					ArquivosExame arquivosExame = arquivosExamesMap.get(requestPut.getMessageID());
 					if (arquivosExame == null) {
@@ -194,21 +139,21 @@ public class MainController implements Initializable {
 					}
 					arquivosExame.setExamesPath(filePath);
 					arquivosExamesMap.put(requestPut.getMessageID(), arquivosExame);
-					SessaoAplicacao.getInstance().getLocalMessages().add(requestPut);					
-				} catch (LoginException e1) {					
+					SessaoAplicacao.getInstance().getLocalMessages().add(requestPut);
+				} catch (LoginException e1) {
 					e1.printStackTrace();
 				}
         	    }
         	});
-        	TreeItem<CustomTreeItem> requestPutList = new TreeItem<CustomTreeItem>(new CustomTreeItem( new Label("Mensagem: " + requestPut.getMessageID()), messageButton, new ImageView(new Image(getClass().getResourceAsStream("mail_16.png")))) );
+        	TreeItem<CustomTreeItem> requestPutList = new TreeItem<CustomTreeItem>(new CustomTreeItem( new Label("Mensagem: " + requestPut.getMessageID()), messageButton, new ImageView(new Image(getClass().getResourceAsStream("img/mail_16.png")))) );
         	URL url = requestPut.getUrl();
-        	
+
         	for (Patient patient: url.getPatient()) {
-        		TreeItem<CustomTreeItem> patientList = new TreeItem<CustomTreeItem>(new CustomTreeItem( new Label( "Paciente: " + patient.getName() ), new ImageView(new Image(getClass().getResourceAsStream("avatar_16.png")))) );
+        		TreeItem<CustomTreeItem> patientList = new TreeItem<CustomTreeItem>(new CustomTreeItem( new Label( "Paciente: " + patient.getName() ), new ImageView(new Image(getClass().getResourceAsStream("img/avatar_16.png")))) );
         		for (Study study: patient.getStudy()) {
-        			TreeItem<CustomTreeItem> studyList = new TreeItem<CustomTreeItem>(new CustomTreeItem( new Label( "Estudo: " + study.getDescription() ), new ImageView(new Image(getClass().getResourceAsStream("test_16.png")))) );
+        			TreeItem<CustomTreeItem> studyList = new TreeItem<CustomTreeItem>(new CustomTreeItem( new Label( "Estudo: " + study.getDescription() ), new ImageView(new Image(getClass().getResourceAsStream("img/test_16.png")))) );
         			for (Serie serie: study.getSerie()) {
-        				TreeItem<CustomTreeItem> serieList = new TreeItem<CustomTreeItem>(new CustomTreeItem( new Label( "Série: " + serie.getDescription() ), new ImageView(new Image(getClass().getResourceAsStream("tornado_16.png")))) );
+        				TreeItem<CustomTreeItem> serieList = new TreeItem<CustomTreeItem>(new CustomTreeItem( new Label( "Série: " + serie.getDescription() ), new ImageView(new Image(getClass().getResourceAsStream("img/tornado_16.png")))) );
         				studyList.getChildren().add(serieList);
         			}
         			patientList.getChildren().add(studyList);
@@ -217,20 +162,20 @@ public class MainController implements Initializable {
         	}
         	root.getChildren().add(requestPutList);
         }
-        
+
         TreeView<CustomTreeItem> tree = new TreeView<CustomTreeItem>();
         tree.setRoot(root);
-        return tree;              	    	    		   
+        return tree;
     }
-    
-    
+
+
     public TreeView<CustomTreeItem> getLocalMessagesTreeList(List<RequestPut> messages) {
     	TreeItem<CustomTreeItem> root = new TreeItem<CustomTreeItem>(new CustomTreeItem( new Label("Mensagens Locais"), rootIcon ));
-        root.setExpanded(true);             
-        
+        root.setExpanded(true);
+
         for (RequestPut requestPut: messages) {
         	Button laudoButton = new Button();
-        	laudoButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("attachment.png"))));
+        	laudoButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("img/attachment.png"))));
         	laudoButton.setTooltip(new Tooltip("Anexar Laudo"));
         	laudoButton.setOnAction(new EventHandler<ActionEvent>() {
         	    @Override public void handle(ActionEvent e) {
@@ -245,14 +190,14 @@ public class MainController implements Initializable {
            						}
            						arquivosExame.setLaudo(laudo.getAbsolutePath());
            						arquivosExamesMap.put(requestPut.getMessageID(), arquivosExame);
-                           }                          
-        	       } catch (Exception e1) {					
+                           }
+        	       } catch (Exception e1) {
         	    	   e1.printStackTrace();
         	       }
         	    }
         	});
         	Button envioRespostaButton = new Button();
-        	envioRespostaButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("cloud-computing-1.png"))));
+        	envioRespostaButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("img/cloud-computing-1.png"))));
         	envioRespostaButton.setTooltip(new Tooltip("Enviar Resposta"));
         	envioRespostaButton.setOnAction(new EventHandler<ActionEvent>() {
         	    @Override public void handle(ActionEvent e) {
@@ -263,24 +208,24 @@ public class MainController implements Initializable {
    						if (arquivosExame != null) {
    							if (arquivosExame.getLaudo() != null) {
    								File file = new File(arquivosExame.getLaudo());
-   								laudo = IOUtils.toByteArray(new FileInputStream(file));   								
-   							}   							
-   						}   						
+   								laudo = IOUtils.toByteArray(new FileInputStream(file));
+   							}
+   						}
    						ProcessadorEnvioRequestResult.enviarExamesLaudos(requestPut, requestPut.getMessageID() + ".zip", laudo);
         	       } catch (Exception e1) {
         	    	   e1.printStackTrace();
         	       }
         	    }
         	});
-        	TreeItem<CustomTreeItem> requestPutList = new TreeItem<CustomTreeItem>(new CustomTreeItem( new Label("Mensagem: " + requestPut.getMessageID()), laudoButton, envioRespostaButton, new ImageView(new Image(getClass().getResourceAsStream("mail_16.png")))) );
+        	TreeItem<CustomTreeItem> requestPutList = new TreeItem<CustomTreeItem>(new CustomTreeItem( new Label("Mensagem: " + requestPut.getMessageID()), laudoButton, envioRespostaButton, new ImageView(new Image(getClass().getResourceAsStream("img/mail_16.png")))) );
         	URL url = requestPut.getUrl();
-        	
+
         	for (Patient patient: url.getPatient()) {
-        		TreeItem<CustomTreeItem> patientList = new TreeItem<CustomTreeItem>(new CustomTreeItem( new Label( "Paciente: " + patient.getName() ), new ImageView(new Image(getClass().getResourceAsStream("avatar_16.png")))) );
+        		TreeItem<CustomTreeItem> patientList = new TreeItem<CustomTreeItem>(new CustomTreeItem( new Label( "Paciente: " + patient.getName() ), new ImageView(new Image(getClass().getResourceAsStream("img/avatar_16.png")))) );
         		for (Study study: patient.getStudy()) {
-        			TreeItem<CustomTreeItem> studyList = new TreeItem<CustomTreeItem>(new CustomTreeItem( new Label( "Estudo: " + study.getDescription() ), new ImageView(new Image(getClass().getResourceAsStream("test_16.png")))) );
+        			TreeItem<CustomTreeItem> studyList = new TreeItem<CustomTreeItem>(new CustomTreeItem( new Label( "Estudo: " + study.getDescription() ), new ImageView(new Image(getClass().getResourceAsStream("img/test_16.png")))) );
         			for (Serie serie: study.getSerie()) {
-        				TreeItem<CustomTreeItem> serieList = new TreeItem<CustomTreeItem>(new CustomTreeItem( new Label( "Série: " + serie.getDescription() ), new ImageView(new Image(getClass().getResourceAsStream("tornado_16.png")))) );
+        				TreeItem<CustomTreeItem> serieList = new TreeItem<CustomTreeItem>(new CustomTreeItem( new Label( "Série: " + serie.getDescription() ), new ImageView(new Image(getClass().getResourceAsStream("img/tornado_16.png")))) );
         				studyList.getChildren().add(serieList);
         			}
         			patientList.getChildren().add(studyList);
@@ -289,13 +234,13 @@ public class MainController implements Initializable {
         	}
         	root.getChildren().add(requestPutList);
         }
-        
+
         TreeView<CustomTreeItem> tree = new TreeView<CustomTreeItem>();
         tree.setRoot(root);
-        return tree;          	    	    		   
+        return tree;
     }
 
-    
+
     public ContextMenu getStudyContextMenu(Node node) {
     	ContextMenu contextMenu = new ContextMenu();
 		contextMenu.setOnShowing(new EventHandler<WindowEvent>() {
@@ -316,11 +261,11 @@ public class MainController implements Initializable {
 		    }
 		});
 		contextMenu.getItems().addAll(item1, item2);
-		
+
 		return contextMenu;
     }
-    
-    
+
+
     public ContextMenu getNewStudiesContextMenu(Node node) {
     	ContextMenu contextMenu = new ContextMenu();
 		contextMenu.setOnShowing(new EventHandler<WindowEvent>() {
@@ -333,15 +278,15 @@ public class MainController implements Initializable {
 		    public void handle(ActionEvent e) {
 		        System.out.println("Abrir Exame");
 		    }
-		});		
+		});
 		contextMenu.getItems().addAll(item1);
-		
+
 		return contextMenu;
-    }  
-    
+    }
+
 	public void initialize(java.net.URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub		
+    	ordenarPor.getItems().addAll("Data", "Nome");
 	}
 
-			    
+
 }

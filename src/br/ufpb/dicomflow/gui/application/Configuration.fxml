@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.embed.swing.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.ImageView?>
+
+<GridPane alignment="center" hgap="10" styleClass="background"
+	vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="br.ufpb.dicomflow.gui.application.ConfigurationController">
+	<stylesheets>
+		<URL value="@css/application.css" />
+	</stylesheets>
+	<padding>
+		<Insets bottom="10" left="25" right="25" top="25" />
+	</padding>
+	<children>
+		<Text id="config-text" styleClass="titulo" text="Configurar novo acesso"
+			GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2" />
+
+		<Label text="Tipo de e-mail:" GridPane.columnIndex="0"
+			GridPane.rowIndex="1" />
+		<ComboBox fx:id="typeField" GridPane.columnIndex="1"
+			GridPane.rowIndex="1" prefWidth="150.0" />
+
+		<Label text="E-mail:" GridPane.columnIndex="0"
+			GridPane.rowIndex="2" />
+		<TextField fx:id="mailField" GridPane.columnIndex="1"
+			GridPane.rowIndex="2" />
+
+		<Label text="Senha:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+		<PasswordField fx:id="passwordField"
+			GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+		<Label text="Repetir Senha:" GridPane.columnIndex="0"
+			GridPane.rowIndex="4" />
+
+		<PasswordField fx:id="rePasswordField"
+			GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+		<Label fx:id="folderLabel" text="Pasta de recebimento:"
+			GridPane.columnIndex="0" GridPane.rowIndex="5">
+			<graphic>
+			<ImageView fx:id="iconeInfo" fitHeight="16.0" fitWidth="16.0"
+				pickOnBounds="true" preserveRatio="true">
+				<image>
+					<Image url="@img/info.gif" />
+				</image>
+
+			</ImageView>
+			</graphic>
+		</Label>
+
+
+		<TextField fx:id="folderField" GridPane.columnIndex="1"
+			GridPane.rowIndex="5" />
+
+		<HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1"
+			GridPane.rowIndex="6">
+			<children>
+				<Button fx:id="saveButton" defaultButton="true" onAction="#saveAction"
+					text="Salvar" />
+			</children>
+		</HBox>
+
+		<HBox alignment="bottom_left" spacing="10" GridPane.columnIndex="0"
+			GridPane.rowIndex="6">
+			<children>
+				<Button fx:id="cancelButton" mnemonicParsing="false"
+					onAction="#cancelAction" text="Voltar" />
+			</children>
+		</HBox>
+
+		<Text fx:id="configAlerts" GridPane.columnIndex="1"
+			GridPane.rowIndex="8" />
+	</children>
+	<columnConstraints>
+		<ColumnConstraints />
+		<ColumnConstraints />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+	</rowConstraints>
+
+</GridPane>

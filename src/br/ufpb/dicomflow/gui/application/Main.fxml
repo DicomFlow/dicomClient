@@ -27,7 +27,7 @@
                       </Menu>
                       <Menu mnemonicParsing="false" text="Editar">
                         <items>
-                          <MenuItem fx:id="atualizarExames" mnemonicParsing="false" onAction="#AtualizarExames" text="Atualizar Novos Exames" />
+                          <MenuItem fx:id="atualizarExames" mnemonicParsing="false" onAction="#atualizarExames" text="Atualizar Novos Exames" />
                         </items>
                       </Menu>
                       <Menu mnemonicParsing="false" text="Ajuda">
@@ -68,17 +68,17 @@
                      <children>
                         <ImageView fx:id="iconeNovosExames" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <image>
-                              <Image url="@mail.png" />
+                              <Image url="@img/mail.png" />
                            </image>
                         </ImageView>
                         <ImageView fx:id="iconeExames" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <image>
-                              <Image url="@reading-message_32.png" />
+                              <Image url="@img/reading-message_32.png" />
                            </image>
                         </ImageView>
                         <ImageView fx:id="iconeLixeira" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                            <image>
-                              <Image url="@garbage.png" />
+                              <Image url="@img/garbage.png" />
                            </image>
                         </ImageView>
                         <Hyperlink fx:id="novosExames" onAction="#showNewStudies" text="Novos Exames" visited="true" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
