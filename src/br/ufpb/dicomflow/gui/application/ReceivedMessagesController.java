@@ -27,7 +27,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
-public class ReceivedMessages implements Initializable {
+public class ReceivedMessagesController implements Initializable {
 
 	private static final double SPACING = 5;
 	@FXML
@@ -118,7 +118,7 @@ public class ReceivedMessages implements Initializable {
 		Tooltip.install(statusIcon,status);
 
 
-		TreeItem<MessageTreeItem> messageTreeItem  = new TreeItem<MessageTreeItem>(new MessageTreeItem( new Label(messageBean.getFrom()), new Label(messageBean.getSubject()),statusIcon));
+		TreeItem<MessageTreeItem> messageTreeItem  = new TreeItem<MessageTreeItem>(new MessageTreeItem( new Label(messageBean.getAFrom()), new Label(messageBean.getSubject()),statusIcon));
 		return messageTreeItem;
 	}
 

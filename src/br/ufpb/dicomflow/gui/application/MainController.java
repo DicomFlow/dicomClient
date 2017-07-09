@@ -30,8 +30,8 @@ public class MainController implements Initializable {
 	@Override
 	public void initialize(java.net.URL arg0, ResourceBundle arg1) {
 		orderByComboBox.getItems().addAll(DATE_ORDER,FROM_ORDER, TO_ORDER, SUBJECT_ORDER);
-		
-		
+
+
 	}
 
 	@FXML
@@ -62,7 +62,8 @@ public class MainController implements Initializable {
 
 	@FXML
 	public void loadReceivedAction(MouseEvent event){
-
+		anchorPane.getChildren().clear();
+		anchorPane.getChildren().add(SceneLoader.getSceneLoader().getNode(SceneLoader.RECEIVED_MESSAGES_SCENE));
 	}
 
 	@FXML

@@ -19,6 +19,7 @@ public class SceneLoader {
 	public static final String LOGIN_SCENE = "Login.fxml";
 	public static final String CONFIG_SCENE = "Configuration.fxml";
 	public static final String CONFIG_UPDATE_SCENE = "ConfigurationUpdate.fxml";
+	public static final String RECEIVED_MESSAGES_SCENE = "ReceivedMessages.fxml";
 
 	private static SceneLoader sceneLoader =  new SceneLoader();
 
@@ -47,6 +48,12 @@ public class SceneLoader {
 	public void loadConfigScene() throws IOException {
 
 		this.loadScene("DicomFlow Client", CONFIG_SCENE);
+
+	}
+
+	public void loadReceivedMessagesScene() throws IOException {
+
+		this.loadScene("DicomFlow Client", RECEIVED_MESSAGES_SCENE);
 
 	}
 

@@ -43,7 +43,7 @@ public class MessageBean implements Persistent {
 	private Integer idMessage;
 
 	@Column
-	private String from;
+	private String afrom;
 
 	@Column
 	private String to;
@@ -52,11 +52,13 @@ public class MessageBean implements Persistent {
 	private String subject;
 
 
-	private String date;
+	@Column
+	private String aDate;
 
 	@Column
 	private String status;
 
+	@Column
 	private String type;
 
 	@OneToOne(mappedBy = "message", cascade = CascadeType.ALL)
@@ -75,12 +77,12 @@ public class MessageBean implements Persistent {
 		this.idMessage = idMessage;
 	}
 
-	public String getFrom() {
-		return from;
+	public String getAFrom() {
+		return afrom;
 	}
 
-	public void setFrom(String from) {
-		this.from = from;
+	public void setAFrom(String from) {
+		this.afrom = from;
 	}
 
 	public String getTo() {
@@ -107,12 +109,12 @@ public class MessageBean implements Persistent {
 		this.service = service;
 	}
 
-	public String getDate() {
-		return date;
+	public String getADate() {
+		return aDate;
 	}
 
-	public void setDate(String date) {
-		this.date = date;
+	public void setADate(String date) {
+		this.aDate = date;
 	}
 
 	public String getStatus() {
@@ -150,8 +152,8 @@ public class MessageBean implements Persistent {
 	}
 
 	public void setValues(MessageIF message) throws IllegalAccessException, InvocationTargetException{
-		this.setDate((String) message.getMailTag(MailXTags.DATE));
-		this.setFrom((String) message.getMailTag(MailXTags.FROM));
+		this.setADate((String) message.getMailTag(MailXTags.DATE));
+		this.setAFrom((String) message.getMailTag(MailXTags.FROM));
 		this.setTo((String) message.getMailTag(MailXTags.TO));
 		this.setSubject((String) message.getMailTag(MailXTags.SUBJECT));
 
@@ -179,8 +181,8 @@ public class MessageBean implements Persistent {
 		MessageIF message = new SMTPMessage();
 		Map<String,Object> mailXTags = new HashMap<>();
 
-		mailXTags.put(MailXTags.DATE, this.getDate());
-		mailXTags.put(MailXTags.FROM, this.getFrom());
+		mailXTags.put(MailXTags.DATE, this.getADate());
+		mailXTags.put(MailXTags.FROM, this.getAFrom());
 		mailXTags.put(MailXTags.TO, this.getTo());
 		mailXTags.put(MailXTags.SUBJECT, this.getSubject());
 
