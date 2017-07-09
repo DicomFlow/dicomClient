@@ -58,8 +58,8 @@ public class MessageProcessor {
 	public static final String MAIL_IMAP_SOCKET_FACTORY_PORT ="mail.imap.socketFactory.port";
 
 
-	private static final int FIRST_PAGE = 1;
-	private static final int DEFAULT_MAX = 20;
+	public static final int FIRST_PAGE = 0;
+	public static final int DEFAULT_MAX = 20;
 
 
 	public static List<MessageBean> receiveMessages(AuthenticationBean authenticationBean, Properties properties) throws LoginException {
@@ -123,7 +123,7 @@ public class MessageProcessor {
 
 		List<MessageBean> messages = new ArrayList<>();
 
-		List<Persistent> messageBeans = GenericDao.selectAll(MessageBean.class, "type", MessageBean.RECEIVED, GenericDao.DESC, "idMessage", page, max);
+		List<Persistent> messageBeans = GenericDao.selectAll(MessageBean.class, "typee", MessageBean.RECEIVED, GenericDao.DESC, "idMessage", page, max);
 
 		Iterator<Persistent> iterator = messageBeans.iterator();
 		while (iterator.hasNext()) {

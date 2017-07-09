@@ -36,11 +36,15 @@ public class ReceivedMessagesController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
+		System.err.println("INICIANDO A RECEIVEDMESSAGES.FXML");
+
 		messageVBox.setSpacing(SPACING);
 
 		try {
 
-			List<MessageBean> messages = receiveMessages();
+			List<MessageBean> messages = loadMessages();
+
+			System.err.println("MENSAGENS : " + messages.size());
 
 			for (MessageBean messageBean: messages) {
 
@@ -122,12 +126,10 @@ public class ReceivedMessagesController implements Initializable {
 		return messageTreeItem;
 	}
 
-	public List<MessageBean> receiveMessages() throws LoginException {
+	public List<MessageBean> loadMessages() throws LoginException {
 
-		AuthenticationBean loggedUser = ApplicationSession.getInstance().getLoggedUser();
-		Properties properties = ConfigurationProcessor.getProcessadorConfiguracao().getProperties(loggedUser.getConfiguration());
 
-		List<MessageBean> messages = MessageProcessor.receiveMessages(loggedUser, properties);
+		List<MessageBean> messages = MessageProcessor.loadReceivedMessages(MessageProcessor.FIRST_PAGE, MessageProcessor.DEFAULT_MAX);
 		return messages;
 
 	}

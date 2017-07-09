@@ -40,9 +40,9 @@ public class ConfigurationProcessor {
 			insertProperties(ConfigurationBean.GMAIL, GMAIL_PROPERTIES);
 		}
 		//TODO it's really necessary?
-		else{
-			updateProperties(gmailConfig, GMAIL_PROPERTIES);
-		}
+//		else{
+//			updateProperties(gmailConfig, GMAIL_PROPERTIES);
+//		}
 
 
 	}

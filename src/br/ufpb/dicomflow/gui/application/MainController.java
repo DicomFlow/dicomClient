@@ -1,9 +1,14 @@
 package br.ufpb.dicomflow.gui.application;
 
 import java.io.IOException;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 import br.ufpb.dicomflow.gui.business.AuthenticationProcessor;
+import br.ufpb.dicomflow.gui.business.ConfigurationProcessor;
+import br.ufpb.dicomflow.gui.business.MessageProcessor;
+import br.ufpb.dicomflow.gui.dao.bean.AuthenticationBean;
+import br.ufpb.dicomflow.gui.exception.LoginException;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,6 +35,9 @@ public class MainController implements Initializable {
 	@Override
 	public void initialize(java.net.URL arg0, ResourceBundle arg1) {
 		orderByComboBox.getItems().addAll(DATE_ORDER,FROM_ORDER, TO_ORDER, SUBJECT_ORDER);
+
+		anchorPane.getChildren().clear();
+		anchorPane.getChildren().add(SceneLoader.getSceneLoader().getNode(SceneLoader.RECEIVED_MESSAGES_SCENE));
 
 
 	}
@@ -62,6 +70,18 @@ public class MainController implements Initializable {
 
 	@FXML
 	public void loadReceivedAction(MouseEvent event){
+
+		try {
+
+			AuthenticationBean loggedUser = ApplicationSession.getInstance().getLoggedUser();
+			Properties properties = ConfigurationProcessor.getProcessadorConfiguracao().getProperties(loggedUser.getConfiguration());
+
+			MessageProcessor.receiveMessages(loggedUser, properties);
+
+		} catch (LoginException e) {
+			e.printStackTrace();
+		}
+
 		anchorPane.getChildren().clear();
 		anchorPane.getChildren().add(SceneLoader.getSceneLoader().getNode(SceneLoader.RECEIVED_MESSAGES_SCENE));
 	}
