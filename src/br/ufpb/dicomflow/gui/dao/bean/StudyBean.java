@@ -154,7 +154,13 @@ public class StudyBean implements Persistent{
 	}
 
 	@Override
-	public Integer getIdentifier() {
+	public Integer getIdentifierValue() {
 		return this.getIdStudy();
 	}
+
+	@Override
+	public String getIndetifierName() {
+		return "idStudy";
+	}
+
 }

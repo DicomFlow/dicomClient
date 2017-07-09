@@ -62,8 +62,14 @@ public class PropertyBean implements Persistent {
 	}
 
 	@Override
-	public Integer getIdentifier() {
+	public Integer getIdentifierValue() {
 		return getId();
+	}
+
+
+	@Override
+	public String getIndetifierName() {
+		return "id";
 	}
 
 }

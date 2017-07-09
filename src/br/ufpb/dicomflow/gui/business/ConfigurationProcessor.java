@@ -38,7 +38,9 @@ public class ConfigurationProcessor {
 
 		if(gmailConfig == null){
 			insertProperties(ConfigurationBean.GMAIL, GMAIL_PROPERTIES);
-		}else{
+		}
+		//TODO it's really necessary?
+		else{
 			updateProperties(gmailConfig, GMAIL_PROPERTIES);
 		}
 
@@ -153,7 +155,7 @@ public class ConfigurationProcessor {
     		throw new ConfigurationException("E-mail já configurado.");
     	}
 
-    	String encryptedPassword = CryptographyUtil.encriptSHA256(password);
+    	String encryptedPassword = CryptographyUtil.encryptPBEWithMD5AndDES(password);
     	if(encryptedPassword == null){
     		throw new ConfigurationException("Não foi possível salvar as configurações.");
     	}
@@ -171,6 +173,32 @@ public class ConfigurationProcessor {
     	auth.setConfiguration(configuration);
 
     	GenericDao.save(auth);
+	}
+
+	public void updateConfiguration(String mail, String password, String title, String folder) throws ConfigurationException{
+		AuthenticationBean authDB = (AuthenticationBean) GenericDao.select(AuthenticationBean.class, "mail", mail);
+		if(authDB == null){
+    		throw new ConfigurationException("Não foi possível atualizar as configurações.");
+    	}
+
+    	String encryptedPassword = CryptographyUtil.encryptPBEWithMD5AndDES(password);
+    	if(encryptedPassword == null){
+    		throw new ConfigurationException("Não foi possível atualizar as configurações.");
+    	}
+
+
+    	ConfigurationBean configuration = (ConfigurationBean) GenericDao.select(ConfigurationBean.class, "title", title);
+    	if(configuration == null){
+    		throw new ConfigurationException("Não foi possível atualizar as configurações.");
+    	}
+
+
+    	authDB.setMail(mail);
+    	authDB.setPassword(encryptedPassword);
+    	authDB.setFolder(folder);
+    	authDB.setConfiguration(configuration);
+
+    	GenericDao.update(authDB);
 	}
 
 

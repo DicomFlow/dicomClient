@@ -147,8 +147,14 @@ public class URLBean implements Persistent{
 	}
 
 	@Override
-	public Integer getIdentifier() {
+	public Integer getIdentifierValue() {
 		return this.getIdURL();
 	}
+
+	@Override
+	public String getIndetifierName() {
+		return "idUrl";
+	}
+
 
 }

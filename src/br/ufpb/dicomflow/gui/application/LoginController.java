@@ -6,10 +6,7 @@ import java.util.ResourceBundle;
 
 import br.ufpb.dicomflow.gui.application.validation.ValidationFields;
 import br.ufpb.dicomflow.gui.business.AuthenticationProcessor;
-import br.ufpb.dicomflow.gui.dao.GenericDao;
-import br.ufpb.dicomflow.gui.dao.bean.AuthenticationBean;
 import br.ufpb.dicomflow.gui.exception.LoginException;
-import br.ufpb.dicomflow.utils.CryptographyUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -44,7 +41,7 @@ public class LoginController implements Initializable{
 
 
     	try {
-			AuthenticationProcessor.getProcessadorAutenticacao().validate(loginField.getText(), passwordField.getText());
+			AuthenticationProcessor.getProcessadorAutenticacao().login(loginField.getText(), passwordField.getText());
 		} catch (LoginException e) {
 			loginErrors.setText(e.getMessage());
 			return;
@@ -62,7 +59,7 @@ public class LoginController implements Initializable{
 
     private boolean validate() {
 
-    	if(!ValidationFields.checkEmptyFields(loginField, passwordField)){
+    	if(!ValidationFields.checkRqueridFields(loginField, passwordField)){
 			return false;
 		}
 

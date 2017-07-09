@@ -93,8 +93,14 @@ public class SerieBean implements Persistent{
 	}
 
 	@Override
-	public Integer getIdentifier() {
+	public Integer getIdentifierValue() {
 		return this.getIdSerie();
 	}
+
+	@Override
+	public String getIndetifierName() {
+		return "idSerie";
+	}
+
 
 }

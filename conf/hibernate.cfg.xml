@@ -27,10 +27,12 @@
 		<mapping class="br.ufpb.dicomflow.gui.dao.bean.AuthenticationBean"></mapping>
 		<mapping class="br.ufpb.dicomflow.gui.dao.bean.ConfigurationBean"></mapping>
 		<mapping class="br.ufpb.dicomflow.gui.dao.bean.CredentialsBean"></mapping>
+		<mapping class="br.ufpb.dicomflow.gui.dao.bean.MessageBean"></mapping>
 		<mapping class="br.ufpb.dicomflow.gui.dao.bean.PatientBean"></mapping>
 		<mapping class="br.ufpb.dicomflow.gui.dao.bean.PropertyBean"></mapping>
 		<mapping class="br.ufpb.dicomflow.gui.dao.bean.RequestPutBean"></mapping>
 		<mapping class="br.ufpb.dicomflow.gui.dao.bean.SerieBean"></mapping>
+		<mapping class="br.ufpb.dicomflow.gui.dao.bean.ServiceBean"></mapping>
 		<mapping class="br.ufpb.dicomflow.gui.dao.bean.StudyBean"></mapping>
 		<mapping class="br.ufpb.dicomflow.gui.dao.bean.URLBean"></mapping>
 

@@ -8,11 +8,15 @@ import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import br.ufpb.dicomflow.gui.dao.bean.Persistent;
 
 public class GenericDao {
+
+	public static final int DESC = 1;
+	public static final int ASC = 0;
 
 
 	public static void save(Persistent persistent) {
@@ -105,6 +109,45 @@ public class GenericDao {
 		try {
 			transaction = session.beginTransaction();
 			Criteria criteria = session.createCriteria(persistentClass);
+
+			persistents = criteria.list();
+			transaction.commit();
+
+		} catch (HibernateException e) {
+			transaction.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return persistents;
+
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <T> List<Persistent> selectAll(Class<T> persistentClass, String property, Object value, int order, String propertyOrder, int page, int max){
+
+		List<Persistent> persistents = new ArrayList<Persistent>();
+
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		Transaction transaction = null;
+
+		try {
+			transaction = session.beginTransaction();
+			Criteria criteria = session.createCriteria(persistentClass);
+			criteria.add(Restrictions.eq(property, value));
+
+			if(order == ASC){
+				criteria.addOrder(Order.asc(propertyOrder));
+		    }
+			if(order == DESC){
+		    	criteria.addOrder(Order.desc(propertyOrder));
+		    }
+
+			if(page >= 0 && max >= 0){
+		        criteria.setFirstResult(page*max);
+		        criteria.setMaxResults(max);
+		    }
 
 			persistents = criteria.list();
 			transaction.commit();

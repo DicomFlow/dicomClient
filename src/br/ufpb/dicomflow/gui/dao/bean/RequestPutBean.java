@@ -156,8 +156,14 @@ public class RequestPutBean implements Persistent{
 	}
 
 	@Override
-	public Integer getIdentifier() {
+	public Integer getIdentifierValue() {
 		return this.getIdRequestPut();
 	}
+
+	@Override
+	public String getIndetifierName() {
+		return "idRequestPut";
+	}
+
 
 }

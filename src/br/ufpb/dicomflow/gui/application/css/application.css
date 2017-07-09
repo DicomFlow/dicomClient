@@ -5,7 +5,7 @@ and open the template in the editor.
 */
 
 .background {
-    -fx-background-image: url("../img/background.jpg");
+   /* -fx-background-image: url("../img/background.jpg"); */
 }
 
 .label {
@@ -17,6 +17,13 @@ and open the template in the editor.
 
 .titulo {
    -fx-font-size: 32px;
+   -fx-font-family: "Arial Black";
+   -fx-fill: #818181;
+   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
+
+.titulo2 {
+   -fx-font-size: 24px;
    -fx-font-family: "Arial Black";
    -fx-fill: #818181;
    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );

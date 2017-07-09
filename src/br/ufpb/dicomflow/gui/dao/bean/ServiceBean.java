@@ -14,7 +14,7 @@ import org.hibernate.annotations.Parameter;
 
 @Entity
 @Table(name="service")
-public class Service implements Persistent {
+public class ServiceBean implements Persistent {
 
 
 	@Id
@@ -27,11 +27,11 @@ public class Service implements Persistent {
 	private String persistentClass;
 
 	@Column
-	private String persitentId;
+	private Integer persitentId;
 
 	@OneToOne(cascade=CascadeType.ALL)
 	@PrimaryKeyJoinColumn
-	private Message message;
+	private MessageBean message;
 
 
 	public Integer getIdService() {
@@ -42,11 +42,11 @@ public class Service implements Persistent {
 		this.idService = idService;
 	}
 
-	public Message getMessage() {
+	public MessageBean getMessage() {
 		return message;
 	}
 
-	public void setMessage(Message message) {
+	public void setMessage(MessageBean message) {
 		this.message = message;
 	}
 
@@ -58,17 +58,23 @@ public class Service implements Persistent {
 		this.persistentClass = persistentClass;
 	}
 
-	public String getPersitentId() {
+	public Integer getPersitentId() {
 		return persitentId;
 	}
 
-	public void setPersitentId(String persitentId) {
+	public void setPersitentId(Integer persitentId) {
 		this.persitentId = persitentId;
 	}
 
 	@Override
-	public Integer getIdentifier() {
+	public Integer getIdentifierValue() {
 		return this.getIdService();
 	}
+
+	@Override
+	public String getIndetifierName() {
+		return "idService";
+	}
+
 
 }

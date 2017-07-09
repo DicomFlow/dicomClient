@@ -67,8 +67,14 @@ public class ConfigurationBean implements Persistent {
 	}
 
 	@Override
-	public Integer getIdentifier() {
+	public Integer getIdentifierValue() {
 		return this.getId();
 	}
+
+	@Override
+	public String getIndetifierName() {
+		return "id";
+	}
+
 
 }

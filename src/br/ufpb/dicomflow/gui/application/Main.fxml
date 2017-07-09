@@ -13,112 +13,109 @@
 <?import javafx.scene.text.*?>
 
 <BorderPane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufpb.dicomflow.gui.application.MainController">
-   <top>
-      <SplitPane dividerPositions="0.37681159420289856" orientation="VERTICAL" prefHeight="77.0" prefWidth="800.0" BorderPane.alignment="CENTER">
-        <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+	<top>
+		<SplitPane dividerPositions="0.0" orientation="VERTICAL" prefHeight="77.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+			<items>
+            <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <MenuBar layoutX="-1.0" layoutY="-1.0" prefHeight="27.0" prefWidth="800.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="-1.0">
-                    <menus>
-                      <Menu mnemonicParsing="false" text="Arquivo">
-                        <items>
-                          <MenuItem mnemonicParsing="false" text="Close" />
-                        </items>
-                      </Menu>
-                      <Menu mnemonicParsing="false" text="Editar">
-                        <items>
-                          <MenuItem fx:id="atualizarExames" mnemonicParsing="false" onAction="#atualizarExames" text="Atualizar Novos Exames" />
-                        </items>
-                      </Menu>
-                      <Menu mnemonicParsing="false" text="Ajuda">
-                        <items>
-                          <MenuItem mnemonicParsing="false" text="Sobre" />
-                        </items>
-                      </Menu>
-                    </menus>
-                  </MenuBar>
+						<MenuBar prefHeight="16.0" prefWidth="798.0">
+							<menus>
+								<Menu mnemonicParsing="false" text="Arquivo">
+									<items>
+										<MenuItem mnemonicParsing="false" onAction="#logoutAction" text="Sair" />
+										<MenuItem mnemonicParsing="false" onAction="#exitAction" text="Fechar" />
+									</items>
+								</Menu>
+								<Menu mnemonicParsing="false" text="Editar">
+									<items>
+										<MenuItem mnemonicParsing="false" onAction="#configAction" text="Configurações" />
+									</items>
+								</Menu>
+								<Menu mnemonicParsing="false" text="Ajuda">
+									<items>
+										<MenuItem mnemonicParsing="false" text="Sobre" />
+									</items>
+								</Menu>
+							</menus>
+						</MenuBar>
                </children>
-            </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="69.0" prefWidth="798.0" SplitPane.resizableWithParent="false">
+            </HBox>
+            <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label layoutX="225.0" layoutY="14.0" prefHeight="17.0" prefWidth="75.0" text="Ordenar por:" />
-                  <Label layoutX="590.0" layoutY="14.0" prefHeight="17.0" prefWidth="44.0" text="Buscar:" />
-                  <TextField layoutX="635.0" layoutY="10.0" />
-                  <ComboBox fx:id="ordenarPor" layoutX="300.0" layoutY="10.0" prefWidth="150.0" />
-               </children></AnchorPane>
-        </items>
-      </SplitPane>
-   </top>
-   <left>
-      <Accordion fx:id="menuLateral" prefHeight="691.0" prefWidth="211.0" BorderPane.alignment="CENTER">
-        <panes>
-          <TitledPane animated="false" text="Caixa de Entrada">
-               <content>
-                  <GridPane prefHeight="447.0" prefWidth="174.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="51.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="163.0" minWidth="10.0" prefWidth="149.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints maxHeight="138.0" minHeight="3.0" prefHeight="53.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="282.0" minHeight="0.0" prefHeight="59.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="282.0" minHeight="10.0" prefHeight="59.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="368.0" minHeight="10.0" prefHeight="315.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <ImageView fx:id="iconeNovosExames" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                           <image>
-                              <Image url="@img/mail.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="iconeExames" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                           <image>
-                              <Image url="@img/reading-message_32.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="iconeLixeira" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                           <image>
-                              <Image url="@img/garbage.png" />
-                           </image>
-                        </ImageView>
-                        <Hyperlink fx:id="novosExames" onAction="#showNewStudies" text="Novos Exames" visited="true" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Hyperlink>
-                        <Hyperlink onAction="#showStudies" text="Exames Locais" visited="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Hyperlink>
-                        <Hyperlink text="Lixeira" visited="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Hyperlink>
-                     </children>
-                  </GridPane>
-               </content></TitledPane>
-          <TitledPane animated="false" prefHeight="385.0" prefWidth="211.0" text="Configurações">
-               <content>
-                  <GridPane>
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints maxHeight="194.0" minHeight="0.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="481.0" minHeight="0.0" prefHeight="80.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="553.0" minHeight="10.0" prefHeight="86.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="553.0" minHeight="10.0" prefHeight="224.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                  </GridPane>
-               </content>
-            </TitledPane>
-            <TitledPane animated="false" layoutX="10.0" layoutY="35.0" text="Mensagens e Alertas" />
-        </panes>
-      </Accordion>
-   </left>
-   <center>
-      <AnchorPane prefHeight="523.0" prefWidth="613.0" BorderPane.alignment="CENTER" />
-   </center>
+                  <Label text="Ordenar por: " />
+                  <ComboBox fx:id="orderByComboBox" prefWidth="150.0" />
+                  <Label text="Buscar: " />
+                  <TextField fx:id="searchTextField" />
+               </children>
+            </HBox>
+			</items>
+		</SplitPane>
+	</top>
+
+	<center>
+		<AnchorPane fx:id="anchorPane" prefHeight="523.0" prefWidth="613.0" BorderPane.alignment="CENTER" />
+	</center>
+
+	<left>
+		<GridPane alignment="TOP_RIGHT" prefHeight="120.0" prefWidth="180.0" BorderPane.alignment="CENTER">
+			<columnConstraints>
+				<ColumnConstraints hgrow="SOMETIMES" maxWidth="35.0" minWidth="10.0" prefWidth="35.0" />
+				<ColumnConstraints hgrow="SOMETIMES" maxWidth="130.0" minWidth="10.0" prefWidth="130.0" />
+			</columnConstraints>
+			<rowConstraints>
+				<RowConstraints maxHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+			</rowConstraints>
+			<children>
+				<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="0">
+					<image>
+						<Image url="@img/received_mail.png" />
+					</image>
+				</ImageView>
+				<Label onMouseClicked="#loadReceivedAction" text="Recebidos" GridPane.columnIndex="1" GridPane.rowIndex="0">
+					<font>
+						<Font name="System Bold" size="14.0" />
+					</font>
+				</Label>
+
+				<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="1">
+					<image>
+						<Image url="@img/sent_mail.png" />
+					</image>
+				</ImageView>
+				<Label onMouseClicked="#loadSentAction" text="Enviados" GridPane.columnIndex="1" GridPane.rowIndex="1">
+					<font>
+						<Font name="System Bold" size="14.0" />
+					</font>
+				</Label>
+
+				<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="2">
+					<image>
+						<Image url="@img/important_mail.png" />
+					</image>
+				</ImageView>
+				<Label onMouseClicked="#loadImportantAction" text="Importantes" GridPane.columnIndex="1" GridPane.rowIndex="2">
+					<font>
+						<Font name="System Bold" size="14.0" />
+					</font>
+				</Label>
+
+				<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="3">
+					<image>
+						<Image url="@img/archived_mail.png" />
+					</image>
+				</ImageView>
+				<Label onMouseClicked="#loadArchivedAction" text="Arquivados" GridPane.columnIndex="1" GridPane.rowIndex="3">
+					<font>
+						<Font name="System Bold" size="14.0" />
+					</font>
+				</Label>
+			</children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+		</GridPane>
+	</left>
 </BorderPane>

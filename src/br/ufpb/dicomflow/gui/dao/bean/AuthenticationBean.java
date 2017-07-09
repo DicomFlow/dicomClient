@@ -1,5 +1,8 @@
 package br.ufpb.dicomflow.gui.dao.bean;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -31,6 +35,12 @@ public class AuthenticationBean implements Persistent {
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="id_configuration")
 	private ConfigurationBean configuration;
+
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn(name="id_authentication")
+	private List<MessageBean> messages;
+
+
 
 
 	public Integer getId() {
@@ -73,9 +83,22 @@ public class AuthenticationBean implements Persistent {
 		this.configuration = configuration;
 	}
 
+	public List<MessageBean> getMessages() {
+		return messages;
+	}
+
+	public void setMessages(List<MessageBean> messages) {
+		this.messages = messages;
+	}
+
 	@Override
-	public Integer getIdentifier() {
+	public Integer getIdentifierValue() {
 		return this.getId();
+	}
+
+	@Override
+	public String getIndetifierName() {
+		return "id";
 	}
 
 }

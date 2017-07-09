@@ -1,11 +1,9 @@
 package br.ufpb.dicomflow.gui.application.validation;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import br.ufpb.dicomflow.gui.application.SceneLoader;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
@@ -13,21 +11,20 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
-import javafx.util.Duration;
 
 public class ValidationFields {
 
 	private static final String STILE_BORDER_VALIDATION = "-fx-border-color: #FF0000";
 
 
-	public static boolean checkEmptyFields(Node... itemToCheck) {
+	public static boolean checkRqueridFields(Node... itemToCheck) {
 
 		final Tooltip toolTip = new Tooltip("Este Campo é requerido.");
 
 		// used to determinate how many fields failed in validation
 		List<Node> failedFields = new ArrayList<>();
 		toolTip.setStyle("-fx-background-color: linear-gradient(#FF6B6B , #FFA6A6 ); -fx-font-weight: bold;");
-		hackTooltipStartTiming(toolTip);
+		SceneLoader.getSceneLoader().hackTooltipStartTiming(toolTip);
 
 		for (Node n : arrayToList(itemToCheck)) {
 
@@ -46,7 +43,7 @@ public class ValidationFields {
 				}
 			}
 
-			if(n instanceof PasswordField) {
+			else if(n instanceof PasswordField) {
 				PasswordField passwordField = (PasswordField) n;
 				passwordField.textProperty().addListener(
 						(ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
@@ -94,6 +91,36 @@ public class ValidationFields {
 		return failedFields.isEmpty();
 	}
 
+	public static boolean checkEmptyFields(Node itemToCheck) {
+
+
+			// Validate TextFields
+			if(itemToCheck instanceof TextField) {
+				TextField textField = (TextField) itemToCheck;
+				return textField.getText() == null || textField.getText().trim().equals("");
+			}
+
+			// Validate PasswordFields
+			else if(itemToCheck instanceof PasswordField) {
+				PasswordField passwordField = (PasswordField) itemToCheck;
+				return passwordField.getText() == null || passwordField.getText().trim().equals("");
+
+			}
+
+			else if (itemToCheck instanceof ComboBox) {
+				ComboBox comboBox = (ComboBox) itemToCheck;
+				return comboBox.getValue() == null;
+			}
+
+			// Validate TextArea
+			else if (itemToCheck instanceof TextArea) {
+				TextArea textArea = (TextArea) itemToCheck;
+				return textArea.getText() == null || textArea.getText().trim().equals("");
+			}
+
+			return false;
+	}
+
 	/**
 	 * *******ADD AND REMOVE STYLES********
 	 */
@@ -118,26 +145,6 @@ public class ValidationFields {
 		return listItems;
 	}
 
-	/**
-	 * ***********FORCE TOOL TIP TO BE DISPLAYED FASTER************
-	 */
-	public static void hackTooltipStartTiming(Tooltip tooltip) {
-		try {
-			Field fieldBehavior = tooltip.getClass().getDeclaredField("BEHAVIOR");
-			fieldBehavior.setAccessible(true);
-			Object objBehavior = fieldBehavior.get(tooltip);
-
-			Field fieldTimer = objBehavior.getClass().getDeclaredField("activationTimer");
-			fieldTimer.setAccessible(true);
-			Timeline objTimer = (Timeline) fieldTimer.get(objBehavior);
-
-			objTimer.getKeyFrames().clear();
-			objTimer.getKeyFrames().add(new KeyFrame(new Duration(5)));
-		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
-			System.out.println(e);
-		}
-	}
-
 	public static boolean checkMailFormat(TextField mail) {
 
 		String mailRegex = "[A-Za-z0-9\\._-]+@[A-Za-z0-9]+(\\.[A-Za-z]+)*";
@@ -146,7 +153,7 @@ public class ValidationFields {
 
 		List<Node> failedFields = new ArrayList<>();
 		toolTip.setStyle("-fx-background-color: linear-gradient(#FF6B6B , #FFA6A6 ); -fx-font-weight: bold;");
-		hackTooltipStartTiming(toolTip);
+		SceneLoader.getSceneLoader().hackTooltipStartTiming(toolTip);
 
 		mail.textProperty()
 				.addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
@@ -168,7 +175,7 @@ public class ValidationFields {
 
 		List<Node> failedFields = new ArrayList<>();
 		toolTip.setStyle("-fx-background-color: linear-gradient(#FF6B6B , #FFA6A6 ); -fx-font-weight: bold;");
-		hackTooltipStartTiming(toolTip);
+		SceneLoader.getSceneLoader().hackTooltipStartTiming(toolTip);
 
 		repassword.textProperty()
 				.addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
