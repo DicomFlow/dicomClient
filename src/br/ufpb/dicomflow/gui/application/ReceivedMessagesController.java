@@ -118,7 +118,7 @@ public class ReceivedMessagesController implements Initializable {
 		Tooltip.install(statusIcon,status);
 
 
-		TreeItem<MessageTreeItem> messageTreeItem  = new TreeItem<MessageTreeItem>(new MessageTreeItem( new Label(messageBean.getAFrom()), new Label(messageBean.getSubject()),statusIcon));
+		TreeItem<MessageTreeItem> messageTreeItem  = new TreeItem<MessageTreeItem>(new MessageTreeItem( new Label(messageBean.getAfrom()), new Label(messageBean.getSubject()),statusIcon));
 		return messageTreeItem;
 	}
 

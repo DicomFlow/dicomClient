@@ -77,11 +77,11 @@ public class MessageBean implements Persistent {
 		this.idMessage = idMessage;
 	}
 
-	public String getAFrom() {
+	public String getAfrom() {
 		return afrom;
 	}
 
-	public void setAFrom(String from) {
+	public void setAfrom(String from) {
 		this.afrom = from;
 	}
 
@@ -109,11 +109,11 @@ public class MessageBean implements Persistent {
 		this.service = service;
 	}
 
-	public String getADate() {
+	public String getAdate() {
 		return aDate;
 	}
 
-	public void setADate(String date) {
+	public void setAdate(String date) {
 		this.aDate = date;
 	}
 
@@ -152,8 +152,8 @@ public class MessageBean implements Persistent {
 	}
 
 	public void setValues(MessageIF message) throws IllegalAccessException, InvocationTargetException{
-		this.setADate((String) message.getMailTag(MailXTags.DATE));
-		this.setAFrom((String) message.getMailTag(MailXTags.FROM));
+		this.setAdate((String) message.getMailTag(MailXTags.DATE));
+		this.setAfrom((String) message.getMailTag(MailXTags.FROM));
 		this.setTo((String) message.getMailTag(MailXTags.TO));
 		this.setSubject((String) message.getMailTag(MailXTags.SUBJECT));
 
@@ -181,8 +181,8 @@ public class MessageBean implements Persistent {
 		MessageIF message = new SMTPMessage();
 		Map<String,Object> mailXTags = new HashMap<>();
 
-		mailXTags.put(MailXTags.DATE, this.getADate());
-		mailXTags.put(MailXTags.FROM, this.getAFrom());
+		mailXTags.put(MailXTags.DATE, this.getAdate());
+		mailXTags.put(MailXTags.FROM, this.getAfrom());
 		mailXTags.put(MailXTags.TO, this.getTo());
 		mailXTags.put(MailXTags.SUBJECT, this.getSubject());
 
