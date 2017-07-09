@@ -18,8 +18,8 @@ public class ServiceBean implements Persistent {
 
 
 	@Id
-	@GeneratedValue(generator="myGenerator")
-	@GenericGenerator(name="myGenerator", strategy = "foreign", parameters = @Parameter(name = "property", value = "message"))
+	@GeneratedValue(generator="myGenerator2")
+	@GenericGenerator(name="myGenerator2", strategy = "foreign", parameters = @Parameter(name = "property", value = "message"))
 	@Column(name="id_service")
 	private Integer idService;
 
