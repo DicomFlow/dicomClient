@@ -106,8 +106,8 @@ public class MessageProcessor {
 			messageBean.setValues(message);
 
 			messageBean.setAuthentication(authenticationBean);
-			messageBean.setType(MessageBean.RECEIVED);
-			messageBean.setStatus(MessageBean.UNREAD);
+			messageBean.setTypee(MessageBean.RECEIVED);
+			messageBean.setStatuss(MessageBean.UNREAD);
 
 			GenericDao.save(messageBean);
 

@@ -43,23 +43,23 @@ public class MessageBean implements Persistent {
 	private Integer idMessage;
 
 	@Column
-	private String afrom;
+	private String fromm;
 
 	@Column
-	private String to;
+	private String too;
 
 	@Column
-	private String subject;
+	private String subjectt;
 
 
 	@Column
-	private String aDate;
+	private String datee;
 
 	@Column
-	private String status;
+	private String statuss;
 
 	@Column
-	private String type;
+	private String typee;
 
 	@OneToOne(mappedBy = "message", cascade = CascadeType.ALL)
 	private ServiceBean service;
@@ -69,6 +69,8 @@ public class MessageBean implements Persistent {
 	@JoinColumn(name="id_authentication")
 	private AuthenticationBean authentication;
 
+
+
 	public Integer getIdMessage() {
 		return idMessage;
 	}
@@ -77,28 +79,53 @@ public class MessageBean implements Persistent {
 		this.idMessage = idMessage;
 	}
 
-	public String getAfrom() {
-		return afrom;
+	public String getFromm() {
+		return fromm;
 	}
 
-	public void setAfrom(String from) {
-		this.afrom = from;
+	public void setFromm(String fromm) {
+		this.fromm = fromm;
 	}
 
-	public String getTo() {
-		return to;
+	public String getToo() {
+		return too;
 	}
 
-	public void setTo(String to) {
-		this.to = to;
+	public void setToo(String too) {
+		this.too = too;
 	}
 
-	public String getSubject() {
-		return subject;
+	public String getDatee() {
+		return datee;
 	}
 
-	public void setSubject(String subject) {
-		this.subject = subject;
+	public void setDatee(String datee) {
+		this.datee = datee;
+	}
+
+
+	public String getSubjectt() {
+		return subjectt;
+	}
+
+	public void setSubjectt(String subjectt) {
+		this.subjectt = subjectt;
+	}
+
+	public String getStatuss() {
+		return statuss;
+	}
+
+	public void setStatuss(String statuss) {
+		this.statuss = statuss;
+	}
+
+	public String getTypee() {
+		return typee;
+	}
+
+	public void setTypee(String typee) {
+		this.typee = typee;
 	}
 
 	public ServiceBean getService() {
@@ -107,30 +134,6 @@ public class MessageBean implements Persistent {
 
 	public void setService(ServiceBean service) {
 		this.service = service;
-	}
-
-	public String getAdate() {
-		return aDate;
-	}
-
-	public void setAdate(String date) {
-		this.aDate = date;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
 	}
 
 	public AuthenticationBean getAuthentication() {
@@ -152,10 +155,10 @@ public class MessageBean implements Persistent {
 	}
 
 	public void setValues(MessageIF message) throws IllegalAccessException, InvocationTargetException{
-		this.setAdate((String) message.getMailTag(MailXTags.DATE));
-		this.setAfrom((String) message.getMailTag(MailXTags.FROM));
-		this.setTo((String) message.getMailTag(MailXTags.TO));
-		this.setSubject((String) message.getMailTag(MailXTags.SUBJECT));
+		this.setDatee((String) message.getMailTag(MailXTags.DATE));
+		this.setFromm((String) message.getMailTag(MailXTags.FROM));
+		this.setToo((String) message.getMailTag(MailXTags.TO));
+		this.setSubjectt((String) message.getMailTag(MailXTags.SUBJECT));
 
 		ServiceIF service = message.getService();
 
@@ -181,10 +184,10 @@ public class MessageBean implements Persistent {
 		MessageIF message = new SMTPMessage();
 		Map<String,Object> mailXTags = new HashMap<>();
 
-		mailXTags.put(MailXTags.DATE, this.getAdate());
-		mailXTags.put(MailXTags.FROM, this.getAfrom());
-		mailXTags.put(MailXTags.TO, this.getTo());
-		mailXTags.put(MailXTags.SUBJECT, this.getSubject());
+		mailXTags.put(MailXTags.DATE, this.getDatee());
+		mailXTags.put(MailXTags.FROM, this.getFromm());
+		mailXTags.put(MailXTags.TO, this.getToo());
+		mailXTags.put(MailXTags.SUBJECT, this.getSubjectt());
 
 		message.setMailXTags(mailXTags);
 

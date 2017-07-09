@@ -110,15 +110,15 @@ public class ReceivedMessagesController implements Initializable {
 	public TreeItem<MessageTreeItem> createMessageTreeItem(MessageBean messageBean) {
 
 
-		String image = messageBean.getStatus() == MessageBean.UNREAD ? "img/mail_16.png" : "img/reading_16.png";
-		String tooltipText = messageBean.getStatus() == MessageBean.UNREAD ? "Não Lida" : "Lida";
+		String image = messageBean.getStatuss() == MessageBean.UNREAD ? "img/mail_16.png" : "img/reading_16.png";
+		String tooltipText = messageBean.getStatuss() == MessageBean.UNREAD ? "Não Lida" : "Lida";
 		ImageView statusIcon = new ImageView(new Image(getClass().getResourceAsStream(image)));
 		Tooltip status = new Tooltip(tooltipText);
 		SceneLoader.getSceneLoader().hackTooltipStartTiming(status);
 		Tooltip.install(statusIcon,status);
 
 
-		TreeItem<MessageTreeItem> messageTreeItem  = new TreeItem<MessageTreeItem>(new MessageTreeItem( new Label(messageBean.getAfrom()), new Label(messageBean.getSubject()),statusIcon));
+		TreeItem<MessageTreeItem> messageTreeItem  = new TreeItem<MessageTreeItem>(new MessageTreeItem( new Label(messageBean.getFromm()), new Label(messageBean.getSubjectt()),statusIcon));
 		return messageTreeItem;
 	}
 
