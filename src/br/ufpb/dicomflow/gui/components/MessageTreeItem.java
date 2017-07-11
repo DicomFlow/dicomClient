@@ -10,7 +10,7 @@ public class MessageTreeItem extends HBox {
 	private Label fromText;
 	private Label subjectText;
 	private ImageView statusImage;
-
+	private Integer idMessage;
 
 	private Label idMessageText;
 	private ImageView downloadImage;
@@ -30,23 +30,24 @@ public class MessageTreeItem extends HBox {
 
 
 
-	public MessageTreeItem(Label fromText, Label subjectText, ImageView statusButton) {
+	public MessageTreeItem(Label fromText, Label subjectText, ImageView statusImage, Integer idMessage) {
 		super(5);
 
 		this.fromText = fromText;
 		this.subjectText = subjectText;
-		this.statusImage = statusButton;
+		this.statusImage = statusImage;
+		this.idMessage = idMessage;
 
 		this.getChildren().addAll(this.fromText, this.subjectText, this.statusImage);
 		this.setAlignment(Pos.CENTER_LEFT);
 	}
 
-	public MessageTreeItem(Label idMessageText, ImageView downloadButton, ImageView replyButton) {
+	public MessageTreeItem(Label idMessageText, ImageView downloadButton, ImageView replyImage) {
 		super(5);
 
 		this.idMessageText = idMessageText;
 		this.downloadImage = downloadButton;
-		this.replyImage = replyButton;
+		this.replyImage = replyImage;
 
 		this.getChildren().addAll(this.idMessageText, this.downloadImage, this.replyImage);
 		this.setAlignment(Pos.CENTER_LEFT);
@@ -60,7 +61,7 @@ public class MessageTreeItem extends HBox {
 		this.birthdateText = birthdateText;
 		this.patientImage = patientImage;
 
-		this.getChildren().addAll(this.nameText, this.genderText, this.birthdateText, this.patientImage);
+		this.getChildren().addAll(this.patientImage, this.nameText, this.genderText, this.birthdateText );
 		this.setAlignment(Pos.CENTER_LEFT);
 	}
 
@@ -73,7 +74,7 @@ public class MessageTreeItem extends HBox {
 		this.sizeText = sizeText;
 		this.studyImage = studyImage;
 
-		this.getChildren().addAll(this.typeText, this.descriptionText, this.datetimeText, this.sizeText, this.studyImage);
+		this.getChildren().addAll(this.studyImage, this.typeText, this.descriptionText, this.datetimeText, this.sizeText);
 		this.setAlignment(Pos.CENTER_LEFT);
 	}
 
@@ -207,6 +208,14 @@ public class MessageTreeItem extends HBox {
 
 	public void setStudyImage(ImageView studyImage) {
 		this.studyImage = studyImage;
+	}
+
+	public Integer getIdMessage() {
+		return idMessage;
+	}
+
+	public void setIdMessage(Integer idMessage) {
+		this.idMessage = idMessage;
 	}
 
 }

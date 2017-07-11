@@ -7,9 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane alignment="center" hgap="10" styleClass="background"
-	vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="br.ufpb.dicomflow.gui.application.LoginController">
+<GridPane alignment="center" hgap="10" styleClass="background" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufpb.dicomflow.gui.application.LoginController">
 	<stylesheets>
 		<URL value="@css/application.css" />
 	</stylesheets>
@@ -18,36 +16,30 @@
 	</padding>
 	<children>
 
-		<Text id="welcome-text" styleClass="titulo" text="Bem vindo"
-			GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2" />
+		<Text id="welcome-text" styleClass="titulo" text="Bem vindo" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0" />
 
-		<Label text="E-mail:" GridPane.columnIndex="0"
-			GridPane.rowIndex="1" />
-		<TextField fx:id="loginField" GridPane.columnIndex="1"
-			GridPane.rowIndex="1" />
+		<Label text="E-mail:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+		<TextField fx:id="loginField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
 		<Label text="Senha:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-		<PasswordField fx:id="passwordField"
-			GridPane.columnIndex="1" GridPane.rowIndex="2" />
+		<PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-		<HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1"
-			GridPane.rowIndex="4">
+		<CheckBox fx:id="connectedCheckBox" alignment="CENTER_RIGHT" mnemonicParsing="false" text="Me  manter conectado" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+		<HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="4">
 			<children>
-				<Button fx:id="loginButton" defaultButton="true" onAction="#loginAction"
-					text="Entrar" />
+				<Button fx:id="loginButton" defaultButton="true" onAction="#loginAction" text="Entrar" />
 			</children>
 		</HBox>
 
-		<HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1"
-			GridPane.rowIndex="7">
+		<HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="7">
 			<children>
-				<Button fx:id="configButton" mnemonicParsing="false"
-					onAction="#configAction" text="Configurar novo e-mail" />
+				<Button fx:id="configButton" mnemonicParsing="false" onAction="#configAction" text="Configurar novo e-mail" />
 			</children>
 		</HBox>
 
-		<Text fx:id="loginErrors" GridPane.columnIndex="1"
-			GridPane.rowIndex="8" />
+		<Text fx:id="loginErrors" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+
 
 	</children>
 
@@ -67,5 +59,6 @@
 		<RowConstraints />
 		<RowConstraints />
 		<RowConstraints />
+      <RowConstraints />
 	</rowConstraints>
 </GridPane>

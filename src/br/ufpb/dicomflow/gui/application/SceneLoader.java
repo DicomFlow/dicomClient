@@ -5,10 +5,15 @@ import java.lang.reflect.Field;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Tooltip;
+import javafx.scene.control.TreeItem;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -82,6 +87,12 @@ public class SceneLoader {
 
 	}
 
+	public void installTooltip(Node statusIcon, String tooltipText) {
+		Tooltip status = new Tooltip(tooltipText);
+		hackTooltipStartTiming(status);
+		Tooltip.install(statusIcon,status);
+	}
+
 
 	/**
 	 * ***********FORCE TOOL TIP TO BE DISPLAYED FASTER************
@@ -103,4 +114,50 @@ public class SceneLoader {
 		}
 	}
 
+	public void expandTreeView(TreeItem<?> item){
+	    if(item != null && !item.isLeaf()){
+	        item.setExpanded(true);
+	        for(TreeItem<?> child:item.getChildren()){
+	            expandTreeView(child);
+	        }
+	    }
+	}
+
+	public void collapseTreeView(TreeItem<?> item){
+	    if(item != null && !item.isLeaf()){
+	        item.setExpanded(false);
+	        for(TreeItem<?> child:item.getChildren()){
+	            collapseTreeView(child);
+	        }
+	    }
+	}
+
+
+	public void informationAlert(String title, String header, String message){
+		Alert dialogoInfo = new Alert(Alert.AlertType.INFORMATION);
+        dialogoInfo.setTitle(title);
+        dialogoInfo.setHeaderText(header);
+        dialogoInfo.setContentText(message);
+        dialogoInfo.show();
+	}
+
+	public void installCursorEvent(Node node) {
+		node.setOnMouseEntered(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+				Main.getpStage().getScene().setCursor(Cursor.HAND);
+
+			}
+		});
+
+		node.setOnMouseExited(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+				Main.getpStage().getScene().setCursor(Cursor.DEFAULT);
+
+			}
+		});
+	}
 }

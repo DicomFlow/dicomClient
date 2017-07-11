@@ -29,6 +29,9 @@ public class AuthenticationBean implements Persistent {
 	@Column
 	private String password;
 
+	@Column(nullable=false)
+	private boolean connected;
+
 	@Column
 	private String folder;
 
@@ -89,6 +92,14 @@ public class AuthenticationBean implements Persistent {
 
 	public void setMessages(List<MessageBean> messages) {
 		this.messages = messages;
+	}
+
+	public boolean isConnected() {
+		return connected;
+	}
+
+	public void setConnected(boolean connected) {
+		this.connected = connected;
 	}
 
 	@Override

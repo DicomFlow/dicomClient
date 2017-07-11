@@ -19,6 +19,29 @@ public class AuthenticationProcessor {
 		return processadorAutenticacao;
 	}
 
+	public void login(String login, String password, boolean connected) throws LoginException {
+
+		this.login(login, password);
+
+		if(connected){
+			keepConnected(connected);
+		}
+
+
+
+	}
+
+	public boolean loadLoggedUser(){
+		AuthenticationBean loggedUser = (AuthenticationBean) GenericDao.select(AuthenticationBean.class, "connected", true);
+		if(loggedUser != null) {
+			ApplicationSession.getInstance().setLoggedUser(loggedUser);
+			return true;
+		}
+		return false;
+	}
+
+
+
 	public void login(String login, String password) throws LoginException {
 
 		AuthenticationBean authDB = (AuthenticationBean) GenericDao.select(AuthenticationBean.class, "mail", login);
@@ -40,8 +63,16 @@ public class AuthenticationProcessor {
 	}
 
 	public void logout(){
+
+		keepConnected(false);
 		ApplicationSession.getInstance().setLoggedUser(null);
 	}
 
+
+	public void keepConnected(boolean connected) {
+		AuthenticationBean loggedUser = ApplicationSession.getInstance().getLoggedUser();
+		loggedUser.setConnected(connected);
+		GenericDao.update(loggedUser);
+	}
 
 }

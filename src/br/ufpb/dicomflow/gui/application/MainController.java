@@ -1,14 +1,11 @@
 package br.ufpb.dicomflow.gui.application;
 
 import java.io.IOException;
-import java.util.Properties;
 import java.util.ResourceBundle;
 
 import br.ufpb.dicomflow.gui.business.AuthenticationProcessor;
-import br.ufpb.dicomflow.gui.business.ConfigurationProcessor;
 import br.ufpb.dicomflow.gui.business.MessageProcessor;
-import br.ufpb.dicomflow.gui.dao.bean.AuthenticationBean;
-import br.ufpb.dicomflow.gui.exception.LoginException;
+import br.ufpb.dicomflow.gui.exception.MessageException;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -56,7 +53,6 @@ public class MainController implements Initializable {
 
 	@FXML
 	public void exitAction(ActionEvent event){
-		AuthenticationProcessor.getProcessadorAutenticacao().logout();
 		Platform.exit();
 		System.exit(0);
 	}
@@ -73,12 +69,9 @@ public class MainController implements Initializable {
 
 		try {
 
-			AuthenticationBean loggedUser = ApplicationSession.getInstance().getLoggedUser();
-			Properties properties = ConfigurationProcessor.getProcessadorConfiguracao().getProperties(loggedUser.getConfiguration());
+			MessageProcessor.getMessageProcessor().receiveMessages();
 
-			MessageProcessor.receiveMessages(loggedUser, properties);
-
-		} catch (LoginException e) {
+		} catch (MessageException e) {
 			e.printStackTrace();
 		}
 

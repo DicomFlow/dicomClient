@@ -124,9 +124,12 @@ public class GenericDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static <T> List<Persistent> selectAll(Class<T> persistentClass, String property, Object value, int order, String propertyOrder, int page, int max){
+	public static <T> List<Persistent> selectAll(Class<T> persistentClass, String[] properties, Object[] values, int order, String propertyOrder, int page, int max){
 
 		List<Persistent> persistents = new ArrayList<Persistent>();
+		if(properties == null || properties.length == 0 || values == null || values.length == 0 || properties.length != values.length){
+			return persistents;
+		}
 
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
@@ -135,7 +138,10 @@ public class GenericDao {
 		try {
 			transaction = session.beginTransaction();
 			Criteria criteria = session.createCriteria(persistentClass);
-			criteria.add(Restrictions.eq(property, value));
+			for (int i = 0; i < properties.length; i++) {
+				criteria.add(Restrictions.eq(properties[i], values[i]));
+			}
+
 
 			if(order == ASC){
 				criteria.addOrder(Order.asc(propertyOrder));

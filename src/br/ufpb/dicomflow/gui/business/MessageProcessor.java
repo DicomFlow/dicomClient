@@ -1,16 +1,18 @@
 package br.ufpb.dicomflow.gui.business;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
+import br.ufpb.dicomflow.gui.application.ApplicationSession;
 import br.ufpb.dicomflow.gui.dao.GenericDao;
 import br.ufpb.dicomflow.gui.dao.bean.AuthenticationBean;
 import br.ufpb.dicomflow.gui.dao.bean.MessageBean;
 import br.ufpb.dicomflow.gui.dao.bean.Persistent;
-import br.ufpb.dicomflow.gui.exception.LoginException;
+import br.ufpb.dicomflow.gui.exception.MessageException;
 import br.ufpb.dicomflow.integrationAPI.exceptions.ServiceCreationException;
 import br.ufpb.dicomflow.integrationAPI.mail.MailAuthenticatorIF;
 import br.ufpb.dicomflow.integrationAPI.mail.MailContentBuilderIF;
@@ -23,7 +25,6 @@ import br.ufpb.dicomflow.integrationAPI.mail.impl.MailHeadBuilderFactory;
 import br.ufpb.dicomflow.integrationAPI.mail.impl.SMTPAuthenticator;
 import br.ufpb.dicomflow.integrationAPI.mail.impl.SMTPFilter;
 import br.ufpb.dicomflow.integrationAPI.mail.impl.SMTPMessageReader;
-import br.ufpb.dicomflow.integrationAPI.mail.impl.SMTPReceiver;
 import br.ufpb.dicomflow.integrationAPI.mail.impl.SMTPServiceExtractor;
 import br.ufpb.dicomflow.integrationAPI.main.ServiceFactory;
 import br.ufpb.dicomflow.integrationAPI.main.ServiceProcessor;
@@ -33,6 +34,7 @@ import br.ufpb.dicomflow.integrationAPI.message.xml.RequestResult;
 import br.ufpb.dicomflow.integrationAPI.message.xml.Result;
 import br.ufpb.dicomflow.integrationAPI.message.xml.ServiceIF;
 import br.ufpb.dicomflow.utils.CryptographyUtil;
+import br.ufpb.dicomflow.utils.FileUtil;
 public class MessageProcessor {
 
 	//SMTP Properties
@@ -61,45 +63,60 @@ public class MessageProcessor {
 	public static final int FIRST_PAGE = 0;
 	public static final int DEFAULT_MAX = 20;
 
-
-	public static List<MessageBean> receiveMessages(AuthenticationBean authenticationBean, Properties properties) throws LoginException {
-
-		Properties receiveProperties = new Properties();
-		receiveProperties.put(MAIL_IMAP_SOCKET_FACTORY_CLASS, properties.getProperty(MAIL_IMAP_SOCKET_FACTORY_CLASS));
-		receiveProperties.put(MAIL_IMAP_SOCKET_FACTORY_FALLBACK, properties.getProperty(MAIL_IMAP_SOCKET_FACTORY_FALLBACK));
-		receiveProperties.put(MAIL_STORE_PROTOCOL, properties.getProperty(MAIL_STORE_PROTOCOL));
-
-		MailAuthenticatorIF smtpAuthenticatorStrategy =  new SMTPAuthenticator(authenticationBean.getMail(), CryptographyUtil.decryptPBEWithMD5AndDES(authenticationBean.getPassword()));
-		MailMessageReaderIF smtpMesssaStrategy = new SMTPMessageReader( properties.getProperty(PROVIDER_HOST), properties.getProperty(PROVIDER_FOLDER));
-		MailServiceExtractorIF serviceExtractor = new SMTPServiceExtractor();
-		SMTPReceiver receiver = new SMTPReceiver();
-		receiver.setProperties(receiveProperties);
-		receiver.setAuthenticatorBuilder(smtpAuthenticatorStrategy);
-		receiver.setMessageReader(smtpMesssaStrategy);
-		receiver.setServiceExtractor(serviceExtractor);
-
-		SMTPFilter filter = new SMTPFilter();
-		filter.setServiceType(ServiceIF.REQUEST_PUT);
-		filter.setUnreadOnly(true);
-
-		List<MessageIF> messages = receiver.receiveMessages(filter);
+	private static MessageProcessor messageProcessor = new MessageProcessor();
 
 
-		for (MessageIF message: messages) {
+	private MessageProcessor(){
 
-			salvar(authenticationBean, message);
+	}
 
+	public static MessageProcessor getMessageProcessor() {
+		return messageProcessor;
+	}
+
+
+	public List<MessageBean> receiveMessages() throws MessageException {
+
+		try {
+
+			AuthenticationBean authenticationBean = ApplicationSession.getInstance().getLoggedUser();
+			Properties properties = ConfigurationProcessor.getProcessadorConfiguracao().getProperties(authenticationBean.getConfiguration());
+
+			Properties receiveProperties = new Properties();
+			receiveProperties.put(MAIL_IMAP_SOCKET_FACTORY_CLASS, properties.getProperty(MAIL_IMAP_SOCKET_FACTORY_CLASS));
+			receiveProperties.put(MAIL_IMAP_SOCKET_FACTORY_FALLBACK, properties.getProperty(MAIL_IMAP_SOCKET_FACTORY_FALLBACK));
+			receiveProperties.put(MAIL_STORE_PROTOCOL, properties.getProperty(MAIL_STORE_PROTOCOL));
+
+			MailAuthenticatorIF smtpAuthenticatorStrategy =  new SMTPAuthenticator(authenticationBean.getMail(), CryptographyUtil.decryptPBEWithMD5AndDES(authenticationBean.getPassword()));
+			MailMessageReaderIF smtpMesssaStrategy = new SMTPMessageReader( properties.getProperty(PROVIDER_HOST), properties.getProperty(PROVIDER_FOLDER));
+			MailServiceExtractorIF serviceExtractor = new SMTPServiceExtractor();
+
+
+			SMTPFilter filter = new SMTPFilter();
+			filter.setServiceType(ServiceIF.REQUEST_PUT);
+			filter.setUnreadOnly(true);
+
+			List<MessageIF> messages = ServiceProcessor.receiveMessages(receiveProperties, smtpAuthenticatorStrategy, serviceExtractor, smtpMesssaStrategy, filter); // receiver.receiveMessages(filter);
+
+			for (MessageIF message: messages) {
+
+				save(authenticationBean, message);
+
+			}
+
+		} catch (ServiceCreationException e) {
+			e.printStackTrace();
 		}
 
-		//load fisrt page
-		return loadReceivedMessages(FIRST_PAGE, DEFAULT_MAX);
 
-//		return loadRequests();
+		//load first page
+		return loadReceivedMessages(ApplicationSession.getInstance().getLoggedUser(),FIRST_PAGE, DEFAULT_MAX);
+
 
 
 	}
 
-	private static void salvar(AuthenticationBean authenticationBean, MessageIF message) {
+	private void save(AuthenticationBean authenticationBean, MessageIF message) {
 		try {
 
 			MessageBean messageBean = new MessageBean();
@@ -119,11 +136,19 @@ public class MessageProcessor {
 
 	}
 
-	public static List<MessageBean> loadReceivedMessages(int page, int max) {
+	public void changeMessageStatus(Integer id, String status){
+
+		MessageBean message = (MessageBean) GenericDao.select(MessageBean.class, id);
+		message.setStatuss(status);
+		GenericDao.update(message);
+
+	}
+
+	public List<MessageBean> loadReceivedMessages(AuthenticationBean authetication, int page, int max) {
 
 		List<MessageBean> messages = new ArrayList<>();
 
-		List<Persistent> messageBeans = GenericDao.selectAll(MessageBean.class, "typee", MessageBean.RECEIVED, GenericDao.DESC, "idMessage", page, max);
+		List<Persistent> messageBeans = GenericDao.selectAll(MessageBean.class, new String[]{"typee", "authentication"},new Object[]{MessageBean.RECEIVED, authetication}, GenericDao.DESC, "idMessage", page, max);
 
 		Iterator<Persistent> iterator = messageBeans.iterator();
 		while (iterator.hasNext()) {
@@ -138,14 +163,17 @@ public class MessageProcessor {
 
 	}
 
-	public static void enviarExamesLaudos(RequestPut requestPut, String fileName, byte[] bytes) throws LoginException {
+	public void sendReport(MessageBean message, RequestPut requestPut, File filePath) throws MessageException {
+
+		if(!filePath.canExecute()){
+			throw new MessageException("arquivo de laudo não pode ser lido");
+		}
 
 		RequestResult requestResult = (RequestResult) ServiceFactory.createService(ServiceIF.REQUEST_RESULT);
 
 		Data data = new Data();
-		data.setFilename(fileName);
-		//byte[] b = fileName.getBytes();
-		data.setBytes(bytes);
+		data.setFilename(filePath.getName());
+		data.setBytes(FileUtil.getBytes(filePath));
 
 		Result result = new Result();
 		result.setData(data);
@@ -154,30 +182,39 @@ public class MessageProcessor {
 		requestResult.addResult(result);
 
 		try {
-			//TODO - parametrizar propriedades
-			Properties props = new Properties();
-			props.put("mail.imap.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-			props.put("mail.imap.socketFactory.fallback", "false");
-			props.put("mail.store.protocol", "imaps");
-			props.put("mail.debug", "false");
-			props.put("mail.smtp.host", "smtp.gmail.com");
-			props.put("mail.smtp.auth", "true");
-			props.put("mail.smtp.socketFactory.port", "25");
-			props.put("mail.smtp.starttls.enable", "true");
-			props.put("mail.smtp.port", "25");
-			props.put("authentication.login", "protocolointegracao@gmail.com");
-			props.put("authentication.password", "pr0t0c0l0ap1d1c0m");
-			props.put("domain", "gmail.com");
 
-			MailAuthenticatorIF smtpAuthenticatorStrategy =  new SMTPAuthenticator("protocolointegracao@gmail.com", "pr0t0c0l0ap1d1c0m");
+			AuthenticationBean authenticationBean = ApplicationSession.getInstance().getLoggedUser();
+			Properties properties = ConfigurationProcessor.getProcessadorConfiguracao().getProperties(authenticationBean.getConfiguration());
+
+			Properties sendProperties = new Properties();
+			sendProperties.put(DOMAIN, properties.getProperty(DOMAIN));
+			sendProperties.put(MAIL_DEBUG, properties.getProperty(MAIL_DEBUG));
+			sendProperties.put(MAIL_SMTP_HOST, properties.getProperty(MAIL_SMTP_HOST));
+			sendProperties.put(MAIL_SMTP_AUTH, properties.getProperty(MAIL_SMTP_AUTH));
+			sendProperties.put(MAIL_SMTP_SOCKET_FACTORY_PORT, properties.getProperty(MAIL_SMTP_SOCKET_FACTORY_PORT));
+			sendProperties.put(MAIL_SMTP_SOCKET_FACTORY_CLASS, properties.getProperty(MAIL_SMTP_SOCKET_FACTORY_CLASS));
+			sendProperties.put(MAIL_SMTP_SOCKET_FACTORY_FALLBACK, properties.getProperty(MAIL_SMTP_SOCKET_FACTORY_FALLBACK));
+			sendProperties.put(MAIL_SMTP_STARTTLS_ENABLE, properties.getProperty(MAIL_SMTP_STARTTLS_ENABLE));
+			sendProperties.put(MAIL_SMTP_PORT, properties.getProperty(MAIL_SMTP_PORT));
+
+			MailAuthenticatorIF smtpAuthenticatorStrategy =  new SMTPAuthenticator(authenticationBean.getMail(), CryptographyUtil.decryptPBEWithMD5AndDES(authenticationBean.getPassword()));
 			MailHeadBuilderIF mailHeadBuilder =  MailHeadBuilderFactory.createHeadStrategy(MailHeadBuilderIF.SMTP_HEAD_STRATEGY);
-			mailHeadBuilder.setFrom("protocolointegracao@gmail.com");
-			mailHeadBuilder.setTo("protocolointegracao@gmail.com");
+			mailHeadBuilder.setDomain(properties.getProperty(DOMAIN));
+
+			//it's a reply!
+			mailHeadBuilder.setFrom(authenticationBean.getMail());
+			mailHeadBuilder.setTo(message.getFromm());
+
 			MailContentBuilderIF mailContentBuilder = MailContentBuilderFactory.createContentStrategy(MailContentBuilderIF.SMTP_SIMPLE_CONTENT_STRATEGY);
 
-			ServiceProcessor.sendMessage(requestResult, "protocolointegracao@gmail.com", props, smtpAuthenticatorStrategy, mailHeadBuilder, mailContentBuilder);
+			String messageID = ServiceProcessor.sendMessage(requestResult, message.getFromm(), sendProperties, smtpAuthenticatorStrategy, mailHeadBuilder, mailContentBuilder);
+
+			//TODO save request result messages.
+
+
 		} catch (ServiceCreationException e) {
 			e.printStackTrace();
+			throw new MessageException(e.getMessage());
 		}
 
 	}

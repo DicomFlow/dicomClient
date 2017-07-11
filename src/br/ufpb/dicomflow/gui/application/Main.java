@@ -1,5 +1,6 @@
 package br.ufpb.dicomflow.gui.application;
 
+import br.ufpb.dicomflow.gui.business.AuthenticationProcessor;
 import br.ufpb.dicomflow.gui.business.ConfigurationProcessor;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -19,17 +20,28 @@ public class Main extends Application {
 
     	ConfigurationProcessor.getProcessadorConfiguracao().init();
 
-        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
-        Scene scene = new Scene(root, 300, 275);
+    	Scene scene = null;
 
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+    	if(AuthenticationProcessor.getProcessadorAutenticacao().loadLoggedUser()){
+
+    		Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
+            scene = new Scene(root);
+
+    	}else{
+
+	        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+	        scene = new Scene(root, 300, 275);
+
+    	}
+
+
+    	stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent t) {
                 Platform.exit();
                 System.exit(0);
             }
         });
-
         setpStage(stage);
         stage.setTitle("DicomFlow Client");
         stage.setScene(scene);

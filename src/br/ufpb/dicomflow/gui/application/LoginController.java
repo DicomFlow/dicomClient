@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -33,6 +34,9 @@ public class LoginController implements Initializable{
     private Button configButton;
 
     @FXML
+    private CheckBox connectedCheckBox;
+
+    @FXML
     protected void loginAction(ActionEvent event) {
 
     	if(!validate()){
@@ -41,7 +45,8 @@ public class LoginController implements Initializable{
 
 
     	try {
-			AuthenticationProcessor.getProcessadorAutenticacao().login(loginField.getText(), passwordField.getText());
+			AuthenticationProcessor.getProcessadorAutenticacao().login(loginField.getText(), passwordField.getText(), connectedCheckBox.isSelected());
+
 		} catch (LoginException e) {
 			loginErrors.setText(e.getMessage());
 			return;

@@ -14,45 +14,55 @@ import javax.ws.rs.core.Response;
 import org.apache.commons.io.IOUtils;
 import org.glassfish.jersey.client.ClientConfig;
 
-import br.ufpb.dicomflow.gui.exception.LoginException;
+import br.ufpb.dicomflow.gui.application.ApplicationSession;
+import br.ufpb.dicomflow.gui.dao.bean.AuthenticationBean;
+import br.ufpb.dicomflow.gui.exception.DownloadException;
 import br.ufpb.dicomflow.integrationAPI.message.xml.RequestPut;
 
 public class DownloadProcessor {
-	
-	public static String downloadExames(RequestPut requestPut) throws LoginException {
-		
-		try {						
+
+	private static DownloadProcessor downloadProcessor = new DownloadProcessor();
+
+
+	private DownloadProcessor(){
+
+	}
+
+	public static DownloadProcessor getDownloadProcessor() {
+		return downloadProcessor;
+	}
+
+	public String downloadImages(RequestPut requestPut) throws DownloadException{
+
+		try {
 			ClientConfig clientConfig = new ClientConfig();
 			Client client = ClientBuilder.newClient(clientConfig);
-			
-			WebTarget webTarget = client.target(requestPut.getUrl().getValue());									
-			Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_OCTET_STREAM);	
-			
+
+			System.out.println("URL : " + requestPut.getUrl().getValue());
+
+			WebTarget webTarget = client.target(requestPut.getUrl().getValue());
+			Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_OCTET_STREAM);
+
 			Response response = invocationBuilder.get();
-			InputStream is = (InputStream)response.getEntity();		
+			InputStream is = (InputStream)response.getEntity();
 
-			byte[] SWFByteArray = IOUtils.toByteArray(is);  
+			byte[] SWFByteArray = IOUtils.toByteArray(is);
 
-			//TODO download dir
-			String fileName = "c:/temp/" + requestPut.getMessageID() + ".zip";
+			AuthenticationBean authenticationBean = ApplicationSession.getInstance().getLoggedUser();
+
+			String fileName = authenticationBean.getFolder() + File.separator + requestPut.getMessageID() + ".zip";
+
 			FileOutputStream fos = new FileOutputStream(new File(fileName));
-			fos.write(SWFByteArray);			
+			fos.write(SWFByteArray);
 			fos.flush();
-			fos.close();										
-						
+			fos.close();
+
 			return fileName;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			throw new DownloadException(e.getMessage());
 		} finally {
-			
+
 		}
 	}
-
-//	host=10.0.0.1
-//	port=80;
-//	context=dicomMove2/rest
-//	serviceName=DownloadStudy
-//	studyId=2.16.840.1.113669.632.20.1211.10000324479
-//	resultPath=temp/dicomflow/
 }

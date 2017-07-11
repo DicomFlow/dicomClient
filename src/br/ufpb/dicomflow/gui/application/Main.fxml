@@ -80,7 +80,7 @@
 					</font>
 				</Label>
 
-				<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="1">
+				<!--  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="1">
 					<image>
 						<Image url="@img/sent_mail.png" />
 					</image>
@@ -111,7 +111,7 @@
 					<font>
 						<Font name="System Bold" size="14.0" />
 					</font>
-				</Label>
+				</Label> -->
 			</children>
          <opaqueInsets>
             <Insets />
