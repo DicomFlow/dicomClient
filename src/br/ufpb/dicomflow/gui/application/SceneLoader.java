@@ -87,10 +87,10 @@ public class SceneLoader {
 
 	}
 
-	public void installTooltip(Node statusIcon, String tooltipText) {
+	public void installTooltip(Node node, String tooltipText) {
 		Tooltip status = new Tooltip(tooltipText);
 		hackTooltipStartTiming(status);
-		Tooltip.install(statusIcon,status);
+		Tooltip.install(node,status);
 	}
 
 
