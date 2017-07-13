@@ -11,8 +11,11 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeItem;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -76,6 +79,7 @@ public class SceneLoader {
 
 		Pane myPane = FXMLLoader.load(getClass().getResource(fxml));
 		Scene scene = new Scene(myPane);
+		scene.getStylesheets().add(getClass().getResource("css/application.css").toExternalForm());
 
 		Stage stage = Main.getpStage();
 		stage.setTitle(title);
@@ -91,6 +95,18 @@ public class SceneLoader {
 		Tooltip status = new Tooltip(tooltipText);
 		hackTooltipStartTiming(status);
 		Tooltip.install(node,status);
+	}
+
+	public void installGraphic(Label label, String img, double height, double width){
+		Image image = new Image(getClass().getResourceAsStream(img));
+		ImageView imageView = new ImageView(image);
+		imageView.setFitHeight(height);
+		imageView.setFitWidth(width);
+	    label.setGraphic(imageView);
+	}
+
+	public void installInfoGraphic(Label label){
+		installGraphic(label, "img/info.gif", 16.0, 16.0);
 	}
 
 
@@ -135,6 +151,13 @@ public class SceneLoader {
 
 	public void informationAlert(String title, String header, String message){
 		Alert dialogoInfo = new Alert(Alert.AlertType.INFORMATION);
+
+		Image image = new Image(getClass().getResourceAsStream("img/info.gif"));
+		ImageView imageView = new ImageView(image);
+		imageView.setFitHeight(64.0);
+		imageView.setFitWidth(64.0);
+		dialogoInfo.setGraphic(imageView);
+
         dialogoInfo.setTitle(title);
         dialogoInfo.setHeaderText(header);
         dialogoInfo.setContentText(message);

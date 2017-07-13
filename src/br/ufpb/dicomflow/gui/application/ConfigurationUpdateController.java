@@ -19,7 +19,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
@@ -151,19 +150,16 @@ public class ConfigurationUpdateController implements Initializable{
 		List<String> configurationTitles = ConfigurationProcessor.getInstance().getConfigurationTitles();
 		typeField.getItems().addAll(configurationTitles);
 
-		//install tolltip on folderLabel
-		Tooltip tooltip =  new Tooltip("Informe o diretório onde serão armazenados os exames.");
-		SceneLoader.getInstance().hackTooltipStartTiming(tooltip);
-		tooltip.setStyle("-fx-font-weight: bold;");
-		Tooltip.install(folderLabel, tooltip);
+		SceneLoader.getInstance().installTooltip(countryLabel, "Informe a sigla do país. Ex.: Brasil = BR");
+		SceneLoader.getInstance().installInfoGraphic(countryLabel);
 
-		//install tolltip on folderLabel
-		Tooltip tooltip2 =  new Tooltip("Informe para alterar a senha.");
-		SceneLoader.getInstance().hackTooltipStartTiming(tooltip2);
-		tooltip2.setStyle("-fx-font-weight: bold;");
-		Tooltip.install(newPasswordLabel, tooltip2);
+		SceneLoader.getInstance().installTooltip(newPasswordLabel, "Informe para alterar a senha.");
+		SceneLoader.getInstance().installInfoGraphic(newPasswordLabel);
 
-		//install directoryChooser folderField
+
+		SceneLoader.getInstance().installTooltip(folderLabel, "Informe o diretório onde serão armazenados os exames.");
+		SceneLoader.getInstance().installInfoGraphic(folderLabel);
+
 		folderField.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			@Override

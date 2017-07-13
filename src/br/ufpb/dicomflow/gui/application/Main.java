@@ -26,11 +26,13 @@ public class Main extends Application {
 
     		Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
             scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("css/application.css").toExternalForm());
 
     	}else{
 
 	        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
 	        scene = new Scene(root, 300, 275);
+	        scene.getStylesheets().add(getClass().getResource("css/application.css").toExternalForm());
 
     	}
 

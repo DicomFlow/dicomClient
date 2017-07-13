@@ -1,5 +1,7 @@
 package br.ufpb.dicomflow.gui.application;
 
+
+
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
@@ -20,16 +22,17 @@ import br.ufpb.dicomflow.integrationAPI.message.xml.Study;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
@@ -122,16 +125,11 @@ public class ReceivedMessagesController implements Initializable {
 		RequestPut requestPut = (RequestPut) service;
 
 
-
-		ImageView downloadIcon = new ImageView(new Image(getClass().getResourceAsStream("img/cloud-computing.png")));
-		SceneLoader.getInstance().installTooltip(downloadIcon, "Baixar imagens");
-
-		SceneLoader.getInstance().installCursorEvent(downloadIcon);
-
-		downloadIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		Button downloadButton =  new Button("Baixar Imagens");
+		downloadButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
-			public void handle(MouseEvent event) {
+			public void handle(ActionEvent event) {
 				Main.getpStage().getScene().setCursor(Cursor.WAIT);
 
 				try {
@@ -150,13 +148,12 @@ public class ReceivedMessagesController implements Initializable {
 			}
 		});
 
-		ImageView replyIcon = new ImageView(new Image(getClass().getResourceAsStream("img/cloud-computing-1.png")));
-		SceneLoader.getInstance().installTooltip(replyIcon, "Enviar laudo");
 
-		replyIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		Button replyButton =  new Button("Enviar Laudo");
+		replyButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
-			public void handle(MouseEvent event) {
+			public void handle(ActionEvent event) {
 				Main.getpStage().getScene().setCursor(Cursor.WAIT);
 				try {
 
@@ -182,9 +179,7 @@ public class ReceivedMessagesController implements Initializable {
 			}
 		});
 
-		SceneLoader.getInstance().installCursorEvent(replyIcon);
-
-		TreeItem<MessageTreeItem> requestPutTreeItem = new TreeItem<MessageTreeItem>(new MessageTreeItem( new Label("Request-Put: " + requestPut.getMessageID()), downloadIcon, replyIcon));
+		TreeItem<MessageTreeItem> requestPutTreeItem = new TreeItem<MessageTreeItem>(new MessageTreeItem( new Label("Requisição - ID: " + requestPut.getMessageID()), downloadButton, replyButton));
 
 
 		for (Patient patient: requestPut.getUrl().getPatient()) {

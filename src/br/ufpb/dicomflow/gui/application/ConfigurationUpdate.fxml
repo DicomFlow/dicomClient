@@ -17,9 +17,6 @@
 <ScrollPane prefHeight="500.0" prefWidth="613.0">
 <content>
 <GridPane alignment="center" hgap="10" styleClass="background" vgap="10" >
-	<stylesheets>
-		<URL value="@css/application.css" />
-	</stylesheets>
 	<padding>
 		<Insets bottom="10" left="25" right="25" top="25" />
 	</padding>
@@ -87,17 +84,7 @@
 			GridPane.rowIndex="12" />
 
 		<Label fx:id="countryLabel" text="País:" GridPane.columnIndex="0"
-			GridPane.rowIndex="13" >
-			<graphic>
-				<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true"
-					preserveRatio="true">
-					<image>
-						<Image url="@img/info.gif" />
-					</image>
-
-				</ImageView>
-			</graphic>
-		</Label>
+			GridPane.rowIndex="13" />
 		<TextField fx:id="countryField" GridPane.columnIndex="1"
 			GridPane.rowIndex="13" />
 
@@ -105,32 +92,12 @@
 			GridPane.columnIndex="0" GridPane.rowIndex="14" GridPane.columnSpan="2" />
 
 		<Label fx:id="aliasLabel" text="Identificador:" GridPane.columnIndex="0"
-			GridPane.rowIndex="15" >
-			<graphic>
-				<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true"
-					preserveRatio="true">
-					<image>
-						<Image url="@img/info.gif" />
-					</image>
-
-				</ImageView>
-			</graphic>
-		</Label>
+			GridPane.rowIndex="15"/>
 		<TextField fx:id="aliasField" disable="true" GridPane.columnIndex="1"
 			GridPane.rowIndex="15" />
 
 		<Label fx:id="certFolderLabel" text="Pasta de certificados:"
-			GridPane.columnIndex="0" GridPane.rowIndex="16">
-			<graphic>
-				<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true"
-					preserveRatio="true">
-					<image>
-						<Image url="@img/info.gif" />
-					</image>
-
-				</ImageView>
-			</graphic>
-		</Label>
+			GridPane.columnIndex="0" GridPane.rowIndex="16"/>
 		<TextField fx:id="certFolderField" disable="true" GridPane.columnIndex="1"
 			GridPane.rowIndex="16" />
 
@@ -138,16 +105,7 @@
 			GridPane.columnIndex="0" GridPane.rowIndex="17" GridPane.columnSpan="2" />
 
 
-		<Label fx:id="folderLabel" text="Pasta de recebimento:" GridPane.columnIndex="0" GridPane.rowIndex="18">
-			<graphic>
-			<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-				<image>
-					<Image url="@img/info.gif" />
-				</image>
-
-			</ImageView>
-			</graphic>
-		</Label>
+		<Label fx:id="folderLabel" text="Pasta de recebimento:" GridPane.columnIndex="0" GridPane.rowIndex="18"/>
 		<TextField fx:id="folderField" GridPane.columnIndex="1" GridPane.rowIndex="18" />
 
 		<HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="19">

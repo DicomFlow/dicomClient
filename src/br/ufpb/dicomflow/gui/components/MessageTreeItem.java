@@ -1,6 +1,8 @@
 package br.ufpb.dicomflow.gui.components;
 
+
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -13,8 +15,8 @@ public class MessageTreeItem extends HBox {
 	private Integer idMessage;
 
 	private Label idMessageText;
-	private ImageView downloadImage;
-	private ImageView replyImage;
+	private Button downloadButton;
+	private Button replyButton;
 
 	private Label nameText;
 	private Label genderText;
@@ -42,14 +44,14 @@ public class MessageTreeItem extends HBox {
 		this.setAlignment(Pos.CENTER_LEFT);
 	}
 
-	public MessageTreeItem(Label idMessageText, ImageView downloadButton, ImageView replyImage) {
+	public MessageTreeItem(Label idMessageText, Button downloadButton, Button replyButton) {
 		super(5);
 
 		this.idMessageText = idMessageText;
-		this.downloadImage = downloadButton;
-		this.replyImage = replyImage;
+		this.downloadButton = downloadButton;
+		this.replyButton = replyButton;
 
-		this.getChildren().addAll(this.idMessageText, this.downloadImage, this.replyImage);
+		this.getChildren().addAll(this.idMessageText, this.downloadButton, this.replyButton);
 		this.setAlignment(Pos.CENTER_LEFT);
 	}
 
@@ -106,28 +108,12 @@ public class MessageTreeItem extends HBox {
 		this.subjectText = subjectText;
 	}
 
-	public ImageView getDownloadImage() {
-		return downloadImage;
-	}
-
-	public void setDownloadImage(ImageView downloadImage) {
-		this.downloadImage = downloadImage;
-	}
-
 	public ImageView getStatusImage() {
 		return statusImage;
 	}
 
 	public void setStatusImage(ImageView statusImage) {
 		this.statusImage = statusImage;
-	}
-
-	public ImageView getReplyImage() {
-		return replyImage;
-	}
-
-	public void setReplyImage(ImageView replyImage) {
-		this.replyImage = replyImage;
 	}
 
 	public Label getIdMessageText() {

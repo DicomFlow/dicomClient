@@ -150,12 +150,16 @@ public class ConfigurationController implements Initializable{
 		typeField.getItems().addAll(configurationTitles);
 
 		SceneLoader.getInstance().installTooltip(aliasLabel, "O identificador do certificado digital que será criado e associado ao seu e-mail. Use apenas letras e números");
+		SceneLoader.getInstance().installInfoGraphic(aliasLabel);
 
 		SceneLoader.getInstance().installTooltip(countryLabel, "Informe a sigla do país. Ex.: Brasil = BR");
+		SceneLoader.getInstance().installInfoGraphic(countryLabel);
 
 		SceneLoader.getInstance().installTooltip(certFolderLabel, "Informe o diretório onde sera armazenado o certificado digital.");
+		SceneLoader.getInstance().installInfoGraphic(certFolderLabel);
 
 		SceneLoader.getInstance().installTooltip(folderLabel, "Informe o diretório onde serão armazenados os exames.");
+		SceneLoader.getInstance().installInfoGraphic(folderLabel);
 
 		certFolderField.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
