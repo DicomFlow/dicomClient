@@ -24,12 +24,12 @@ public class Main extends Application {
 
     	if(AuthenticationProcessor.getInstance().loadLoggedUser()){
 
-    		Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
+    		Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
             scene = new Scene(root);
 
     	}else{
 
-	        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+	        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
 	        scene = new Scene(root, 300, 275);
 
     	}
