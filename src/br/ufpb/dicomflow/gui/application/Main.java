@@ -1,5 +1,7 @@
 package br.ufpb.dicomflow.gui.application;
 
+import br.ufpb.dicomflow.gui.business.AuthenticationProcessor;
+import br.ufpb.dicomflow.gui.business.ConfigurationProcessor;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -10,28 +12,41 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class Main extends Application {
-	
+
 	private static Stage pStage;
-	
+
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
-        
-        Scene scene = new Scene(root, 300, 275);
-        
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+
+    	ConfigurationProcessor.getInstance().init();
+
+    	Scene scene = null;
+
+    	if(AuthenticationProcessor.getInstance().loadLoggedUser()){
+
+    		Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
+            scene = new Scene(root);
+
+    	}else{
+
+	        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+	        scene = new Scene(root, 300, 275);
+
+    	}
+
+
+    	stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent t) {
                 Platform.exit();
                 System.exit(0);
             }
         });
-        
         setpStage(stage);
         stage.setTitle("DicomFlow Client");
         stage.setScene(scene);
         stage.show();
-        
+
     }
 
     /**
@@ -47,6 +62,6 @@ public class Main extends Application {
 
 	public static void setpStage(Stage pStage) {
 		Main.pStage = pStage;
-	}        
-    
+	}
+
 }
