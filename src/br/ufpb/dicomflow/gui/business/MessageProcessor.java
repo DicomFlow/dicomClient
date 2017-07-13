@@ -181,8 +181,8 @@ public class MessageProcessor {
 		data.setBytes(FileUtil.getBytes(filePath));
 
 		Completed completed = new Completed();
-		completed.setStatus(Completed.STATUS_MESSAGE);
-		completed.setCompletedMessage(Completed.SUCCESS_MESSAGE);
+		completed.setStatus(Completed.SUCCESS);
+		completed.setCompletedMessage(Completed.SUCCESS);
 
 		Result result = new Result();
 		result.setData(data);
