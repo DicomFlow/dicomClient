@@ -10,7 +10,9 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -27,10 +29,15 @@ public class MainController implements Initializable {
 	private TextField searchTextField;
 
 	@FXML
+	private Label receivedLabel;
+
+	@FXML
 	private AnchorPane anchorPane;
 
 	@Override
 	public void initialize(java.net.URL arg0, ResourceBundle arg1) {
+
+		SceneLoader.getInstance().installCursorEvent(receivedLabel);
 		orderByComboBox.getItems().addAll(DATE_ORDER,FROM_ORDER, TO_ORDER, SUBJECT_ORDER);
 
 		anchorPane.getChildren().clear();
@@ -66,17 +73,19 @@ public class MainController implements Initializable {
 
 	@FXML
 	public void loadReceivedAction(MouseEvent event){
-
+		Main.getpStage().getScene().setCursor(Cursor.WAIT);
 		try {
 
 			MessageProcessor.getInstance().receiveMessages();
 
 		} catch (MessageException e) {
+			Main.getpStage().getScene().setCursor(Cursor.DEFAULT);
 			e.printStackTrace();
 		}
 
 		anchorPane.getChildren().clear();
 		anchorPane.getChildren().add(SceneLoader.getInstance().getNode(SceneLoader.RECEIVED_MESSAGES_SCENE));
+		Main.getpStage().getScene().setCursor(Cursor.DEFAULT);
 	}
 
 	@FXML

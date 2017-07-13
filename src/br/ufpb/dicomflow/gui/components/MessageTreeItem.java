@@ -84,7 +84,7 @@ public class MessageTreeItem extends HBox {
 		this.descriptionText = descriptionText;
 		this.studyImage = studyImage;
 
-		this.getChildren().addAll(this.descriptionText, this.studyImage);
+		this.getChildren().addAll(this.studyImage, this.descriptionText);
 		this.setAlignment(Pos.CENTER_LEFT);
 	}
 

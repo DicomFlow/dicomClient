@@ -23,6 +23,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -131,6 +132,7 @@ public class ReceivedMessagesController implements Initializable {
 
 			@Override
 			public void handle(MouseEvent event) {
+				Main.getpStage().getScene().setCursor(Cursor.WAIT);
 
 				try {
 					String filename = DownloadProcessor.getInstance().downloadImages(requestPut);
@@ -138,9 +140,12 @@ public class ReceivedMessagesController implements Initializable {
 					SceneLoader.getInstance().informationAlert("Download", "Informação", "Download efetudo em: " + filename);
 
 				} catch (DownloadException e) {
+					Main.getpStage().getScene().setCursor(Cursor.DEFAULT);
 					e.printStackTrace();
 					SceneLoader.getInstance().informationAlert("Download", "Erro", e.getMessage());
 				}
+
+				Main.getpStage().getScene().setCursor(Cursor.DEFAULT);
 
 			}
 		});
@@ -152,7 +157,7 @@ public class ReceivedMessagesController implements Initializable {
 
 			@Override
 			public void handle(MouseEvent event) {
-
+				Main.getpStage().getScene().setCursor(Cursor.WAIT);
 				try {
 
 					FileChooser directoryChooser = new FileChooser();
@@ -167,9 +172,12 @@ public class ReceivedMessagesController implements Initializable {
 		            }
 
 				} catch (MessageException e) {
+					Main.getpStage().getScene().setCursor(Cursor.DEFAULT);
 					e.printStackTrace();
 					SceneLoader.getInstance().informationAlert("Laudo", "Erro", e.getMessage());
 				}
+
+				Main.getpStage().getScene().setCursor(Cursor.DEFAULT);
 
 			}
 		});

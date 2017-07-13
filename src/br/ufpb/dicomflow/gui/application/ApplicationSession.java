@@ -1,12 +1,6 @@
 package br.ufpb.dicomflow.gui.application;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import br.ufpb.dicomflow.gui.components.ArquivosExame;
 import br.ufpb.dicomflow.gui.dao.bean.AuthenticationBean;
-import br.ufpb.dicomflow.integrationAPI.message.xml.RequestPut;
 
 public class ApplicationSession {
 
@@ -16,10 +10,6 @@ public class ApplicationSession {
 //	private Log log = LogFactory.getLog("RestauranteUniversitarioDesktop");
 
 	private AuthenticationBean loggedUser;
-
-	List<RequestPut> localMessages = new ArrayList<RequestPut>();
-	List<RequestPut> newMessages = new ArrayList<RequestPut>();
-	HashMap<String, ArquivosExame> arquivosExameMap = new HashMap<String, ArquivosExame>();
 
 	protected ApplicationSession() {
 	}

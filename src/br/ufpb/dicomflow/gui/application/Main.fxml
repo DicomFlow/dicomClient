@@ -74,7 +74,7 @@
 						<Image url="@img/received_mail.png" />
 					</image>
 				</ImageView>
-				<Label onMouseClicked="#loadReceivedAction" text="Recebidos" GridPane.columnIndex="1" GridPane.rowIndex="0">
+				<Label fx:id="receivedLabel" onMouseClicked="#loadReceivedAction" text="Recebidos" GridPane.columnIndex="1" GridPane.rowIndex="0">
 					<font>
 						<Font name="System Bold" size="14.0" />
 					</font>
