@@ -47,6 +47,39 @@ public class ConfigurationUpdateController implements Initializable{
     private PasswordField rePasswordField;
 
     @FXML
+    private Label aliasLabel;
+
+    @FXML
+    private TextField aliasField;
+
+    @FXML
+    private TextField nameField;
+
+    @FXML
+    private TextField departamentField;
+
+    @FXML
+    private TextField organizationField;
+
+    @FXML
+    private TextField locationField;
+
+    @FXML
+    private TextField stateField;
+
+    @FXML
+    private Label countryLabel;
+
+    @FXML
+    private TextField countryField;
+
+    @FXML
+    private Label certFolderLabel;
+
+    @FXML
+    private TextField certFolderField;
+
+    @FXML
     private Label folderLabel;
 
     @FXML
@@ -64,7 +97,7 @@ public class ConfigurationUpdateController implements Initializable{
 
     	//no login, no update
     	try {
-			AuthenticationProcessor.getProcessadorAutenticacao().login(mailField.getText(), passwordField.getText());
+			AuthenticationProcessor.getInstance().login(mailField.getText(), passwordField.getText());
 		} catch (LoginException e) {
 			configAlerts.setText("A senha atual está incorreta.");
 			return;
@@ -73,10 +106,9 @@ public class ConfigurationUpdateController implements Initializable{
     	try {
 
     		String password = !ValidationFields.checkEmptyFields(newPasswordField) ?  newPasswordField.getText() : passwordField.getText();
-    		System.out.println("Atualizando password : " + password);
-			ConfigurationProcessor.getProcessadorConfiguracao().updateConfiguration(mailField.getText(), password, typeField.getValue(), folderField.getText());
+			ConfigurationProcessor.getInstance().updateConfiguration(mailField.getText(), password, typeField.getValue(), folderField.getText(), nameField.getText(), departamentField.getText(), organizationField.getText(), locationField.getText(), stateField.getText(), countryField.getText());
 
-			AuthenticationProcessor.getProcessadorAutenticacao().login(mailField.getText(), password);
+			AuthenticationProcessor.getInstance().login(mailField.getText(), password);
 
     	} catch (ConfigurationException e) {
 			configAlerts.setText(e.getMessage());
@@ -92,9 +124,13 @@ public class ConfigurationUpdateController implements Initializable{
 
     private boolean validate() {
 
-    	if(!ValidationFields.checkRqueridFields(passwordField, folderField)){
+    	if(!ValidationFields.checkRqueridFields(passwordField, folderField, nameField, departamentField, organizationField, locationField, stateField, countryField)){
 			return false;
 		}
+
+    	if(!ValidationFields.checkCountryFormat(countryField)){
+    		return false;
+    	}
 
     	if(!ValidationFields.checkEmptyFields(newPasswordField)){
 	    	if(!ValidationFields.checkPasswordEquals(newPasswordField, rePasswordField)){
@@ -112,18 +148,18 @@ public class ConfigurationUpdateController implements Initializable{
 		loadConfiguration();
 
 		//initialize comboBox
-		List<String> configurationTitles = ConfigurationProcessor.getProcessadorConfiguracao().getConfigurationTitles();
+		List<String> configurationTitles = ConfigurationProcessor.getInstance().getConfigurationTitles();
 		typeField.getItems().addAll(configurationTitles);
 
 		//install tolltip on folderLabel
 		Tooltip tooltip =  new Tooltip("Informe o diretório onde serão armazenados os exames.");
-		SceneLoader.getSceneLoader().hackTooltipStartTiming(tooltip);
+		SceneLoader.getInstance().hackTooltipStartTiming(tooltip);
 		tooltip.setStyle("-fx-font-weight: bold;");
 		Tooltip.install(folderLabel, tooltip);
 
 		//install tolltip on folderLabel
 		Tooltip tooltip2 =  new Tooltip("Informe para alterar a senha.");
-		SceneLoader.getSceneLoader().hackTooltipStartTiming(tooltip2);
+		SceneLoader.getInstance().hackTooltipStartTiming(tooltip2);
 		tooltip2.setStyle("-fx-font-weight: bold;");
 		Tooltip.install(newPasswordLabel, tooltip2);
 
@@ -151,6 +187,14 @@ public class ConfigurationUpdateController implements Initializable{
 			typeField.setValue(loggedAuthentication.getConfiguration().getTitle());
 			mailField.setText(loggedAuthentication.getMail());
 			folderField.setText(loggedAuthentication.getFolder());
+			nameField.setText(loggedAuthentication.getName());
+			departamentField.setText(loggedAuthentication.getDepartament());
+			organizationField.setText(loggedAuthentication.getOrganization());
+			locationField.setText(loggedAuthentication.getLocation());
+			stateField.setText(loggedAuthentication.getState());
+			countryField.setText(loggedAuthentication.getCountry());
+			aliasField.setText(loggedAuthentication.getAlias());
+			certFolderField.setText(loggedAuthentication.getCertFolder());
 		}
 	}
 

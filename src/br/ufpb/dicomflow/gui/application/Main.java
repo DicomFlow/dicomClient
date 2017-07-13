@@ -18,11 +18,11 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-    	ConfigurationProcessor.getProcessadorConfiguracao().init();
+    	ConfigurationProcessor.getInstance().init();
 
     	Scene scene = null;
 
-    	if(AuthenticationProcessor.getProcessadorAutenticacao().loadLoggedUser()){
+    	if(AuthenticationProcessor.getInstance().loadLoggedUser()){
 
     		Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
             scene = new Scene(root);

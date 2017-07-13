@@ -28,12 +28,16 @@
 		<property name="javax.persistence.validation.mode">none</property>
 
 		<mapping class="br.ufpb.dicomflow.gui.dao.bean.AuthenticationBean"></mapping>
+		<mapping class="br.ufpb.dicomflow.gui.dao.bean.CompletedBean"></mapping>
 		<mapping class="br.ufpb.dicomflow.gui.dao.bean.ConfigurationBean"></mapping>
 		<mapping class="br.ufpb.dicomflow.gui.dao.bean.CredentialsBean"></mapping>
+		<mapping class="br.ufpb.dicomflow.gui.dao.bean.DataBean"></mapping>
 		<mapping class="br.ufpb.dicomflow.gui.dao.bean.MessageBean"></mapping>
 		<mapping class="br.ufpb.dicomflow.gui.dao.bean.PatientBean"></mapping>
 		<mapping class="br.ufpb.dicomflow.gui.dao.bean.PropertyBean"></mapping>
 		<mapping class="br.ufpb.dicomflow.gui.dao.bean.RequestPutBean"></mapping>
+		<mapping class="br.ufpb.dicomflow.gui.dao.bean.RequestResultBean"></mapping>
+		<mapping class="br.ufpb.dicomflow.gui.dao.bean.ResultBean"></mapping>
 		<mapping class="br.ufpb.dicomflow.gui.dao.bean.SerieBean"></mapping>
 		<mapping class="br.ufpb.dicomflow.gui.dao.bean.ServiceBean"></mapping>
 		<mapping class="br.ufpb.dicomflow.gui.dao.bean.StudyBean"></mapping>

@@ -22,15 +22,15 @@ public class ConfigurationProcessor {
 
 	private final String GMAIL_PROPERTIES = "gmail.properties";
 
-	private static ConfigurationProcessor processadorConfiguracao = new ConfigurationProcessor();
+	private static ConfigurationProcessor configurationProcessor = new ConfigurationProcessor();
 
 
 	private ConfigurationProcessor(){
 
 	}
 
-	public static ConfigurationProcessor getProcessadorConfiguracao() {
-		return processadorConfiguracao;
+	public static ConfigurationProcessor getInstance() {
+		return configurationProcessor;
 	}
 
 	public  void init(){
@@ -64,18 +64,18 @@ public class ConfigurationProcessor {
 
 	}
 
-	private void updateProperties(ConfigurationBean configurationBean, String configFile) {
-
-		//remove old properties
-		List<Persistent> propertyBeans = GenericDao.selectAll(PropertyBean.class, "configuration", configurationBean);
-		GenericDao.deleteAll(propertyBeans);
-
-		//insert new properties
-		configurationBean.setProperties(getPropertyBeans(configFile));
-		GenericDao.update(configurationBean);
-
-
-	}
+//	private void updateProperties(ConfigurationBean configurationBean, String configFile) {
+//
+//		//remove old properties
+//		List<Persistent> propertyBeans = GenericDao.selectAll(PropertyBean.class, "configuration", configurationBean);
+//		GenericDao.deleteAll(propertyBeans);
+//
+//		//insert new properties
+//		configurationBean.setProperties(getPropertyBeans(configFile));
+//		GenericDao.update(configurationBean);
+//
+//
+//	}
 
 	private List<PropertyBean> getPropertyBeans(String configFile) {
 		List<PropertyBean> propertyBeans = new ArrayList<>();
@@ -149,7 +149,7 @@ public class ConfigurationProcessor {
 
 	}
 
-	public void saveConfiguration(String mail, String password, String title, String folder) throws ConfigurationException{
+	public void saveConfiguration(String mail, String password, String title, String folder, String alias, String name, String departament, String organization, String location, String state, String country, String certFolder) throws ConfigurationException{
 		AuthenticationBean authDB = (AuthenticationBean) GenericDao.select(AuthenticationBean.class, "mail", mail);
     	if(authDB != null){
     		throw new ConfigurationException("E-mail já configurado.");
@@ -170,12 +170,20 @@ public class ConfigurationProcessor {
     	auth.setMail(mail);
     	auth.setPassword(encryptedPassword);
     	auth.setFolder(folder);
+    	auth.setAlias(alias);
+    	auth.setName(name);
+    	auth.setDepartament(departament);
+    	auth.setOrganization(organization);
+    	auth.setLocation(location);
+    	auth.setState(state);
+    	auth.setCountry(country);
+    	auth.setCertFolder(certFolder);
     	auth.setConfiguration(configuration);
 
     	GenericDao.save(auth);
 	}
 
-	public void updateConfiguration(String mail, String password, String title, String folder) throws ConfigurationException{
+	public void updateConfiguration(String mail, String password, String title, String folder, String name, String departament, String organization, String location, String state, String country) throws ConfigurationException{
 		AuthenticationBean authDB = (AuthenticationBean) GenericDao.select(AuthenticationBean.class, "mail", mail);
 		if(authDB == null){
     		throw new ConfigurationException("Não foi possível atualizar as configurações.");
@@ -196,6 +204,12 @@ public class ConfigurationProcessor {
     	authDB.setMail(mail);
     	authDB.setPassword(encryptedPassword);
     	authDB.setFolder(folder);
+    	authDB.setName(name);
+    	authDB.setDepartament(departament);
+    	authDB.setOrganization(organization);
+    	authDB.setLocation(location);
+    	authDB.setState(state);
+    	authDB.setCountry(country);
     	authDB.setConfiguration(configuration);
 
     	GenericDao.update(authDB);

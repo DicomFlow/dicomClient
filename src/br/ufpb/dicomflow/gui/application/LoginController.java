@@ -45,7 +45,7 @@ public class LoginController implements Initializable{
 
 
     	try {
-			AuthenticationProcessor.getProcessadorAutenticacao().login(loginField.getText(), passwordField.getText(), connectedCheckBox.isSelected());
+			AuthenticationProcessor.getInstance().login(loginField.getText(), passwordField.getText(), connectedCheckBox.isSelected());
 
 		} catch (LoginException e) {
 			loginErrors.setText(e.getMessage());
@@ -55,7 +55,7 @@ public class LoginController implements Initializable{
 
 
     	try {
-    		SceneLoader.getSceneLoader().loadMainScene();
+    		SceneLoader.getInstance().loadMainScene();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -82,7 +82,7 @@ public class LoginController implements Initializable{
     protected void configAction(ActionEvent event) {
 
     	try {
-    		SceneLoader.getSceneLoader().loadConfigScene();
+    		SceneLoader.getInstance().loadConfigScene();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

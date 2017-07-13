@@ -34,7 +34,7 @@ public class SceneLoader {
 	}
 
 
-	public static SceneLoader getSceneLoader(){
+	public static SceneLoader getInstance(){
 		return sceneLoader;
 	}
 

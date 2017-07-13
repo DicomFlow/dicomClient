@@ -34,17 +34,17 @@ public class MainController implements Initializable {
 		orderByComboBox.getItems().addAll(DATE_ORDER,FROM_ORDER, TO_ORDER, SUBJECT_ORDER);
 
 		anchorPane.getChildren().clear();
-		anchorPane.getChildren().add(SceneLoader.getSceneLoader().getNode(SceneLoader.RECEIVED_MESSAGES_SCENE));
+		anchorPane.getChildren().add(SceneLoader.getInstance().getNode(SceneLoader.RECEIVED_MESSAGES_SCENE));
 
 
 	}
 
 	@FXML
 	public void logoutAction(ActionEvent event){
-		AuthenticationProcessor.getProcessadorAutenticacao().logout();
+		AuthenticationProcessor.getInstance().logout();
 
 		try {
-			SceneLoader.getSceneLoader().loadLoginScene();
+			SceneLoader.getInstance().loadLoginScene();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -60,7 +60,7 @@ public class MainController implements Initializable {
 	@FXML
 	public void configAction(ActionEvent event){
 		anchorPane.getChildren().clear();
-		anchorPane.getChildren().add(SceneLoader.getSceneLoader().getNode(SceneLoader.CONFIG_UPDATE_SCENE));
+		anchorPane.getChildren().add(SceneLoader.getInstance().getNode(SceneLoader.CONFIG_UPDATE_SCENE));
 
 	}
 
@@ -69,14 +69,14 @@ public class MainController implements Initializable {
 
 		try {
 
-			MessageProcessor.getMessageProcessor().receiveMessages();
+			MessageProcessor.getInstance().receiveMessages();
 
 		} catch (MessageException e) {
 			e.printStackTrace();
 		}
 
 		anchorPane.getChildren().clear();
-		anchorPane.getChildren().add(SceneLoader.getSceneLoader().getNode(SceneLoader.RECEIVED_MESSAGES_SCENE));
+		anchorPane.getChildren().add(SceneLoader.getInstance().getNode(SceneLoader.RECEIVED_MESSAGES_SCENE));
 	}
 
 	@FXML

@@ -63,20 +63,20 @@ public class ReceivedMessagesController implements Initializable {
 					if(bproperty.getValue()){
 
 						//update status
-						MessageProcessor.getMessageProcessor().changeMessageStatus(messageTreeItem.getValue().getIdMessage(), MessageBean.READ);
+						MessageProcessor.getInstance().changeMessageStatus(messageTreeItem.getValue().getIdMessage(), MessageBean.READ);
 
 						ImageView statusIcon = messageTreeItem.getValue().getStatusImage();
 						statusIcon.setImage(new Image(getClass().getResourceAsStream("img/reading_16.png")));
-						SceneLoader.getSceneLoader().installTooltip(statusIcon, "Lida");
+						SceneLoader.getInstance().installTooltip(statusIcon, "Lida");
 
 						//expand treeView
 						treeView.setPrefHeight(EXPAND_TREVIEW);
-						SceneLoader.getSceneLoader().expandTreeView(messageTreeItem);
+						SceneLoader.getInstance().expandTreeView(messageTreeItem);
 					}else{
 
 						//collapse treeView
 						treeView.setPrefHeight(COLLAPSE_TREVIEW);
-						SceneLoader.getSceneLoader().collapseTreeView(messageTreeItem);
+						SceneLoader.getInstance().collapseTreeView(messageTreeItem);
 					}
 				}
 			});
@@ -123,9 +123,9 @@ public class ReceivedMessagesController implements Initializable {
 
 
 		ImageView downloadIcon = new ImageView(new Image(getClass().getResourceAsStream("img/cloud-computing.png")));
-		SceneLoader.getSceneLoader().installTooltip(downloadIcon, "Baixar imagens");
+		SceneLoader.getInstance().installTooltip(downloadIcon, "Baixar imagens");
 
-		SceneLoader.getSceneLoader().installCursorEvent(downloadIcon);
+		SceneLoader.getInstance().installCursorEvent(downloadIcon);
 
 		downloadIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
@@ -133,20 +133,20 @@ public class ReceivedMessagesController implements Initializable {
 			public void handle(MouseEvent event) {
 
 				try {
-					String filename = DownloadProcessor.getDownloadProcessor().downloadImages(requestPut);
+					String filename = DownloadProcessor.getInstance().downloadImages(requestPut);
 
-					SceneLoader.getSceneLoader().informationAlert("Download", "Informação", "Download efetudo em: " + filename);
+					SceneLoader.getInstance().informationAlert("Download", "Informação", "Download efetudo em: " + filename);
 
 				} catch (DownloadException e) {
 					e.printStackTrace();
-					SceneLoader.getSceneLoader().informationAlert("Download", "Erro", e.getMessage());
+					SceneLoader.getInstance().informationAlert("Download", "Erro", e.getMessage());
 				}
 
 			}
 		});
 
 		ImageView replyIcon = new ImageView(new Image(getClass().getResourceAsStream("img/cloud-computing-1.png")));
-		SceneLoader.getSceneLoader().installTooltip(replyIcon, "Enviar laudo");
+		SceneLoader.getInstance().installTooltip(replyIcon, "Enviar laudo");
 
 		replyIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
@@ -161,20 +161,20 @@ public class ReceivedMessagesController implements Initializable {
 
 		            if(selectedFile != null){
 
-		            	MessageProcessor.getMessageProcessor().sendReport(messageBean, requestPut, selectedFile);
+		            	MessageProcessor.getInstance().sendReport(messageBean, requestPut, selectedFile);
 
-		            	SceneLoader.getSceneLoader().informationAlert("Laudo", "Informação", "Laudo enviado com sucesso.");
+		            	SceneLoader.getInstance().informationAlert("Laudo", "Informação", "Laudo enviado com sucesso.");
 		            }
 
 				} catch (MessageException e) {
 					e.printStackTrace();
-					SceneLoader.getSceneLoader().informationAlert("Laudo", "Erro", e.getMessage());
+					SceneLoader.getInstance().informationAlert("Laudo", "Erro", e.getMessage());
 				}
 
 			}
 		});
 
-		SceneLoader.getSceneLoader().installCursorEvent(replyIcon);
+		SceneLoader.getInstance().installCursorEvent(replyIcon);
 
 		TreeItem<MessageTreeItem> requestPutTreeItem = new TreeItem<MessageTreeItem>(new MessageTreeItem( new Label("Request-Put: " + requestPut.getMessageID()), downloadIcon, replyIcon));
 
@@ -197,7 +197,7 @@ public class ReceivedMessagesController implements Initializable {
 		ImageView statusIcon = new ImageView(new Image(getClass().getResourceAsStream(image)));
 
 		String tooltipText = messageBean.getStatuss().equals(MessageBean.UNREAD) ? "Não lida" : "Lida";
-		SceneLoader.getSceneLoader().installTooltip(statusIcon, tooltipText);
+		SceneLoader.getInstance().installTooltip(statusIcon, tooltipText);
 
 		TreeItem<MessageTreeItem> messageTreeItem  = new TreeItem<MessageTreeItem>(new MessageTreeItem( new Label(messageBean.getFromm()), new Label(messageBean.getSubjectt()),statusIcon, messageBean.getIdentifierValue()));
 		return messageTreeItem;
@@ -208,7 +208,7 @@ public class ReceivedMessagesController implements Initializable {
 	public List<MessageBean> loadMessages(){
 
 
-		List<MessageBean> messages = MessageProcessor.getMessageProcessor().loadReceivedMessages(ApplicationSession.getInstance().getLoggedUser(), MessageProcessor.FIRST_PAGE, MessageProcessor.DEFAULT_MAX);
+		List<MessageBean> messages = MessageProcessor.getInstance().loadReceivedMessages(ApplicationSession.getInstance().getLoggedUser(), MessageProcessor.FIRST_PAGE, MessageProcessor.DEFAULT_MAX);
 		return messages;
 
 	}

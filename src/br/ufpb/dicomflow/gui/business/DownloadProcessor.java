@@ -28,7 +28,7 @@ public class DownloadProcessor {
 
 	}
 
-	public static DownloadProcessor getDownloadProcessor() {
+	public static DownloadProcessor getInstance() {
 		return downloadProcessor;
 	}
 

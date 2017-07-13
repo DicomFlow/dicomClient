@@ -8,15 +8,15 @@ import br.ufpb.dicomflow.utils.CryptographyUtil;
 
 public class AuthenticationProcessor {
 
-	private static AuthenticationProcessor processadorAutenticacao = new AuthenticationProcessor();
+	private static AuthenticationProcessor authenticationProcessor = new AuthenticationProcessor();
 
 
 	private AuthenticationProcessor(){
 
 	}
 
-	public static AuthenticationProcessor getProcessadorAutenticacao() {
-		return processadorAutenticacao;
+	public static AuthenticationProcessor getInstance() {
+		return authenticationProcessor;
 	}
 
 	public void login(String login, String password, boolean connected) throws LoginException {

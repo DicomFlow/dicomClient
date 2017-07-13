@@ -24,7 +24,7 @@ public class ValidationFields {
 		// used to determinate how many fields failed in validation
 		List<Node> failedFields = new ArrayList<>();
 		toolTip.setStyle("-fx-background-color: linear-gradient(#FF6B6B , #FFA6A6 ); -fx-font-weight: bold;");
-		SceneLoader.getSceneLoader().hackTooltipStartTiming(toolTip);
+		SceneLoader.getInstance().hackTooltipStartTiming(toolTip);
 
 		for (Node n : arrayToList(itemToCheck)) {
 
@@ -153,7 +153,7 @@ public class ValidationFields {
 
 		List<Node> failedFields = new ArrayList<>();
 		toolTip.setStyle("-fx-background-color: linear-gradient(#FF6B6B , #FFA6A6 ); -fx-font-weight: bold;");
-		SceneLoader.getSceneLoader().hackTooltipStartTiming(toolTip);
+		SceneLoader.getInstance().hackTooltipStartTiming(toolTip);
 
 		mail.textProperty()
 				.addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
@@ -169,13 +169,61 @@ public class ValidationFields {
 		return failedFields.isEmpty();
 	}
 
+	public static boolean checkAliasFormat(TextField alias) {
+
+		String aliasRegex = "[A-Za-z0-9]+";
+
+		final Tooltip toolTip = new Tooltip("Apeliado com formato inválido");
+
+		List<Node> failedFields = new ArrayList<>();
+		toolTip.setStyle("-fx-background-color: linear-gradient(#FF6B6B , #FFA6A6 ); -fx-font-weight: bold;");
+		SceneLoader.getInstance().hackTooltipStartTiming(toolTip);
+
+		alias.textProperty()
+				.addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+					removeToolTipAndBorderColor(alias, toolTip);
+				});
+		if (alias.getText() == null || !alias.getText().matches(aliasRegex)) {
+			failedFields.add(alias);
+			addToolTipAndBorderColor(alias, toolTip);
+		} else {
+			removeToolTipAndBorderColor(alias, toolTip);
+		}
+
+		return failedFields.isEmpty();
+	}
+
+	public static boolean checkCountryFormat(TextField country) {
+
+		String countryRegex = "[A-Za-z][A-Za-z]";
+
+		final Tooltip toolTip = new Tooltip("País com formato inválido");
+
+		List<Node> failedFields = new ArrayList<>();
+		toolTip.setStyle("-fx-background-color: linear-gradient(#FF6B6B , #FFA6A6 ); -fx-font-weight: bold;");
+		SceneLoader.getInstance().hackTooltipStartTiming(toolTip);
+
+		country.textProperty()
+				.addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+					removeToolTipAndBorderColor(country, toolTip);
+				});
+		if (country.getText() == null || !country.getText().matches(countryRegex)) {
+			failedFields.add(country);
+			addToolTipAndBorderColor(country, toolTip);
+		} else {
+			removeToolTipAndBorderColor(country, toolTip);
+		}
+
+		return failedFields.isEmpty();
+	}
+
 	public static boolean checkPasswordEquals(PasswordField password, PasswordField repassword) {
 
 		final Tooltip toolTip = new Tooltip("Não confere com a senha informada");
 
 		List<Node> failedFields = new ArrayList<>();
 		toolTip.setStyle("-fx-background-color: linear-gradient(#FF6B6B , #FFA6A6 ); -fx-font-weight: bold;");
-		SceneLoader.getSceneLoader().hackTooltipStartTiming(toolTip);
+		SceneLoader.getInstance().hackTooltipStartTiming(toolTip);
 
 		repassword.textProperty()
 				.addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {

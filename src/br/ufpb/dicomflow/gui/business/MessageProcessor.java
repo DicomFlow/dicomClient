@@ -3,6 +3,7 @@ package br.ufpb.dicomflow.gui.business;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -22,18 +23,22 @@ import br.ufpb.dicomflow.integrationAPI.mail.MailServiceExtractorIF;
 import br.ufpb.dicomflow.integrationAPI.mail.MessageIF;
 import br.ufpb.dicomflow.integrationAPI.mail.impl.MailContentBuilderFactory;
 import br.ufpb.dicomflow.integrationAPI.mail.impl.MailHeadBuilderFactory;
+import br.ufpb.dicomflow.integrationAPI.mail.impl.MailXTags;
 import br.ufpb.dicomflow.integrationAPI.mail.impl.SMTPAuthenticator;
 import br.ufpb.dicomflow.integrationAPI.mail.impl.SMTPFilter;
+import br.ufpb.dicomflow.integrationAPI.mail.impl.SMTPMessage;
 import br.ufpb.dicomflow.integrationAPI.mail.impl.SMTPMessageReader;
 import br.ufpb.dicomflow.integrationAPI.mail.impl.SMTPServiceExtractor;
 import br.ufpb.dicomflow.integrationAPI.main.ServiceFactory;
 import br.ufpb.dicomflow.integrationAPI.main.ServiceProcessor;
+import br.ufpb.dicomflow.integrationAPI.message.xml.Completed;
 import br.ufpb.dicomflow.integrationAPI.message.xml.Data;
 import br.ufpb.dicomflow.integrationAPI.message.xml.RequestPut;
 import br.ufpb.dicomflow.integrationAPI.message.xml.RequestResult;
 import br.ufpb.dicomflow.integrationAPI.message.xml.Result;
 import br.ufpb.dicomflow.integrationAPI.message.xml.ServiceIF;
 import br.ufpb.dicomflow.utils.CryptographyUtil;
+import br.ufpb.dicomflow.utils.DateUtil;
 import br.ufpb.dicomflow.utils.FileUtil;
 public class MessageProcessor {
 
@@ -70,7 +75,7 @@ public class MessageProcessor {
 
 	}
 
-	public static MessageProcessor getMessageProcessor() {
+	public static MessageProcessor getInstance() {
 		return messageProcessor;
 	}
 
@@ -80,7 +85,7 @@ public class MessageProcessor {
 		try {
 
 			AuthenticationBean authenticationBean = ApplicationSession.getInstance().getLoggedUser();
-			Properties properties = ConfigurationProcessor.getProcessadorConfiguracao().getProperties(authenticationBean.getConfiguration());
+			Properties properties = ConfigurationProcessor.getInstance().getProperties(authenticationBean.getConfiguration());
 
 			Properties receiveProperties = new Properties();
 			receiveProperties.put(MAIL_IMAP_SOCKET_FACTORY_CLASS, properties.getProperty(MAIL_IMAP_SOCKET_FACTORY_CLASS));
@@ -163,7 +168,7 @@ public class MessageProcessor {
 
 	}
 
-	public void sendReport(MessageBean message, RequestPut requestPut, File filePath) throws MessageException {
+	public void sendReport(MessageBean messageBean, RequestPut requestPut, File filePath) throws MessageException {
 
 		if(!filePath.canExecute()){
 			throw new MessageException("arquivo de laudo não pode ser lido");
@@ -175,16 +180,22 @@ public class MessageProcessor {
 		data.setFilename(filePath.getName());
 		data.setBytes(FileUtil.getBytes(filePath));
 
+		Completed completed = new Completed();
+		completed.setStatus(Completed.STATUS_MESSAGE);
+		completed.setCompletedMessage(Completed.SUCCESS_MESSAGE);
+
 		Result result = new Result();
 		result.setData(data);
 		result.setOriginalMessageID(requestPut.getMessageID());
+		result.setTimestamp(DateUtil.dateToTimestamp(new Date()));
+		result.setCompleted(completed);
 
 		requestResult.addResult(result);
 
 		try {
 
 			AuthenticationBean authenticationBean = ApplicationSession.getInstance().getLoggedUser();
-			Properties properties = ConfigurationProcessor.getProcessadorConfiguracao().getProperties(authenticationBean.getConfiguration());
+			Properties properties = ConfigurationProcessor.getInstance().getProperties(authenticationBean.getConfiguration());
 
 			Properties sendProperties = new Properties();
 			sendProperties.put(DOMAIN, properties.getProperty(DOMAIN));
@@ -203,16 +214,30 @@ public class MessageProcessor {
 
 			//it's a reply!
 			mailHeadBuilder.setFrom(authenticationBean.getMail());
-			mailHeadBuilder.setTo(message.getFromm());
+			mailHeadBuilder.setTo(messageBean.getFromm());
 
 			MailContentBuilderIF mailContentBuilder = MailContentBuilderFactory.createContentStrategy(MailContentBuilderIF.SMTP_SIMPLE_CONTENT_STRATEGY);
 
-			String messageID = ServiceProcessor.sendMessage(requestResult, message.getFromm(), sendProperties, smtpAuthenticatorStrategy, mailHeadBuilder, mailContentBuilder);
+			String messageID = ServiceProcessor.sendMessage(requestResult, messageBean.getFromm(), sendProperties, smtpAuthenticatorStrategy, mailHeadBuilder, mailContentBuilder);
+			requestResult.setMessageID(messageID);
 
-			//TODO save request result messages.
+			//Saving RequestResult message
+			SMTPMessage message = new SMTPMessage();
+			message.addMailXTag(MailXTags.DATE, DateUtil.dateToMailDateString(new Date()));
+			message.addMailXTag(MailXTags.FROM, authenticationBean.getMail());
+			message.addMailXTag(MailXTags.TO, messageBean.getFromm());
+			message.addMailXTag(MailXTags.SUBJECT, "Request-Result");
+			message.setService(requestResult);
 
+			MessageBean newMessageBean = new MessageBean();
+			newMessageBean.setValues(message);
+			newMessageBean.setAuthentication(authenticationBean);
+			newMessageBean.setTypee(MessageBean.SENT);
+			newMessageBean.setStatuss(MessageBean.UNREAD);
 
-		} catch (ServiceCreationException e) {
+			GenericDao.save(newMessageBean);
+
+		} catch (ServiceCreationException | IllegalAccessException | InvocationTargetException e) {
 			e.printStackTrace();
 			throw new MessageException(e.getMessage());
 		}

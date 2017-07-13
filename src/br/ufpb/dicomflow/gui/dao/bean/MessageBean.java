@@ -21,6 +21,7 @@ import br.ufpb.dicomflow.integrationAPI.mail.MessageIF;
 import br.ufpb.dicomflow.integrationAPI.mail.impl.MailXTags;
 import br.ufpb.dicomflow.integrationAPI.mail.impl.SMTPMessage;
 import br.ufpb.dicomflow.integrationAPI.message.xml.RequestPut;
+import br.ufpb.dicomflow.integrationAPI.message.xml.RequestResult;
 import br.ufpb.dicomflow.integrationAPI.message.xml.ServiceIF;
 
 @Entity
@@ -165,18 +166,34 @@ public class MessageBean implements Persistent {
 
 		if (service instanceof RequestPut) {
 
-			RequestPutBean RequestPutbean = new RequestPutBean();
-			RequestPutbean.setValues((RequestPut) service);
+			RequestPutBean RequestPutBean = new RequestPutBean();
+			RequestPutBean.setValues((RequestPut) service);
 
-			GenericDao.save(RequestPutbean);
+			GenericDao.save(RequestPutBean);
 
 			ServiceBean serviceBean = new ServiceBean();
 			serviceBean.setMessage(this);
 			serviceBean.setPersistentClass(RequestPutBean.class.getName());
-			serviceBean.setPersitentId(RequestPutbean.getIdentifierValue());
+			serviceBean.setPersitentId(RequestPutBean.getIdentifierValue());
 
 			this.setService(serviceBean);
 
+		}
+
+		if(service instanceof RequestResult){
+
+
+			RequestResultBean RequestResultBean = new RequestResultBean();
+			RequestResultBean.setValues((RequestResult) service);
+
+			GenericDao.save(RequestResultBean);
+
+			ServiceBean serviceBean = new ServiceBean();
+			serviceBean.setMessage(this);
+			serviceBean.setPersistentClass(RequestResultBean.class.getName());
+			serviceBean.setPersitentId(RequestResultBean.getIdentifierValue());
+
+			this.setService(serviceBean);
 		}
 	}
 
@@ -201,6 +218,14 @@ public class MessageBean implements Persistent {
 			RequestPut requestPut = ((RequestPutBean) requestPutBean).getValues();
 
 			message.setService(requestPut);
+		}
+
+		if (persistent instanceof RequestResultBean) {
+
+			RequestResultBean requestResultBean = (RequestResultBean) GenericDao.select(persistent.getClass(), service.getIdentifierValue());
+			RequestResult requestResult = ((RequestResultBean) requestResultBean).getValues();
+
+			message.setService(requestResult);
 		}
 
 

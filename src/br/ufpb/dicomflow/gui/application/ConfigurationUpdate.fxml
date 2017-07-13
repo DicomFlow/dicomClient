@@ -12,8 +12,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.ImageView?>
-
-<GridPane alignment="center" hgap="10" styleClass="background" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufpb.dicomflow.gui.application.ConfigurationUpdateController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="613.0"  xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufpb.dicomflow.gui.application.ConfigurationUpdateController">
+   <children>
+<ScrollPane prefHeight="500.0" prefWidth="613.0">
+<content>
+<GridPane alignment="center" hgap="10" styleClass="background" vgap="10" >
 	<stylesheets>
 		<URL value="@css/application.css" />
 	</stylesheets>
@@ -23,16 +26,19 @@
 	<children>
 		<Text id="config-text" styleClass="titulo" text="Atualizar acesso" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0" />
 
-		<Label text="Tipo de e-mail:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-		<ComboBox fx:id="typeField" disable="true" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+		<Text id="config-text" text="DADOS DO E-MAIL"
+			GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="2" />
 
-		<Label text="E-mail:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-		<TextField fx:id="mailField" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+		<Label text="Tipo de e-mail:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+		<ComboBox fx:id="typeField" disable="true" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-		<Label text="Senha Atual:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-		<PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+		<Label text="E-mail:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+		<TextField fx:id="mailField" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-		<Label fx:id="newPasswordLabel" text="Nova Senha:" GridPane.columnIndex="0" GridPane.rowIndex="4">
+		<Label text="Senha Atual:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+		<PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+		<Label fx:id="newPasswordLabel" text="Nova Senha:" GridPane.columnIndex="0" GridPane.rowIndex="5">
 			<graphic>
 			<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
 				<image>
@@ -42,11 +48,97 @@
 			</ImageView>
 			</graphic>
 		</Label>
-		<PasswordField fx:id="newPasswordField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-		<Label text="Repetir Nova Senha:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-		<PasswordField fx:id="rePasswordField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+		<PasswordField fx:id="newPasswordField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
-		<Label fx:id="folderLabel" text="Pasta de recebimento:" GridPane.columnIndex="0" GridPane.rowIndex="6">
+		<Label text="Repetir Nova Senha:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+		<PasswordField fx:id="rePasswordField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+
+
+		<Text id="config-text" text="DADOS DO USUÁRIO"
+			GridPane.columnIndex="0" GridPane.rowIndex="7" GridPane.columnSpan="2" />
+
+
+		<Label text="Nome:" GridPane.columnIndex="0"
+			GridPane.rowIndex="8" />
+		<TextField fx:id="nameField" GridPane.columnIndex="1"
+			GridPane.rowIndex="8" />
+
+		<Label text="Departamento:" GridPane.columnIndex="0"
+			GridPane.rowIndex="9" />
+		<TextField fx:id="departamentField" GridPane.columnIndex="1"
+			GridPane.rowIndex="9" />
+
+
+		<Label text="Organização:" GridPane.columnIndex="0"
+			GridPane.rowIndex="10" />
+		<TextField fx:id="organizationField" GridPane.columnIndex="1"
+			GridPane.rowIndex="10" />
+
+
+		<Label text="Cidade:" GridPane.columnIndex="0"
+			GridPane.rowIndex="11" />
+		<TextField fx:id="locationField" GridPane.columnIndex="1"
+			GridPane.rowIndex="11" />
+
+
+		<Label text="Estado:" GridPane.columnIndex="0"
+			GridPane.rowIndex="12" />
+		<TextField fx:id="stateField" GridPane.columnIndex="1"
+			GridPane.rowIndex="12" />
+
+		<Label fx:id="countryLabel" text="País:" GridPane.columnIndex="0"
+			GridPane.rowIndex="13" >
+			<graphic>
+				<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true"
+					preserveRatio="true">
+					<image>
+						<Image url="@img/info.gif" />
+					</image>
+
+				</ImageView>
+			</graphic>
+		</Label>
+		<TextField fx:id="countryField" GridPane.columnIndex="1"
+			GridPane.rowIndex="13" />
+
+		<Text id="config-text" text="DADOS DO CERTIFICADO"
+			GridPane.columnIndex="0" GridPane.rowIndex="14" GridPane.columnSpan="2" />
+
+		<Label fx:id="aliasLabel" text="Identificador:" GridPane.columnIndex="0"
+			GridPane.rowIndex="15" >
+			<graphic>
+				<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true"
+					preserveRatio="true">
+					<image>
+						<Image url="@img/info.gif" />
+					</image>
+
+				</ImageView>
+			</graphic>
+		</Label>
+		<TextField fx:id="aliasField" disable="true" GridPane.columnIndex="1"
+			GridPane.rowIndex="15" />
+
+		<Label fx:id="certFolderLabel" text="Pasta de certificados:"
+			GridPane.columnIndex="0" GridPane.rowIndex="16">
+			<graphic>
+				<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true"
+					preserveRatio="true">
+					<image>
+						<Image url="@img/info.gif" />
+					</image>
+
+				</ImageView>
+			</graphic>
+		</Label>
+		<TextField fx:id="certFolderField" disable="true" GridPane.columnIndex="1"
+			GridPane.rowIndex="16" />
+
+		<Text id="config-text" text="DADOS DAS IMAGENS"
+			GridPane.columnIndex="0" GridPane.rowIndex="17" GridPane.columnSpan="2" />
+
+
+		<Label fx:id="folderLabel" text="Pasta de recebimento:" GridPane.columnIndex="0" GridPane.rowIndex="18">
 			<graphic>
 			<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
 				<image>
@@ -56,17 +148,15 @@
 			</ImageView>
 			</graphic>
 		</Label>
+		<TextField fx:id="folderField" GridPane.columnIndex="1" GridPane.rowIndex="18" />
 
-
-		<TextField fx:id="folderField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-
-		<HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="7">
+		<HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="19">
 			<children>
 				<Button defaultButton="true" onAction="#updateAction" text="Atualizar" />
 			</children>
 		</HBox>
 
-		<Text fx:id="configAlerts" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+		<Text fx:id="configAlerts" GridPane.columnIndex="1" GridPane.rowIndex="21" />
 	</children>
 	<columnConstraints>
 		<ColumnConstraints />
@@ -82,6 +172,21 @@
 		<RowConstraints />
 		<RowConstraints />
 		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
 	</rowConstraints>
 
 </GridPane>
+</content>
+</ScrollPane>
+</children>
+</Pane>

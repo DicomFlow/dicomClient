@@ -27,6 +27,27 @@ public class AuthenticationBean implements Persistent {
 	private String mail;
 
 	@Column
+	private String alias;
+
+	@Column
+	private String name;
+
+	@Column
+	private String departament;
+
+	@Column
+	private String organization;
+
+	@Column
+	private String location;
+
+	@Column
+	private String state;
+
+	@Column
+	private String country;
+
+	@Column
 	private String password;
 
 	@Column(nullable=false)
@@ -34,6 +55,9 @@ public class AuthenticationBean implements Persistent {
 
 	@Column
 	private String folder;
+
+	@Column
+	private String certFolder;
 
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="id_configuration")
@@ -100,6 +124,70 @@ public class AuthenticationBean implements Persistent {
 
 	public void setConnected(boolean connected) {
 		this.connected = connected;
+	}
+
+	public String getAlias() {
+		return alias;
+	}
+
+	public void setAlias(String alias) {
+		this.alias = alias;
+	}
+
+	public String getDepartament() {
+		return departament;
+	}
+
+	public void setDepartament(String departament) {
+		this.departament = departament;
+	}
+
+	public String getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(String organization) {
+		this.organization = organization;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getCertFolder() {
+		return certFolder;
+	}
+
+	public void setCertFolder(String certFolder) {
+		this.certFolder = certFolder;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Override
