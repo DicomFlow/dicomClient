@@ -133,7 +133,7 @@ public class ReceivedMessagesController implements Initializable {
 				Main.getpStage().getScene().setCursor(Cursor.WAIT);
 
 				try {
-					String filename = DownloadProcessor.getInstance().downloadImages(requestPut);
+					String filename = DownloadProcessor.getInstance().download(requestPut);
 
 					SceneLoader.getInstance().informationAlert("Download", "Informação", "Download efetudo em: " + filename);
 

@@ -22,10 +22,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 public class MainController implements Initializable {
-	private final String DATE_ORDER = "Data";
-	private final String FROM_ORDER = "De";
-	private final String TO_ORDER = "Para";
-	private final String SUBJECT_ORDER = "Assunto";
+//	private final String DATE_ORDER = "Data";
+//	private final String FROM_ORDER = "De";
+//	private final String TO_ORDER = "Para";
+//	private final String SUBJECT_ORDER = "Assunto";
 
 	@FXML
 	private ComboBox<String> orderByComboBox;
@@ -47,7 +47,7 @@ public class MainController implements Initializable {
 	@Override
 	public void initialize(java.net.URL arg0, ResourceBundle arg1) {
 
-		orderByComboBox.getItems().addAll(DATE_ORDER,FROM_ORDER, TO_ORDER, SUBJECT_ORDER);
+		//orderByComboBox.getItems().addAll(DATE_ORDER,FROM_ORDER, TO_ORDER, SUBJECT_ORDER);
 
 		anchorPane.getChildren().clear();
 

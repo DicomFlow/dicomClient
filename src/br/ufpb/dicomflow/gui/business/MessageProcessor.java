@@ -210,7 +210,7 @@ public class MessageProcessor {
 
 			MailAuthenticatorIF smtpAuthenticatorStrategy =  new SMTPAuthenticator(authenticationBean.getMail(), CryptographyUtil.decryptPBEWithMD5AndDES(authenticationBean.getPassword()));
 			MailHeadBuilderIF mailHeadBuilder =  MailHeadBuilderFactory.createHeadStrategy(MailHeadBuilderIF.SMTP_HEAD_STRATEGY);
-			mailHeadBuilder.setDomain(properties.getProperty(DOMAIN));
+			mailHeadBuilder.setDomain(authenticationBean.getAlias()+"."+properties.getProperty(DOMAIN));
 
 			//it's a reply!
 			mailHeadBuilder.setFrom(authenticationBean.getMail());

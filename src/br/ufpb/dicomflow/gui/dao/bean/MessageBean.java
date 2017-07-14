@@ -214,7 +214,7 @@ public class MessageBean implements Persistent {
 
 		if (persistent instanceof RequestPutBean) {
 
-			RequestPutBean requestPutBean = (RequestPutBean) GenericDao.select(persistent.getClass(), service.getIdentifierValue());
+			RequestPutBean requestPutBean = (RequestPutBean) GenericDao.select(persistent.getClass(), serviceBean.getPersitentId());
 			RequestPut requestPut = ((RequestPutBean) requestPutBean).getValues();
 
 			message.setService(requestPut);
@@ -222,7 +222,7 @@ public class MessageBean implements Persistent {
 
 		if (persistent instanceof RequestResultBean) {
 
-			RequestResultBean requestResultBean = (RequestResultBean) GenericDao.select(persistent.getClass(), service.getIdentifierValue());
+			RequestResultBean requestResultBean = (RequestResultBean) GenericDao.select(persistent.getClass(), serviceBean.getPersitentId());
 			RequestResult requestResult = ((RequestResultBean) requestResultBean).getValues();
 
 			message.setService(requestResult);

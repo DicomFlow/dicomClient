@@ -41,7 +41,7 @@
 						</MenuBar>
                </children>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="820.0">
+            <!--  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="820.0">
                <children>
                   <Label text="Ordenar por: " />
                   <ComboBox fx:id="orderByComboBox" prefWidth="150.0">
@@ -55,7 +55,7 @@
                <padding>
 		            <Insets right="10.0" />
 		        </padding>
-            </HBox>
+            </HBox> -->
 			</items>
 		</SplitPane>
 	</top>
