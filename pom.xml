@@ -65,8 +65,12 @@
 			<groupId>org.glassfish.jersey.core</groupId>
 			<artifactId>jersey-client</artifactId>
 			<version>${jersey2.version}</version>
-		</dependency>
-
+		</dependency>			
+		<dependency >
+  			<groupId >org.aerofx</groupId>
+  			<artifactId>aerofx</artifactId>
+  			<version>0.2</version>
+		</dependency >
 		<!-- Hibernate library dependecy start -->
 		<dependency>
 			<groupId>org.hibernate</groupId>

@@ -16,25 +16,30 @@ public class Main extends Application {
 	private static Stage pStage;
 
     @Override
-    public void start(Stage stage) throws Exception {
-
+    public void start(Stage stage) throws Exception {    	
+    	
     	ConfigurationProcessor.getInstance().init();
 
     	Scene scene = null;
 
-    	if(AuthenticationProcessor.getInstance().loadLoggedUser()){
-
-    		Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
-            scene = new Scene(root);
-            scene.getStylesheets().add(getClass().getResource("css/application.css").toExternalForm());
-
-    	}else{
-
-	        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-	        scene = new Scene(root, 300, 275);
-	        scene.getStylesheets().add(getClass().getResource("css/application.css").toExternalForm());
-
-    	}
+//    	if(AuthenticationProcessor.getInstance().loadLoggedUser()){
+//
+//    		Parent root = FXMLLoader.load(getClass().getResource("MainApp.fxml"));
+//            scene = new Scene(root);
+//            scene.getStylesheets().add(getClass().getResource("css/application.css").toExternalForm());
+//
+//    	}else{
+//
+//	        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+//	        scene = new Scene(root, 300, 275);
+//	        scene.getStylesheets().add(getClass().getResource("css/application.css").toExternalForm());
+//
+//    	}
+    	
+    	Parent root = FXMLLoader.load(getClass().getResource("MainApp.fxml"));
+        scene = new Scene(root);
+        stage.setResizable(false);
+        
 
 
     	stage.setOnCloseRequest(new EventHandler<WindowEvent>() {

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="650.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufpb.dicomflow.gui.application.MainAppController">
+	<top>
+		
+	</top>
+	
+	<center>
+      
+	</center>
+	
+	<left>
+	
+	</left>
+   <top>
+      <SplitPane orientation="VERTICAL" prefHeight="80.0" prefWidth="160.0" BorderPane.alignment="CENTER">
+        <items>
+          <HBox prefHeight="100.0" prefWidth="820.0">
+               <children>
+						<MenuBar prefHeight="16.0" prefWidth="820.0">
+							<menus>
+								<Menu mnemonicParsing="false" text="Arquivo">
+									<items>
+										<MenuItem mnemonicParsing="false" onAction="#logoutAction" text="Sair" />
+										<MenuItem mnemonicParsing="false" onAction="#exitAction" text="Fechar" />
+									</items>
+								</Menu>
+								<Menu mnemonicParsing="false" text="Editar">
+									<items>										
+									</items>
+								</Menu>
+								<Menu mnemonicParsing="false" text="Ajuda">
+									<items>
+										<MenuItem mnemonicParsing="false" text="Sobre" />
+									</items>
+								</Menu>
+							</menus>
+						</MenuBar>
+               </children>
+            </HBox>
+        </items>
+      </SplitPane>
+   </top>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
+   <left>
+      <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+      </GridPane>
+   </left>
+</BorderPane>
