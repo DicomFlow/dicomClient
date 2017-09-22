@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
@@ -17,49 +20,61 @@
 	<left>
 	
 	</left>
-   <top>
-      <SplitPane orientation="VERTICAL" prefHeight="80.0" prefWidth="160.0" BorderPane.alignment="CENTER">
-        <items>
-          <HBox prefHeight="100.0" prefWidth="820.0">
-               <children>
-						<MenuBar prefHeight="16.0" prefWidth="820.0">
-							<menus>
-								<Menu mnemonicParsing="false" text="Arquivo">
-									<items>
-										<MenuItem mnemonicParsing="false" onAction="#logoutAction" text="Sair" />
-										<MenuItem mnemonicParsing="false" onAction="#exitAction" text="Fechar" />
-									</items>
-								</Menu>
-								<Menu mnemonicParsing="false" text="Editar">
-									<items>										
-									</items>
-								</Menu>
-								<Menu mnemonicParsing="false" text="Ajuda">
-									<items>
-										<MenuItem mnemonicParsing="false" text="Sobre" />
-									</items>
-								</Menu>
-							</menus>
-						</MenuBar>
-               </children>
-            </HBox>
-        </items>
-      </SplitPane>
-   </top>
-   <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </center>
    <left>
-      <GridPane BorderPane.alignment="CENTER">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-      </GridPane>
+      <Pane prefHeight="650.0" prefWidth="250.0" style="-fx-background-color: #0E233B;" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="contatosLabel" layoutX="53.0" layoutY="33.0" style="-fx-font-family: Roboto;" text="Contatos" textFill="WHITE">
+               <font>
+                  <Font name="Roboto" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="contatosIcon" fitHeight="25.0" fitWidth="25.0" layoutX="14.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../img/employee.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="inboxIcon" fitHeight="25.0" fitWidth="25.0" layoutX="14.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../img/download.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="inboxLabel" layoutX="53.0" layoutY="77.0" style="-fx-font-family: Roboto;" text="Inbox" textFill="WHITE">
+               <font>
+                  <Font name="Centaur" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="favoritosLabel" layoutX="53.0" layoutY="117.0" style="-fx-font-family: Roboto;" text="Favoritos" textFill="WHITE">
+               <font>
+                  <Font name="Centaur" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="favoritosIcon" fitHeight="25.0" fitWidth="25.0" layoutX="14.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../img/star.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="configuracoesLabel" layoutX="53.0" layoutY="157.0" style="-fx-font-family: Roboto;" text="Configurações" textFill="WHITE">
+               <font>
+                  <Font name="Centaur" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="configuracoesIcon" fitHeight="25.0" fitWidth="25.0" layoutX="14.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../img/cogwheel.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
    </left>
+   <center>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2e6fb9" height="61.0" stroke="BLACK" strokeType="INSIDE" width="511.0" />
+            <TextField layoutX="28.0" layoutY="18.0" prefHeight="25.0" prefWidth="447.0" promptText="Pesquisa" style="-fx-border-radius: 16px; -fx-border: 1px solid #979797;" />
+         </children>
+      </Pane>
+   </center>
+   <right>
+      <Pane prefHeight="650.0" prefWidth="272.0" style="-fx-background-color: #DBE5F1;" BorderPane.alignment="CENTER" />
+   </right>
 </BorderPane>
