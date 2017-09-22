@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="506.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="150.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="512.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5a623" height="22.0" layoutX="415.0" layoutY="44.0" stroke="#f5a623" strokeType="INSIDE" width="70.0" />
+      <Line endX="495.0" layoutX="10.0" layoutY="75.0" startX="30.0" />
+      <Label layoutX="40.0" layoutY="14.0" text="Herman Joseph">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="42.0" layoutY="45.0" text="herman@shcadsasdas.com">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="391.0" layoutY="14.0" text="16 Jul 2017">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="40.0" layoutY="81.0" text="RX">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="40.0" layoutY="108.0" text="Sean Petters">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Circle fill="#4a90e2" layoutX="20.0" layoutY="28.0" radius="11.0" smooth="false" stroke="WHITE" strokeType="INSIDE" />
+      <ImageView fitHeight="22.0" fitWidth="22.0" layoutX="9.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@img/star.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="423.0" layoutY="45.0" prefHeight="20.0" prefWidth="61.0" text="Hospital">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>

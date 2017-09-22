@@ -67,10 +67,11 @@
       </Pane>
    </left>
    <center>
-      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <Pane fx:id="centerPane" prefHeight="449.0" prefWidth="502.0" BorderPane.alignment="CENTER">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2e6fb9" height="61.0" stroke="BLACK" strokeType="INSIDE" width="511.0" />
-            <TextField layoutX="28.0" layoutY="18.0" prefHeight="25.0" prefWidth="447.0" promptText="Pesquisa" style="-fx-border-radius: 16px; -fx-border: 1px solid #979797;" />
+            <TextField fx:id="pesquisarTextField" layoutX="28.0" layoutY="18.0" prefHeight="25.0" prefWidth="447.0" promptText="Pesquisa" style="-fx-border-radius: 16px; -fx-border: 1px solid #979797;" />
+            <Pane fx:id="mailsPane" layoutY="61.0" prefHeight="595.0" prefWidth="506.0" />
          </children>
       </Pane>
    </center>
