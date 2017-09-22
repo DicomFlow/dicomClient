@@ -9,9 +9,9 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="506.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="150.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="512.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="150.0" layoutY="-1.0" stroke="#6978ee" strokeType="INSIDE" strokeWidth="0.5" width="512.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5a623" height="22.0" layoutX="415.0" layoutY="44.0" stroke="#f5a623" strokeType="INSIDE" width="70.0" />
-      <Line endX="495.0" layoutX="10.0" layoutY="75.0" startX="30.0" />
+      <Line endX="495.0" layoutX="10.0" layoutY="75.0" startX="30.0" strokeWidth="0.5" />
       <Label layoutX="40.0" layoutY="14.0" text="Herman Joseph">
          <font>
             <Font size="18.0" />
